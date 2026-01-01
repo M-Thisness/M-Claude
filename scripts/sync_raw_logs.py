@@ -15,7 +15,7 @@ from datetime import datetime
 HOME = Path.home()
 CLAUDE_PROJECTS = HOME / ".claude/projects/-home-mischa"
 REPO_ROOT = Path(__file__).parent.parent
-TRANSCRIPTS_DEST = REPO_ROOT / "transcripts"
+TRANSCRIPTS_DEST = REPO_ROOT / "CHAT_LOGS"
 
 # Comprehensive secret and PII patterns
 SECRET_PATTERNS = [
