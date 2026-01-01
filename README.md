@@ -18,6 +18,7 @@ M-Claude-Code/
 ├── scripts/                            # Utility scripts
 │   └── export_full_transcripts.sh      # Script to export full conversation transcripts
 ├── transcripts/                        # Full conversation transcripts (55 files, ~3.8MB)
+├── transcripts-markdown/               # Human-readable Markdown versions (auto-generated)
 └── docs/                               # Additional documentation
 ```
 
@@ -33,13 +34,24 @@ The `claude_code_chat_history_export.md` file contains a chronological summary o
 
 ### Full Transcripts
 
-The `transcripts/` directory contains complete conversation logs with:
+The `transcripts/` directory contains complete conversation logs in JSONL format:
 - Full user prompts and Claude's responses
 - Tool usage and command outputs
 - File contents read or modified
 - Error messages and debugging information
+- Metadata (tokens, cache usage, model info)
 
-See `transcripts/README.md` for details.
+### Human-Readable Markdown Versions
+
+The `transcripts-markdown/` directory contains **automatically generated** beautiful Markdown versions of all conversations:
+- 💭 Collapsible thinking blocks
+- 💬 Clear message formatting
+- 🔧 Syntax-highlighted code and commands
+- 📊 Organized index with timestamps
+
+**Auto-updated:** GitHub Actions regenerates these whenever transcripts change.
+
+See `transcripts/README.md` for JSONL details or browse `transcripts-markdown/` for easy reading.
 
 ### Viewing Chat History
 
