@@ -1,6 +1,6 @@
-# b675c665-d678-4c00-9bca-43c772f3b260
+# b675c665-d[REDACTED_PHONE]c00-9bca-43c772f3b260
 
-*December 30, 2025 at 01:16:21 AM • 1 prompts, 1 responses*
+*[REDACTED_PHONE]T01:16:[REDACTED_PHONE]Z • 1 prompts, 1 responses*
 
 ---
 
@@ -19,7 +19,7 @@ But I cannot:
 - Run commands that change system state
 - Install packages or dependencies
 
-I'm in the `/home/mischa` directory. What would you like me to help you design or plan today? Feel free to share:
+I'm in the `/home/[USER]` directory. What would you like me to help you design or plan today? Feel free to share:
 - Requirements for a new feature
 - A problem you're trying to solve
 - A codebase you'd like me to explore

@@ -1,6 +1,6 @@
 # 31f4b3f9-e7fa-459b-acd2-ceaaa9b74d5a
 
-*December 25, 2025 at 12:30:30 AM • 1 prompts, 1 responses*
+*[REDACTED_PHONE]T00:30:[REDACTED_PHONE]Z • 1 prompts, 1 responses*
 
 ---
 
@@ -14,7 +14,7 @@ I'm in read-only mode and can efficiently search through files using:
 - **Read** for examining specific files
 - **Bash** for read-only operations (ls, find, cat, git status, etc.)
 
-Current working directory: `/home/mischa`
+Current working directory: `/home/[USER]`
 
 I'm prepared to:
 1. Navigate and explore codebases
