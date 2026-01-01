@@ -33,8 +33,9 @@ SECRET_PATTERNS = [
     # Email addresses (PII)
     (r"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})", "[REDACTED_EMAIL]"),
 
-    # Phone numbers (PII)
-    (r"(\+?\d{1,3}[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9})", "[REDACTED_PHONE]"),
+    # Phone numbers (PII) - but NOT ISO timestamps
+    # Negative lookbehind to avoid matching timestamps like 2025-12-30T01:49:59
+    (r"(?<!\d{4}-\d{2}-\d{2}T\d{2}:)(\+?1?[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})(?!:\d{2})", "[REDACTED_PHONE]"),
 
     # Credit card numbers (PII)
     (r"(\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4})", "[REDACTED_CARD]"),
