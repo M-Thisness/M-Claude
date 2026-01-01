@@ -1,6 +1,6 @@
 # 31f4b3f9-e7fa-459b-acd2-ceaaa9b74d5a
 
-*December 25, 2025 at 12:30:30 AM • 1 prompts, 1 responses*
+*[REDACTED_PHONE]T00:30:[REDACTED_PHONE]Z • 1 prompts, 1 responses*
 
 ---
 
@@ -26,7 +26,7 @@ I understand that I'm in **READ-ONLY mode** - I can explore and analyze code, bu
 I'm ready to help! What would you like me to explore or plan for you today?
 
 **Current environment:**
-- Working directory: `/home/mischa`
+- Working directory: `/home/[USER]`
 - Platform: Linux (CachyOS)
 - Not currently in a git repository
 

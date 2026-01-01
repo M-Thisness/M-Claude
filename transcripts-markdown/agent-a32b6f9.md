@@ -1,6 +1,6 @@
-# 1364a361-cf7b-42ad-9665-c141e0c92686
+# [REDACTED_PHONE]a361-cf7b-42ad-[REDACTED_PHONE]-c141e0c[REDACTED_PHONE]
 
-*December 30, 2025 at 06:13:10 PM • 1 prompts, 1 responses*
+*[REDACTED_PHONE]T18:13:[REDACTED_PHONE]Z • 1 prompts, 1 responses*
 
 ---
 
@@ -19,5 +19,5 @@ But I **cannot**:
 - Run commands that change system state
 - Install packages or dependencies
 
-I'm currently in `/home/mischa` and ready to assist. What would you like me to help you plan or explore?
+I'm currently in `/home/[USER]` and ready to assist. What would you like me to help you plan or explore?
 
