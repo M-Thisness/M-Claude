@@ -17,17 +17,29 @@ M-Claude-Code/
 ├── claude_code_chat_history_export.md  # Main chat history export
 ├── scripts/                            # Utility scripts
 │   └── export_full_transcripts.sh      # Script to export full conversation transcripts
-├── transcripts/                        # Full conversation transcripts (optional)
+├── transcripts/                        # Full conversation transcripts (28 files, ~760KB)
 └── docs/                               # Additional documentation
 ```
 
 ## Chat History
+
+### Summary Export
 
 The `claude_code_chat_history_export.md` file contains a chronological summary of all interactions with Claude Code, including:
 - Session timestamps
 - User prompts
 - Session IDs for full transcript lookup
 - Statistics and topic summaries
+
+### Full Transcripts
+
+The `transcripts/` directory contains complete conversation logs with:
+- Full user prompts and Claude's responses
+- Tool usage and command outputs
+- File contents read or modified
+- Error messages and debugging information
+
+See `transcripts/README.md` for details.
 
 ### Viewing Chat History
 
