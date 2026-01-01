@@ -1,0 +1,49 @@
+name: Generate Markdown Transcripts
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'transcripts/*.jsonl'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  convert-to-markdown:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Convert JSONL to Markdown
+      run: python scripts/convert_to_markdown.py
+
+    - name: Check for changes
+      id: check_changes
+      run: |
+        if git diff --quiet transcripts-markdown/; then
+          echo "changes=false" >> $GITHUB_OUTPUT
+        else
+          echo "changes=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Commit and push if changed
+      if: steps.check_changes.outputs.changes == 'true'
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add transcripts-markdown/
+        git commit -m "🤖 Auto-generate markdown transcripts from JSONL
+
+Generated beautiful human-readable markdown from conversation transcripts.
+
+Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
+        git push
