@@ -1,4 +1,4 @@
-name: Generate Markdown Transcripts
+name: Transform Raw Chat Logs to Human-Readable Markdown
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 jobs:
-  convert-to-markdown:
+  transform-chat-logs:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +23,7 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Convert JSONL to Markdown
+    - name: Transform raw chat logs into simple, human-readable markdown
       run: python scripts/convert_to_markdown.py
 
     - name: Check for changes
@@ -41,7 +41,7 @@ jobs:
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git add transcripts-markdown/
-        git commit -m "🤖 Auto-generate markdown transcripts from JSONL" \
-                   -m "Generated beautiful human-readable markdown from conversation transcripts." \
+        git commit -m "🤖 Transform raw chat logs into human-readable markdown" \
+                   -m "Converted raw JSONL chat logs into simple, concise markdown format." \
                    -m "Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
         git push

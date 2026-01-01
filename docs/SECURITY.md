@@ -56,7 +56,7 @@ Scans every commit before it's created:
 
 **Test it:**
 ```bash
-cd ~/M-Claude-Code
+cd ~/M-Claude
 echo "AWS_SECRET_KEY=AKIAIOSFODNN7EXAMPLE" > test.txt
 git add test.txt
 git commit -m "test"  # This should be blocked!
@@ -74,7 +74,7 @@ Each repository has a `.gitignore` file that prevents sensitive files from being
 - [x] Global .gitignore configured
 - [x] Gitleaks installed (v8.30.0)
 - [x] Pre-commit hook template created
-- [x] M-Claude-Code repository has pre-commit hook
+- [x] M-Claude repository has pre-commit hook
 - [x] GitHub secret scanning (enabled by default for public repos)
 
 ### ⚠️ Requires Manual Action
