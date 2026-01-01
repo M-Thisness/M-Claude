@@ -53,6 +53,7 @@ python3 scripts/convert_to_markdown.py
 
 **System Security:**
 - [M-SECURITY.md](docs/M-SECURITY.md) - Complete security analysis (legion-cachy → M-Claude)
+- [HARDENING-APPLIED.md](docs/HARDENING-APPLIED.md) - System hardening steps completed
 - [SECURITY.md](docs/SECURITY.md) - Multi-layer secret protection guide
 
 ---
