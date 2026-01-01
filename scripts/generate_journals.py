@@ -173,7 +173,7 @@ def create_journal_entry(date: str, sessions: List[Tuple[datetime, str, List[Dic
 def main():
     """Generate all journal entries."""
     project_root = Path(__file__).parent.parent
-    transcripts_dir = project_root / 'transcripts'
+    transcripts_dir = project_root / 'CHAT_LOGS'
     journals_dir = project_root / 'journals'
 
     # Create journals directory

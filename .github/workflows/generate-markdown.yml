@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'transcripts/*.jsonl'
+      - 'CHAT_LOGS/*.jsonl'
   workflow_dispatch:
 
 permissions:
@@ -29,7 +29,7 @@ jobs:
     - name: Check for changes
       id: check_changes
       run: |
-        if git diff --quiet CHRONOLOGICAL_TRANSCRIPT.md; then
+        if git diff --quiet CHAT_LOG.md; then
           echo "changes=false" >> $GITHUB_OUTPUT
         else
           echo "changes=true" >> $GITHUB_OUTPUT
@@ -40,8 +40,8 @@ jobs:
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add CHRONOLOGICAL_TRANSCRIPT.md
-        git commit -m "🤖 Update chronological transcript" \
+        git add CHAT_LOG.md
+        git commit -m "🤖 Update chat log" \
                    -m "Regenerated chronological markdown from raw JSONL chat logs." \
                    -m "Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
         git push

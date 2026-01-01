@@ -185,8 +185,8 @@ def main():
     """Main conversion process."""
     # Setup paths
     project_root = Path(__file__).parent.parent
-    transcripts_dir = project_root / 'transcripts'
-    output_file = project_root / 'CHRONOLOGICAL_TRANSCRIPT.md'
+    transcripts_dir = project_root / 'CHAT_LOGS'
+    output_file = project_root / 'CHAT_LOG.md'
 
     print("=" * 70)
     print("Claude Code JSONL → Chronological Markdown Converter")

@@ -5,9 +5,9 @@ Personal archive of Claude Code conversations with automated processing, securit
 ## 📂 Repository Structure
 
 ### 📝 Conversations
-- **[CHRONOLOGICAL_TRANSCRIPT.md](CHRONOLOGICAL_TRANSCRIPT.md)** - All 66 conversations merged, chronologically ordered (741KB, 3,889 messages)
-- **[transcripts/](transcripts/)** - Raw JSONL conversation logs (66 files, 8.4MB) with comprehensive redaction
-- **[transcripts-markdown/](transcripts-markdown/)** - Individual markdown files per conversation
+- **[CHAT_LOG.md](CHAT_LOG.md)** - All 66 conversations merged, chronologically ordered (741KB, 3,889 messages)
+- **[CHAT_LOGS/](CHAT_LOGS/)** - Raw JSONL conversation logs (66 files, 8.4MB) with comprehensive redaction
+- **[CHAT_LOGS-markdown/](CHAT_LOGS-markdown/)** - Individual markdown files per conversation
 
 ### 📔 Daily Journals
 - **[journals/](journals/)** - Daily activity summaries organized by date
@@ -55,7 +55,7 @@ Personal archive of Claude Code conversations with automated processing, securit
 
 **Browse the complete timeline:**
 ```bash
-glow CHRONOLOGICAL_TRANSCRIPT.md
+glow CHAT_LOG.md
 ```
 
 **Read daily journals:**
@@ -65,7 +65,7 @@ glow journals/2026-01-01.md
 
 **Browse individual conversations:**
 ```bash
-glow transcripts-markdown/
+glow CHAT_LOGS-markdown/
 ```
 
 ### Sync Latest Conversations
@@ -88,9 +88,9 @@ python scripts/generate_journals.py
 ### Automatic Updates
 
 The GitHub Action automatically:
-1. Triggers when raw logs are pushed to `transcripts/*.jsonl`
-2. Regenerates `CHRONOLOGICAL_TRANSCRIPT.md`
-3. Commits and pushes the updated transcript
+1. Triggers when raw logs are pushed to `CHAT_LOGS/*.jsonl`
+2. Regenerates `CHAT_LOG.md`
+3. Commits and pushes the updated chat log
 
 ## 📊 Statistics
 
@@ -113,13 +113,13 @@ The GitHub Action automatically:
 **sync_raw_logs.py:**
 - Syncs from `~/.claude/projects/-home-mischa/`
 - Applies comprehensive redaction patterns
-- Updates `transcripts/` directory
+- Updates `CHAT_LOGS/` directory
 - Updates README with sync timestamp
 
 **convert_to_markdown.py:**
 - Loads all JSONL files
 - Sorts messages chronologically
-- Generates single `CHRONOLOGICAL_TRANSCRIPT.md`
+- Generates single `CHAT_LOG.md`
 - Formats with session headers and timestamps
 
 **generate_journals.py:**
