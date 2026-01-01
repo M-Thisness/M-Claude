@@ -41,9 +41,7 @@ jobs:
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git add transcripts-markdown/
-        git commit -m "🤖 Auto-generate markdown transcripts from JSONL
-
-Generated beautiful human-readable markdown from conversation transcripts.
-
-Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
+        git commit -m "🤖 Auto-generate markdown transcripts from JSONL" \
+                   -m "Generated beautiful human-readable markdown from conversation transcripts." \
+                   -m "Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
         git push
