@@ -1,0 +1,871 @@
+2025-12-31T04:53:09.965Z [DEBUG] Skipping SessionEnd:clear hook execution - workspace trust not accepted
+2025-12-31T04:53:09.965Z [DEBUG] Cleared all session hooks for session 1aa24ffe-4ef1-4343-baf0-0dba1952d2e0
+2025-12-31T04:53:09.966Z [DEBUG] Skipping SessionStart:clear hook execution - workspace trust not accepted
+2025-12-31T04:53:09.974Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (7.7ms)
+2025-12-31T04:53:09.974Z [DEBUG] FileHistory: Added snapshot for adce7f33-41ae-41bf-9832-09378cd9e15f, tracking 0 files
+2025-12-31T04:53:09.990Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T04:54:30.503Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-31T04:54:30.503Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-31T04:54:30.503Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-31T04:54:30.503Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-31T04:54:30.507Z [DEBUG] Skipping UserPromptSubmit hook execution - workspace trust not accepted
+2025-12-31T04:54:30.507Z [DEBUG] FileHistory: Making snapshot for message 43973f95-f1b8-493b-9dcd-3f947d2f4ba2
+2025-12-31T04:54:30.507Z [DEBUG] FileHistory: Added snapshot for 43973f95-f1b8-493b-9dcd-3f947d2f4ba2, tracking 0 files
+2025-12-31T04:54:32.520Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.5038.1767156872520
+2025-12-31T04:54:32.520Z [DEBUG] Preserving file permissions: 100600
+2025-12-31T04:54:32.528Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (8.6ms)
+2025-12-31T04:54:32.528Z [DEBUG] Temp file written successfully, size: 56431 bytes
+2025-12-31T04:54:32.528Z [DEBUG] Applied original permissions to temp file
+2025-12-31T04:54:32.528Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.5038.1767156872520 to /home/mischa/.claude.json
+2025-12-31T04:54:32.528Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-31T04:54:34.468Z [DEBUG] Stream started - received first chunk
+2025-12-31T04:54:36.779Z [DEBUG] Stream started - received first chunk
+2025-12-31T04:54:38.553Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-31T04:54:38.553Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-31T04:54:38.553Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-31T04:54:38.553Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-31T04:54:42.729Z [DEBUG] Stream started - received first chunk
+2025-12-31T04:54:44.580Z [DEBUG] executePreToolHooks called for tool: Glob
+2025-12-31T04:54:44.581Z [DEBUG] Skipping PreToolUse:Glob hook execution - workspace trust not accepted
+2025-12-31T04:54:45.007Z [DEBUG] Skipping PostToolUse:Glob hook execution - workspace trust not accepted
+2025-12-31T04:54:45.012Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-31T04:54:45.012Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-31T04:54:45.012Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-31T04:54:45.012Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-31T04:54:47.906Z [DEBUG] Stream started - received first chunk
+2025-12-31T04:54:50.389Z [DEBUG] Skipping Stop hook execution - workspace trust not accepted
+2025-12-31T04:55:50.396Z [DEBUG] Skipping Notification:idle_prompt hook execution - workspace trust not accepted
+2025-12-31T04:59:48.410Z [DEBUG] Applying permission update: Adding 1 directory with destination 'session': ["/"]
+2025-12-31T05:00:04.816Z [DEBUG] FileHistory: Making snapshot for message 6d3e04c1-e3a3-4074-9657-a839c6869158
+2025-12-31T05:00:04.816Z [DEBUG] FileHistory: Added snapshot for 6d3e04c1-e3a3-4074-9657-a839c6869158, tracking 0 files
+2025-12-31T05:00:04.818Z [DEBUG] UserCommandMessage rendering: "add-dir" (args: "none")
+2025-12-31T05:00:04.818Z [DEBUG] isSkillFormat: false
+2025-12-31T05:00:04.825Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T05:00:11.217Z [DEBUG] UserCommandMessage rendering: "add-dir" (args: "none")
+2025-12-31T05:00:11.217Z [DEBUG] isSkillFormat: false
+2025-12-31T05:00:11.223Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T05:00:21.258Z [DEBUG] UserCommandMessage rendering: "add-dir" (args: "none")
+2025-12-31T05:00:21.258Z [DEBUG] isSkillFormat: false
+2025-12-31T05:00:21.263Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T05:00:42.375Z [DEBUG] UserCommandMessage rendering: "agents" (args: "none")
+2025-12-31T05:00:42.375Z [DEBUG] isSkillFormat: false
+2025-12-31T05:00:42.381Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T05:00:50.304Z [DEBUG] [Claude in Chrome] Found Chrome profiles:
+2025-12-31T05:00:50.304Z [DEBUG] [Claude in Chrome] Extension not found in any profile
+2025-12-31T05:00:53.245Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.5038.1767157253245
+2025-12-31T05:00:53.245Z [DEBUG] Preserving file permissions: 100600
+2025-12-31T05:00:53.255Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (10.1ms)
+2025-12-31T05:00:53.255Z [DEBUG] Temp file written successfully, size: 56471 bytes
+2025-12-31T05:00:53.255Z [DEBUG] Applied original permissions to temp file
+2025-12-31T05:00:53.255Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.5038.1767157253245 to /home/mischa/.claude.json
+2025-12-31T05:00:53.255Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-31T05:01:17.712Z [DEBUG] FileHistory: Making snapshot for message 0f1b7951-37c9-4ac4-9036-be83e521ec51
+2025-12-31T05:01:17.712Z [DEBUG] FileHistory: Added snapshot for 0f1b7951-37c9-4ac4-9036-be83e521ec51, tracking 0 files
+2025-12-31T05:01:17.714Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none")
+2025-12-31T05:01:17.714Z [DEBUG] isSkillFormat: false
+2025-12-31T05:01:17.721Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T05:01:23.532Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T05:02:03.033Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-31T05:02:03.033Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-31T05:02:03.033Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-31T05:02:03.033Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-31T05:02:03.037Z [DEBUG] Skipping UserPromptSubmit hook execution - workspace trust not accepted
+2025-12-31T05:02:03.038Z [DEBUG] FileHistory: Making snapshot for message d0266e6c-56e1-45b9-bd8f-6ea4f84cc0c5
+2025-12-31T05:02:03.038Z [DEBUG] FileHistory: Added snapshot for d0266e6c-56e1-45b9-bd8f-6ea4f84cc0c5, tracking 0 files
+2025-12-31T05:02:04.082Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:02:07.665Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:02:18.350Z [DEBUG] executePreToolHooks called for tool: Task
+2025-12-31T05:02:18.350Z [DEBUG] Skipping PreToolUse:Task hook execution - workspace trust not accepted
+2025-12-31T05:02:18.366Z [DEBUG] Skipping SubagentStart:claude-code-guide hook execution - workspace trust not accepted
+2025-12-31T05:02:18.375Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (8.0ms)
+2025-12-31T05:02:19.621Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:02:20.707Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2025-12-31T05:02:20.708Z [DEBUG] Skipping PreToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:02:23.915Z [DEBUG] Skipping PostToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:02:26.492Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:02:27.703Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:02:27.703Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:02:27.703Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2025-12-31T05:02:27.703Z [DEBUG] Skipping PreToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:02:28.598Z [DEBUG] Skipping PostToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:02:30.297Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:02:47.405Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:02:49.151Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:02:50.087Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2025-12-31T05:02:50.087Z [DEBUG] Skipping PreToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:02:53.830Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:03:00.017Z [DEBUG] Skipping PostToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:03:01.178Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:03:06.545Z [DEBUG] Skipping SubagentStop hook execution - workspace trust not accepted
+2025-12-31T05:03:06.548Z [DEBUG] Skipping PostToolUse:Task hook execution - workspace trust not accepted
+2025-12-31T05:03:06.554Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-31T05:03:06.554Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-31T05:03:06.554Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-31T05:03:06.554Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-31T05:03:09.738Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:03:19.678Z [DEBUG] Skipping Stop hook execution - workspace trust not accepted
+2025-12-31T05:05:26.628Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-31T05:05:26.628Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-31T05:05:26.628Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-31T05:05:26.628Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-31T05:05:26.632Z [DEBUG] Skipping UserPromptSubmit hook execution - workspace trust not accepted
+2025-12-31T05:05:26.632Z [DEBUG] FileHistory: Making snapshot for message 73fb6035-0e97-4720-92ef-8ef83ddd5014
+2025-12-31T05:05:26.632Z [DEBUG] FileHistory: Added snapshot for 73fb6035-0e97-4720-92ef-8ef83ddd5014, tracking 0 files
+2025-12-31T05:05:27.627Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:05:41.802Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:05:47.587Z [DEBUG] executePreToolHooks called for tool: EnterPlanMode
+2025-12-31T05:05:47.588Z [DEBUG] Skipping PreToolUse:EnterPlanMode hook execution - workspace trust not accepted
+2025-12-31T05:05:47.598Z [DEBUG] executePermissionRequestHooks called for tool: EnterPlanMode
+2025-12-31T05:05:47.598Z [DEBUG] Skipping PermissionRequest:EnterPlanMode hook execution - workspace trust not accepted
+2025-12-31T05:05:53.602Z [DEBUG] Skipping Notification:permission_prompt hook execution - workspace trust not accepted
+2025-12-31T05:06:28.747Z [DEBUG] Applying permission update: Setting mode to 'plan'
+2025-12-31T05:06:28.754Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T05:06:28.754Z [DEBUG] Applying permission update: Setting mode to 'plan'
+2025-12-31T05:06:28.757Z [DEBUG] Skipping PostToolUse:EnterPlanMode hook execution - workspace trust not accepted
+2025-12-31T05:06:28.763Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-31T05:06:28.763Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-31T05:06:28.763Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-31T05:06:28.763Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-31T05:06:32.373Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:06:52.714Z [DEBUG] executePreToolHooks called for tool: Task
+2025-12-31T05:06:52.714Z [DEBUG] Skipping PreToolUse:Task hook execution - workspace trust not accepted
+2025-12-31T05:06:52.714Z [DEBUG] executePreToolHooks called for tool: Task
+2025-12-31T05:06:52.715Z [DEBUG] Skipping PreToolUse:Task hook execution - workspace trust not accepted
+2025-12-31T05:06:52.715Z [DEBUG] executePreToolHooks called for tool: Task
+2025-12-31T05:06:52.715Z [DEBUG] Skipping PreToolUse:Task hook execution - workspace trust not accepted
+2025-12-31T05:06:52.734Z [DEBUG] Skipping SubagentStart:Explore hook execution - workspace trust not accepted
+2025-12-31T05:06:52.734Z [DEBUG] Skipping SubagentStart:Explore hook execution - workspace trust not accepted
+2025-12-31T05:06:52.734Z [DEBUG] Skipping SubagentStart:Explore hook execution - workspace trust not accepted
+2025-12-31T05:06:52.746Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (9.1ms)
+2025-12-31T05:06:54.920Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:06:54.994Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:06:57.059Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:06:57.248Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:06:57.248Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:06:57.248Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:06:57.248Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:06:57.248Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:06:57.248Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:06:57.248Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:06:57.248Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:06:58.620Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:06:58.645Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:06:58.878Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:06:58.919Z [DEBUG] executePreToolHooks called for tool: Glob
+2025-12-31T05:06:58.919Z [DEBUG] Skipping PreToolUse:Glob hook execution - workspace trust not accepted
+2025-12-31T05:06:58.919Z [DEBUG] executePreToolHooks called for tool: Glob
+2025-12-31T05:06:58.919Z [DEBUG] Skipping PreToolUse:Glob hook execution - workspace trust not accepted
+2025-12-31T05:06:58.919Z [DEBUG] executePreToolHooks called for tool: Glob
+2025-12-31T05:06:58.920Z [DEBUG] Skipping PreToolUse:Glob hook execution - workspace trust not accepted
+2025-12-31T05:06:58.920Z [DEBUG] executePreToolHooks called for tool: Glob
+2025-12-31T05:06:58.920Z [DEBUG] Skipping PreToolUse:Glob hook execution - workspace trust not accepted
+2025-12-31T05:06:58.920Z [DEBUG] executePreToolHooks called for tool: Glob
+2025-12-31T05:06:58.920Z [DEBUG] Skipping PreToolUse:Glob hook execution - workspace trust not accepted
+2025-12-31T05:06:58.920Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:06:58.920Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:06:58.932Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:06:58.932Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:06:58.932Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:06:58.932Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:06:58.932Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:06:58.933Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:06:59.044Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:06:59.363Z [DEBUG] Skipping PostToolUse:Glob hook execution - workspace trust not accepted
+2025-12-31T05:06:59.379Z [DEBUG] Skipping PostToolUse:Glob hook execution - workspace trust not accepted
+2025-12-31T05:06:59.430Z [DEBUG] Skipping PostToolUse:Glob hook execution - workspace trust not accepted
+2025-12-31T05:06:59.522Z [DEBUG] Skipping PostToolUse:Glob hook execution - workspace trust not accepted
+2025-12-31T05:06:59.605Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:06:59.781Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:06:59.811Z [DEBUG] Skipping PostToolUse:Glob hook execution - workspace trust not accepted
+2025-12-31T05:07:00.554Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:01.164Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:01.196Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:01.983Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:05.398Z [DEBUG] executePreToolHooks called for tool: Glob
+2025-12-31T05:07:05.398Z [DEBUG] Skipping PreToolUse:Glob hook execution - workspace trust not accepted
+2025-12-31T05:07:05.398Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:05.398Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:05.402Z [DEBUG] executePreToolHooks called for tool: Read
+2025-12-31T05:07:05.403Z [DEBUG] Skipping PreToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:07:05.427Z [DEBUG] Skipping PostToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:07:05.636Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:05.726Z [DEBUG] Skipping PostToolUse:Glob hook execution - workspace trust not accepted
+2025-12-31T05:07:06.621Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:08.757Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:11.316Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:12.505Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:12.630Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:12.761Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:13.714Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:13.715Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:13.715Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:13.715Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:13.715Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:13.715Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:13.715Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:13.715Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:13.715Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:13.715Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:13.795Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:13.804Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:13.812Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:13.825Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:13.833Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:14.514Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:14.598Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:14.850Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:15.197Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:15.333Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:15.807Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:15.827Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:17.265Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:18.174Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:19.003Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:19.429Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:07:19.429Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:19.429Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:07:19.429Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:19.429Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:07:19.429Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:21.042Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:21.237Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:22.280Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:22.386Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:23.431Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:23.431Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:23.431Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:23.431Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:23.431Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:23.431Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:23.431Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:23.431Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:23.438Z [DEBUG] executePreToolHooks called for tool: Read
+2025-12-31T05:07:23.438Z [DEBUG] Skipping PreToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:07:23.466Z [DEBUG] Skipping PostToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:07:23.505Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:23.505Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:23.505Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:23.525Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:24.500Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:24.632Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:25.424Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:25.809Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:26.630Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:27.245Z [ERROR] MaxFileReadTokenExceededError: MaxFileReadTokenExceededError: File content (34534 tokens) exceeds maximum allowed tokens (25000). Please use offset and limit parameters to read specific portions of the file, or use the GrepTool to search for specific content.
+    at tqI (/$bunfs/root/claude:954:12204)
+    at processTicksAndRejections (native:7:39)
+2025-12-31T05:07:27.632Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2025-12-31T05:07:27.632Z [DEBUG] Skipping PreToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:07:27.632Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2025-12-31T05:07:27.632Z [DEBUG] Skipping PreToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:07:27.632Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:07:27.632Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:27.687Z [DEBUG] executePermissionRequestHooks called for tool: WebFetch
+2025-12-31T05:07:27.687Z [DEBUG] Skipping PermissionRequest:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:07:29.369Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:31.355Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:31.355Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:31.355Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:31.355Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:31.355Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:31.356Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:31.362Z [DEBUG] executePreToolHooks called for tool: Read
+2025-12-31T05:07:31.363Z [DEBUG] Skipping PreToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:07:31.384Z [DEBUG] Skipping PostToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:07:31.411Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:31.429Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:31.449Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:32.145Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:32.201Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:32.387Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:33.061Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:33.589Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:33.691Z [DEBUG] Skipping Notification:permission_prompt hook execution - workspace trust not accepted
+2025-12-31T05:07:34.264Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:37.557Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:38.807Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:39.685Z [DEBUG] Skipping PostToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:07:41.414Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:07:43.324Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:07:59.489Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:59.490Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:59.490Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:59.490Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:59.490Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:07:59.490Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:59.497Z [DEBUG] executePreToolHooks called for tool: Read
+2025-12-31T05:07:59.497Z [DEBUG] Skipping PreToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:07:59.522Z [DEBUG] Skipping PostToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:07:59.546Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:59.562Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:07:59.563Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:00.309Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:00.470Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:01.192Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:02.711Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:08.274Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:08.274Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:08.274Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:08.274Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:08.321Z [DEBUG] Skipping PostToolUseFailure:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:08.327Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:08.336Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:08.336Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:08.399Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:08.407Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:08.408Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:08.408Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:08.408Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:08.453Z [DEBUG] Skipping PostToolUseFailure:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:08.463Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:09.101Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:09.337Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:09.510Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:11.725Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:17.586Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:17.586Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:17.586Z [DEBUG] executePreToolHooks called for tool: Grep
+2025-12-31T05:08:17.586Z [DEBUG] Skipping PreToolUse:Grep hook execution - workspace trust not accepted
+2025-12-31T05:08:17.586Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:17.587Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:17.587Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:17.587Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:17.587Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:17.587Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:17.662Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:17.663Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:17.836Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:17.989Z [DEBUG] Skipping PostToolUse:Grep hook execution - workspace trust not accepted
+2025-12-31T05:08:18.407Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:18.451Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:18.600Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:18.666Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:19.741Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:22.368Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:23.919Z [DEBUG] Skipping SubagentStop hook execution - workspace trust not accepted
+2025-12-31T05:08:23.926Z [DEBUG] Skipping PostToolUse:Task hook execution - workspace trust not accepted
+2025-12-31T05:08:31.162Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:31.162Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:31.162Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:31.162Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:31.162Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:31.162Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:31.169Z [DEBUG] executePreToolHooks called for tool: Read
+2025-12-31T05:08:31.169Z [DEBUG] Skipping PreToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:08:31.197Z [DEBUG] Skipping PostToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:08:31.217Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:31.224Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:31.242Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:32.254Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:32.284Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:32.669Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:34.662Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:39.592Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:39.593Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:39.593Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:39.593Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:39.593Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:39.593Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:39.593Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:39.593Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:39.655Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:39.655Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:39.669Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:40.495Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:40.552Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:41.095Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:41.431Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:41.923Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:43.058Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:46.975Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:46.976Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:46.976Z [DEBUG] executePreToolHooks called for tool: Grep
+2025-12-31T05:08:46.976Z [DEBUG] Skipping PreToolUse:Grep hook execution - workspace trust not accepted
+2025-12-31T05:08:46.976Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:08:46.976Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:47.050Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:47.057Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:08:47.366Z [DEBUG] Skipping PostToolUse:Grep hook execution - workspace trust not accepted
+2025-12-31T05:08:47.917Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:48.147Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:08:50.445Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:09:19.307Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T05:09:23.267Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:09:26.967Z [DEBUG] Skipping SubagentStop hook execution - workspace trust not accepted
+2025-12-31T05:09:26.975Z [DEBUG] Skipping PostToolUse:Task hook execution - workspace trust not accepted
+2025-12-31T05:09:29.566Z [DEBUG] Skipping PostToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:09:32.464Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:09:35.544Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:09:35.545Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:09:35.545Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:09:35.545Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:09:35.545Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2025-12-31T05:09:35.545Z [DEBUG] Skipping PreToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:09:36.924Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:09:38.260Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:09:40.303Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:09:44.978Z [DEBUG] Skipping PostToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:09:51.968Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:09:57.927Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:10:01.192Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:10:04.813Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2025-12-31T05:10:04.813Z [DEBUG] Skipping PreToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:10:04.813Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:10:04.813Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:10:04.813Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:10:04.813Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:10:06.431Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:10:06.930Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:10:09.592Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:10:20.460Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:10:26.957Z [DEBUG] Skipping PostToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:10:32.492Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:10:36.628Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:11:34.499Z [DEBUG] Skipping SubagentStop hook execution - workspace trust not accepted
+2025-12-31T05:11:34.503Z [DEBUG] Skipping PostToolUse:Task hook execution - workspace trust not accepted
+2025-12-31T05:11:34.509Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-31T05:11:34.509Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-31T05:11:34.509Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-31T05:11:34.509Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-31T05:11:37.558Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:11:56.370Z [DEBUG] executePreToolHooks called for tool: AskUserQuestion
+2025-12-31T05:11:56.370Z [DEBUG] Skipping PreToolUse:AskUserQuestion hook execution - workspace trust not accepted
+2025-12-31T05:11:56.387Z [DEBUG] executePermissionRequestHooks called for tool: AskUserQuestion
+2025-12-31T05:11:56.387Z [DEBUG] Skipping PermissionRequest:AskUserQuestion hook execution - workspace trust not accepted
+2025-12-31T05:12:02.392Z [DEBUG] Skipping Notification:permission_prompt hook execution - workspace trust not accepted
+2025-12-31T05:33:01.660Z [DEBUG] Skipping PostToolUse:AskUserQuestion hook execution - workspace trust not accepted
+2025-12-31T05:33:01.660Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T05:33:01.669Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-31T05:33:01.669Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-31T05:33:01.669Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-31T05:33:01.669Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-31T05:33:06.601Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:24.218Z [DEBUG] executePreToolHooks called for tool: Task
+2025-12-31T05:33:24.218Z [DEBUG] Skipping PreToolUse:Task hook execution - workspace trust not accepted
+2025-12-31T05:33:24.243Z [DEBUG] Skipping SubagentStart:Plan hook execution - workspace trust not accepted
+2025-12-31T05:33:24.259Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (9.0ms)
+2025-12-31T05:33:26.670Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:31.077Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:33:31.077Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:31.077Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:33:31.077Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:31.077Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:33:31.078Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:31.078Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:33:31.078Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:31.129Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:31.145Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:31.152Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:31.334Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:32.099Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:32.192Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:32.232Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:32.252Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:33.478Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:37.383Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:33:37.384Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:37.384Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:33:37.384Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:37.384Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:33:37.384Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:37.384Z [DEBUG] executePreToolHooks called for tool: Grep
+2025-12-31T05:33:37.384Z [DEBUG] Skipping PreToolUse:Grep hook execution - workspace trust not accepted
+2025-12-31T05:33:37.437Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:37.456Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:37.457Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:37.699Z [DEBUG] Skipping PostToolUse:Grep hook execution - workspace trust not accepted
+2025-12-31T05:33:38.182Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:38.221Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:38.429Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:40.815Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:43.471Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:33:43.472Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:43.472Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:33:43.472Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:43.472Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:33:43.472Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:43.536Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:43.752Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:43.876Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:44.546Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:44.662Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:44.785Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:48.053Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:50.532Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:33:50.532Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:50.532Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:33:50.532Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:50.535Z [DEBUG] executePreToolHooks called for tool: Read
+2025-12-31T05:33:50.535Z [DEBUG] Skipping PreToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:33:50.554Z [DEBUG] Skipping PostToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:33:50.693Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:50.706Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:51.689Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:51.860Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:54.535Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:56.320Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:33:56.320Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:56.320Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:33:56.320Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:56.365Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:56.378Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:33:57.083Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:57.274Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:33:58.639Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:01.142Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:34:01.142Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:01.142Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:34:01.142Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:01.142Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:34:01.142Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:01.187Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:01.201Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:01.208Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:02.100Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:02.156Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:02.262Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:04.253Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:07.167Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:34:07.167Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:07.167Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:34:07.167Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:07.167Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-31T05:34:07.168Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:34:07.221Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:07.580Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:08.393Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:08.618Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:09.832Z [ERROR] Error streaming, falling back to non-streaming mode: 400 {"type":"error","error":{"type":"invalid_request_error","message":"prompt is too long: 206086 tokens > 200000 maximum"},"request_id":"req_011CWeDj8ZWqKKEZjsfZNDjw"}
+2025-12-31T05:34:17.706Z [ERROR] Error in non-streaming fallback: 400 {"type":"error","error":{"type":"invalid_request_error","message":"prompt is too long: 206086 tokens > 200000 maximum"},"request_id":"req_011CWeDjXSvezVCBUZjBFb3i"}
+2025-12-31T05:34:17.706Z [ERROR] Error: Error: 400 {"type":"error","error":{"type":"invalid_request_error","message":"prompt is too long: 206086 tokens > 200000 maximum"},"request_id":"req_011CWeDjXSvezVCBUZjBFb3i"}
+    at generate (/$bunfs/root/claude:451:11098)
+    at makeRequest (/$bunfs/root/claude:798:5435)
+    at processTicksAndRejections (native:7:39)
+2025-12-31T05:34:25.683Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-31T05:34:29.626Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:32.955Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:34:32.955Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:33.014Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:33.023Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:34:33.023Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:33.068Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:33.073Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:34:33.073Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:33.114Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:33.889Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:34.152Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:34.714Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:36.473Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:40.877Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:34:40.878Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:40.878Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:34:40.878Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:40.886Z [DEBUG] executePreToolHooks called for tool: Read
+2025-12-31T05:34:40.886Z [DEBUG] Skipping PreToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:34:40.906Z [DEBUG] Skipping PostToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:34:40.927Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:40.941Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:34:41.654Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:41.784Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:44.233Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:34:49.119Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2025-12-31T05:34:49.120Z [DEBUG] Skipping PreToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:34:58.936Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:35:02.139Z [DEBUG] Skipping PostToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-31T05:35:02.154Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:35:02.154Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:35:02.199Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:35:02.208Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:35:02.208Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:35:02.383Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:35:02.917Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:35:03.302Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:35:05.289Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:35:08.428Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:35:08.428Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:35:08.428Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:35:08.428Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:35:08.428Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:35:08.428Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:35:08.473Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:35:08.482Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:35:08.766Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:35:09.283Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:35:09.330Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:35:09.592Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:35:14.397Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:35:15.634Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:35:15.634Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:35:16.444Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:35:16.489Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:35:16.704Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "claude --chrome"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2025-12-31T05:35:16.715Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2025-12-31T05:35:16.715Z [DEBUG] Skipping PermissionRequest:Bash hook execution - workspace trust not accepted
+2025-12-31T05:35:22.722Z [DEBUG] Skipping Notification:permission_prompt hook execution - workspace trust not accepted
+2025-12-31T05:39:13.798Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2025-12-31T05:39:13.799Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2025-12-31T05:39:13.800Z [DEBUG] Writing to temp file: /home/mischa/.claude/settings.local.json.tmp.5038.1767159553800
+2025-12-31T05:39:13.800Z [DEBUG] Preserving file permissions: 100600
+2025-12-31T05:39:13.809Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (8.9ms)
+2025-12-31T05:39:13.809Z [DEBUG] Temp file written successfully, size: 1115 bytes
+2025-12-31T05:39:13.809Z [DEBUG] Applied original permissions to temp file
+2025-12-31T05:39:13.809Z [DEBUG] Renaming /home/mischa/.claude/settings.local.json.tmp.5038.1767159553800 to /home/mischa/.claude/settings.local.json
+2025-12-31T05:39:13.809Z [DEBUG] File /home/mischa/.claude/settings.local.json written atomically
+2025-12-31T05:39:13.810Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(claude --chrome)"]
+2025-12-31T05:39:13.822Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T05:39:17.436Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:39:18.138Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:39:19.984Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:39:20.806Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:39:20.806Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:39:21.751Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:39:22.429Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:39:22.562Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "claude --chrome --print"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  },
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "claude --chrome --print"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2025-12-31T05:39:22.576Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2025-12-31T05:39:22.576Z [DEBUG] Skipping PermissionRequest:Bash hook execution - workspace trust not accepted
+2025-12-31T05:39:28.578Z [DEBUG] Skipping Notification:permission_prompt hook execution - workspace trust not accepted
+2025-12-31T05:40:00.111Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2025-12-31T05:40:00.111Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2025-12-31T05:40:00.113Z [DEBUG] Writing to temp file: /home/mischa/.claude/settings.local.json.tmp.5038.1767159600113
+2025-12-31T05:40:00.113Z [DEBUG] Preserving file permissions: 100600
+2025-12-31T05:40:00.121Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (7.9ms)
+2025-12-31T05:40:00.121Z [DEBUG] Temp file written successfully, size: 1154 bytes
+2025-12-31T05:40:00.121Z [DEBUG] Applied original permissions to temp file
+2025-12-31T05:40:00.121Z [DEBUG] Renaming /home/mischa/.claude/settings.local.json.tmp.5038.1767159600113 to /home/mischa/.claude/settings.local.json
+2025-12-31T05:40:00.121Z [DEBUG] File /home/mischa/.claude/settings.local.json written atomically
+2025-12-31T05:40:00.122Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2025-12-31T05:40:00.122Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2025-12-31T05:40:00.123Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(claude --chrome --print)"]
+2025-12-31T05:40:00.123Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(claude --chrome --print)"]
+2025-12-31T05:40:00.134Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T05:40:09.556Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:10.611Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:40:11.709Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:40:14.609Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:40:14.609Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:14.609Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:40:14.609Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:14.609Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:40:14.609Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:14.659Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:14.674Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:14.674Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:15.578Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:40:15.734Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:40:15.777Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:40:17.114Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:40:20.019Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:40:20.019Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:20.022Z [DEBUG] executePreToolHooks called for tool: Read
+2025-12-31T05:40:20.022Z [DEBUG] Skipping PreToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:40:20.022Z [DEBUG] executePreToolHooks called for tool: Read
+2025-12-31T05:40:20.023Z [DEBUG] Skipping PreToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:40:20.046Z [DEBUG] Skipping PostToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:40:20.046Z [DEBUG] Skipping PostToolUse:Read hook execution - workspace trust not accepted
+2025-12-31T05:40:20.065Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:21.390Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:40:21.728Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:40:26.281Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:40:26.282Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:26.325Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:26.333Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:40:26.333Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:26.386Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:26.563Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:40:26.563Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:26.612Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:27.226Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:40:27.418Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:40:28.284Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:40:34.790Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:40:40.571Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:40:40.571Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:40.571Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-31T05:40:40.571Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:40.615Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:40.626Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-31T05:40:41.603Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:40:41.639Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:40:43.657Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:41:35.039Z [DEBUG] Skipping SubagentStop hook execution - workspace trust not accepted
+2025-12-31T05:41:35.046Z [DEBUG] Skipping PostToolUse:Task hook execution - workspace trust not accepted
+2025-12-31T05:41:35.051Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-31T05:41:35.051Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-31T05:41:35.051Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-31T05:41:35.051Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-31T05:41:37.812Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:42:03.330Z [DEBUG] executePreToolHooks called for tool: Write
+2025-12-31T05:42:03.330Z [DEBUG] Skipping PreToolUse:Write hook execution - workspace trust not accepted
+2025-12-31T05:42:03.337Z [DEBUG] Writing to temp file: /home/mischa/.claude/plans/reactive-sleeping-pinwheel.md.tmp.5038.1767159723337
+2025-12-31T05:42:03.346Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (8.7ms)
+2025-12-31T05:42:03.346Z [DEBUG] Temp file written successfully, size: 4330 bytes
+2025-12-31T05:42:03.346Z [DEBUG] Renaming /home/mischa/.claude/plans/reactive-sleeping-pinwheel.md.tmp.5038.1767159723337 to /home/mischa/.claude/plans/reactive-sleeping-pinwheel.md
+2025-12-31T05:42:03.346Z [DEBUG] File /home/mischa/.claude/plans/reactive-sleeping-pinwheel.md written atomically
+2025-12-31T05:42:03.350Z [DEBUG] FileHistory: Tracked file modification for /home/mischa/.claude/plans/reactive-sleeping-pinwheel.md
+2025-12-31T05:42:03.353Z [DEBUG] Skipping PostToolUse:Write hook execution - workspace trust not accepted
+2025-12-31T05:42:03.353Z [DEBUG] [lspRecommendation] Looking for LSP plugins for .md
+2025-12-31T05:42:03.358Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-31T05:42:03.358Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-31T05:42:03.358Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-31T05:42:03.358Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-31T05:42:08.021Z [DEBUG] Stream started - received first chunk
+2025-12-31T05:42:09.840Z [DEBUG] executePreToolHooks called for tool: ExitPlanMode
+2025-12-31T05:42:09.840Z [DEBUG] Skipping PreToolUse:ExitPlanMode hook execution - workspace trust not accepted
+2025-12-31T05:42:09.878Z [DEBUG] executePermissionRequestHooks called for tool: ExitPlanMode
+2025-12-31T05:42:09.878Z [DEBUG] Skipping PermissionRequest:ExitPlanMode hook execution - workspace trust not accepted
+2025-12-31T05:42:15.898Z [DEBUG] Skipping Notification:permission_prompt hook execution - workspace trust not accepted
+2025-12-31T06:03:52.860Z [DEBUG] Skipping SessionStart:resume hook execution - workspace trust not accepted
+2025-12-31T06:03:52.861Z [DEBUG] FileHistory: Copied backup fa5465feb9854eb8@v1 from session ea6b9704-440b-478b-bcc7-3705480cec17 to 167f4a1c-de2a-499f-b462-4a20c8eae49d
+2025-12-31T06:03:52.863Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.245216.1767161032863
+2025-12-31T06:03:52.863Z [DEBUG] Preserving file permissions: 100600
+2025-12-31T06:03:52.873Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (9.4ms)
+2025-12-31T06:03:52.873Z [DEBUG] Temp file written successfully, size: 56505 bytes
+2025-12-31T06:03:52.873Z [DEBUG] Applied original permissions to temp file
+2025-12-31T06:03:52.873Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.245216.1767161032863 to /home/mischa/.claude.json
+2025-12-31T06:03:52.873Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-31T06:03:52.877Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none")
+2025-12-31T06:03:52.877Z [DEBUG] isSkillFormat: false
+2025-12-31T06:03:52.880Z [DEBUG] UserCommandMessage rendering: "add-dir" (args: "none")
+2025-12-31T06:03:52.880Z [DEBUG] isSkillFormat: false
+2025-12-31T06:03:52.881Z [DEBUG] UserCommandMessage rendering: "add-dir" (args: "none")
+2025-12-31T06:03:52.881Z [DEBUG] isSkillFormat: false
+2025-12-31T06:03:52.881Z [DEBUG] UserCommandMessage rendering: "add-dir" (args: "none")
+2025-12-31T06:03:52.881Z [DEBUG] isSkillFormat: false
+2025-12-31T06:03:52.881Z [DEBUG] UserCommandMessage rendering: "agents" (args: "none")
+2025-12-31T06:03:52.881Z [DEBUG] isSkillFormat: false
+2025-12-31T06:03:52.881Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none")
+2025-12-31T06:03:52.881Z [DEBUG] isSkillFormat: false
+2025-12-31T06:03:52.902Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.245216.1767161032902
+2025-12-31T06:03:52.902Z [DEBUG] Preserving file permissions: 100600
+2025-12-31T06:03:52.903Z [DEBUG] Temp file written successfully, size: 56429 bytes
+2025-12-31T06:03:52.903Z [DEBUG] Applied original permissions to temp file
+2025-12-31T06:03:52.903Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.245216.1767161032902 to /home/mischa/.claude.json
+2025-12-31T06:03:52.903Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-31T06:03:52.904Z [DEBUG] [lspRecommendation] Looking for LSP plugins for .md
+2025-12-31T06:03:52.907Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.245216.1767161032907
+2025-12-31T06:03:52.907Z [DEBUG] Preserving file permissions: 100600
+2025-12-31T06:03:52.908Z [DEBUG] Temp file written successfully, size: 56505 bytes
+2025-12-31T06:03:52.908Z [DEBUG] Applied original permissions to temp file
+2025-12-31T06:03:52.908Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.245216.1767161032907 to /home/mischa/.claude.json
+2025-12-31T06:03:52.908Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-31T06:03:52.908Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T06:05:03.258Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T06:05:03.751Z [DEBUG] FileHistory: Making snapshot for message f9965906-4287-4959-83c9-9ab64bce7b89
+2025-12-31T06:05:03.752Z [DEBUG] FileHistory: Added snapshot for f9965906-4287-4959-83c9-9ab64bce7b89, tracking 1 files
+2025-12-31T06:05:03.753Z [DEBUG] UserCommandMessage rendering: "release-notes" (args: "none")
+2025-12-31T06:05:03.753Z [DEBUG] isSkillFormat: false
+2025-12-31T06:05:04.809Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.245216.1767161104809
+2025-12-31T06:05:04.809Z [DEBUG] Preserving file permissions: 100600
+2025-12-31T06:05:04.818Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (9.2ms)
+2025-12-31T06:05:04.818Z [DEBUG] Temp file written successfully, size: 56505 bytes
+2025-12-31T06:05:04.818Z [DEBUG] Applied original permissions to temp file
+2025-12-31T06:05:04.818Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.245216.1767161104809 to /home/mischa/.claude.json
+2025-12-31T06:05:04.818Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-31T06:20:04.504Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T06:20:11.409Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none")
+2025-12-31T06:20:11.409Z [DEBUG] isSkillFormat: false
+2025-12-31T06:20:11.411Z [DEBUG] UserCommandMessage rendering: "add-dir" (args: "none")
+2025-12-31T06:20:11.411Z [DEBUG] isSkillFormat: false
+2025-12-31T06:20:11.411Z [DEBUG] UserCommandMessage rendering: "add-dir" (args: "none")
+2025-12-31T06:20:11.411Z [DEBUG] isSkillFormat: false
+2025-12-31T06:20:11.411Z [DEBUG] UserCommandMessage rendering: "add-dir" (args: "none")
+2025-12-31T06:20:11.411Z [DEBUG] isSkillFormat: false
+2025-12-31T06:20:11.411Z [DEBUG] UserCommandMessage rendering: "agents" (args: "none")
+2025-12-31T06:20:11.411Z [DEBUG] isSkillFormat: false
+2025-12-31T06:20:11.411Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none")
+2025-12-31T06:20:11.411Z [DEBUG] isSkillFormat: false
+2025-12-31T06:20:11.416Z [DEBUG] UserCommandMessage rendering: "release-notes" (args: "none")
+2025-12-31T06:20:11.416Z [DEBUG] isSkillFormat: false
+2025-12-31T06:20:11.512Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.245216.1767162011512
+2025-12-31T06:20:11.512Z [DEBUG] Preserving file permissions: 100600
+2025-12-31T06:20:11.520Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (8.7ms)
+2025-12-31T06:20:11.520Z [DEBUG] Temp file written successfully, size: 56429 bytes
+2025-12-31T06:20:11.520Z [DEBUG] Applied original permissions to temp file
+2025-12-31T06:20:11.520Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.245216.1767162011512 to /home/mischa/.claude.json
+2025-12-31T06:20:11.520Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-31T06:20:11.526Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.245216.1767162011526
+2025-12-31T06:20:11.526Z [DEBUG] Preserving file permissions: 100600
+2025-12-31T06:20:11.527Z [DEBUG] Temp file written successfully, size: 56505 bytes
+2025-12-31T06:20:11.527Z [DEBUG] Applied original permissions to temp file
+2025-12-31T06:20:11.527Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.245216.1767162011526 to /home/mischa/.claude.json
+2025-12-31T06:20:11.527Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-31T06:20:15.937Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (9.2ms)
+2025-12-31T06:20:15.938Z [DEBUG] FileHistory: Making snapshot for message 0d00f518-56e3-4922-b27e-ca2f0711e76d
+2025-12-31T06:20:15.938Z [DEBUG] FileHistory: Added snapshot for 0d00f518-56e3-4922-b27e-ca2f0711e76d, tracking 1 files
+2025-12-31T06:20:15.939Z [DEBUG] UserCommandMessage rendering: "export" (args: "none")
+2025-12-31T06:20:15.939Z [DEBUG] isSkillFormat: false
+2025-12-31T06:20:15.947Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T06:21:35.001Z [DEBUG] Telemetry flushed successfully
+2025-12-31T06:21:35.002Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.245216.1767162095002
+2025-12-31T06:21:35.002Z [DEBUG] Preserving file permissions: 100600
+2025-12-31T06:21:35.011Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (9.2ms)
+2025-12-31T06:21:35.011Z [DEBUG] Temp file written successfully, size: 56505 bytes
+2025-12-31T06:21:35.011Z [DEBUG] Applied original permissions to temp file
+2025-12-31T06:21:35.011Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.245216.1767162095002 to /home/mischa/.claude.json
+2025-12-31T06:21:35.011Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-31T06:21:35.014Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.245216.1767162095014
+2025-12-31T06:21:35.014Z [DEBUG] Preserving file permissions: 100600
+2025-12-31T06:21:35.016Z [DEBUG] Temp file written successfully, size: 56121 bytes
+2025-12-31T06:21:35.016Z [DEBUG] Applied original permissions to temp file
+2025-12-31T06:21:35.016Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.245216.1767162095014 to /home/mischa/.claude.json
+2025-12-31T06:21:35.016Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-31T06:21:35.437Z [ERROR] AxiosError: Error
+    at ry (/$bunfs/root/claude:58:1144)
+    at <anonymous> (/$bunfs/root/claude:59:10093)
+    at emit (node:events:92:22)
+    at endReadableNT (internal:streams/readable:862:50)
+    at processTicksAndRejections (native:7:39)
+    at request (/$bunfs/root/claude:61:2149)
+    at processTicksAndRejections (native:7:39)
+2025-12-31T06:21:35.447Z [DEBUG] [SLOW OPERATION DETECTED] fs.copyFileSync (9.0ms)
+2025-12-31T06:21:35.447Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.245216.1767162095447
+2025-12-31T06:21:35.447Z [DEBUG] Preserving file permissions: 100600
+2025-12-31T06:21:35.448Z [DEBUG] Temp file written successfully, size: 56315 bytes
+2025-12-31T06:21:35.448Z [DEBUG] Applied original permissions to temp file
+2025-12-31T06:21:35.448Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.245216.1767162095447 to /home/mischa/.claude.json
+2025-12-31T06:21:35.448Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-31T06:21:36.556Z [ERROR] Error: Error: Failed to access repository 
+    at _rD (/$bunfs/root/claude:3726:606)
+    at async <anonymous> (/$bunfs/root/claude:3731:7745)
+    at processTicksAndRejections (native:7:39)
+2025-12-31T06:21:49.902Z [DEBUG] FileHistory: Making snapshot for message 9659ad8d-d8ce-48a7-9ed2-565249748a7b
+2025-12-31T06:21:49.902Z [DEBUG] FileHistory: Added snapshot for 9659ad8d-d8ce-48a7-9ed2-565249748a7b, tracking 1 files
+2025-12-31T06:21:49.904Z [DEBUG] UserCommandMessage rendering: "install-github-app" (args: "none")
+2025-12-31T06:21:49.904Z [DEBUG] isSkillFormat: false
+2025-12-31T06:21:49.912Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-31T06:21:56.549Z [DEBUG] Skipping SessionEnd:prompt_input_exit hook execution - workspace trust not accepted

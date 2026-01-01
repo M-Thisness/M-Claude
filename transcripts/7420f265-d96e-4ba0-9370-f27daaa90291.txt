@@ -1,0 +1,21 @@
+2025-12-31T05:39:14.452Z [INFO] [Claude in Chrome] Attempting to connect to: /tmp/claude-mcp-browser-bridge-root
+2025-12-31T05:39:14.453Z [DEBUG] [Claude in Chrome] Starting MCP server
+2025-12-31T05:39:14.455Z [DEBUG] [Claude in Chrome] MCP server started
+2025-12-31T05:39:14.455Z [INFO] [Claude in Chrome] Socket not found, will be created by server
+2025-12-31T05:39:14.458Z [INFO] [Claude in Chrome] Socket error: Error: connect ENOENT /tmp/claude-mcp-browser-bridge-root
+    at afterConnect (node:net:1156:39)
+    at connectError (node:net:350:48)
+    at doConnect (unknown)
+    at kConnectPipe (node:net:366:19)
+    at internalConnect (node:net:1064:93)
+    at connect (node:net:632:58)
+    at connect (/$bunfs/root/claude:2593:25281)
+    at async ensureConnected (/$bunfs/root/claude:2593:27223)
+    at processTicksAndRejections (native:7:39) {
+  errno: -2,
+  syscall: 'connect',
+  port: undefined,
+  address: '/tmp/claude-mcp-browser-bridge-root',
+  code: 'ENOENT'
+}
+2025-12-31T05:39:14.472Z [INFO] [Claude in Chrome] Reconnecting in 1000ms (attempt 1)

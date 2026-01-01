@@ -1,0 +1,661 @@
+2025-12-28T03:35:38.781Z [DEBUG] [LSP MANAGER] initializeLspServerManager() called
+2025-12-28T03:35:38.781Z [DEBUG] [LSP MANAGER] Created manager instance, state=pending
+2025-12-28T03:35:38.781Z [DEBUG] [LSP MANAGER] Starting async initialization (generation 1)
+2025-12-28T03:35:38.782Z [DEBUG] LSP server manager initialized successfully
+2025-12-28T03:35:38.782Z [DEBUG] LSP notification handlers registered successfully for all 0 server(s)
+2025-12-28T03:35:38.784Z [DEBUG] Found 0 plugins (0 enabled, 0 disabled)
+2025-12-28T03:35:38.786Z [DEBUG] Stats cache does not exist, returning empty cache
+2025-12-28T03:35:38.790Z [DEBUG] Stats cache empty, processing all historical data in background
+2025-12-28T03:35:38.797Z [DEBUG] Loading skills from directories: managed=/etc/claude-code/.claude/skills, user=/home/mischa/.claude/skills, project=[]
+2025-12-28T03:35:38.811Z [DEBUG] [SLOW OPERATION DETECTED] execSyncWithDefaults (11.8ms): ps aux | grep -E "code|cursor|windsurf|idea|pycharm|webstorm|phpstorm|rubymine|clion|goland|rider|da
+2025-12-28T03:35:38.811Z [DEBUG] installed_plugins.json doesn't exist, returning empty V2 object
+2025-12-28T03:35:38.811Z [DEBUG] Official marketplace auto-install already attempted, skipping
+2025-12-28T03:35:38.815Z [DEBUG] Creating shell snapshot for zsh (/usr/bin/zsh)
+2025-12-28T03:35:38.815Z [DEBUG] Looking for shell config file: /home/mischa/.zshrc
+2025-12-28T03:35:38.815Z [DEBUG] Snapshots directory: /home/mischa/.claude/shell-snapshots
+2025-12-28T03:35:38.815Z [DEBUG] Creating snapshot at: /home/mischa/.claude/shell-snapshots/snapshot-zsh-1766892938815-z0xb25.sh
+2025-12-28T03:35:38.815Z [DEBUG] Shell binary exists: true
+2025-12-28T03:35:38.815Z [DEBUG] Execution timeout: 10000ms
+2025-12-28T03:35:38.817Z [DEBUG] Writing to temp file: /home/mischa/.claude/todos/187e63fb-1e58-43d2-a2d6-d0aeeb7a81d0-agent-187e63fb-1e58-43d2-a2d6-d0aeeb7a81d0.json.tmp.5198.1766892938817
+2025-12-28T03:35:38.817Z [DEBUG] Temp file written successfully, size: 2 bytes
+2025-12-28T03:35:38.817Z [DEBUG] Renaming /home/mischa/.claude/todos/187e63fb-1e58-43d2-a2d6-d0aeeb7a81d0-agent-187e63fb-1e58-43d2-a2d6-d0aeeb7a81d0.json.tmp.5198.1766892938817 to /home/mischa/.claude/todos/187e63fb-1e58-43d2-a2d6-d0aeeb7a81d0-agent-187e63fb-1e58-43d2-a2d6-d0aeeb7a81d0.json
+2025-12-28T03:35:38.817Z [DEBUG] File /home/mischa/.claude/todos/187e63fb-1e58-43d2-a2d6-d0aeeb7a81d0-agent-187e63fb-1e58-43d2-a2d6-d0aeeb7a81d0.json written atomically
+2025-12-28T03:35:38.819Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2025-12-28T03:35:38.819Z [DEBUG] Total plugin skills loaded: 0
+2025-12-28T03:35:38.819Z [DEBUG] Total plugin commands loaded: 0
+2025-12-28T03:35:38.819Z [DEBUG] Registered 0 hooks from 0 plugins
+2025-12-28T03:35:38.820Z [DEBUG] Loaded 0 unique skills (managed: 0, user: 0, project: 0, duplicates removed: 0)
+2025-12-28T03:35:38.820Z [DEBUG] getSkills returning: 0 skill dir commands, 0 plugin skills
+2025-12-28T03:35:38.826Z [DEBUG] Total plugin agents loaded: 0
+2025-12-28T03:35:38.864Z [DEBUG] Git remote URL: null
+2025-12-28T03:35:38.864Z [DEBUG] No git remote URL found
+2025-12-28T03:35:38.864Z [DEBUG] Not in a GitHub repository, skipping path mapping update
+2025-12-28T03:35:39.184Z [DEBUG] Shell snapshot created successfully (140210 bytes)
+2025-12-28T03:35:40.265Z [ERROR] AxiosError: Error
+    at wO (/$bunfs/root/claude:58:1143)
+    at <anonymous> (/$bunfs/root/claude:59:10080)
+    at emit (node:events:92:22)
+    at endReadableNT (internal:streams/readable:862:50)
+    at processTicksAndRejections (native:7:39)
+    at request (/$bunfs/root/claude:61:2147)
+    at processTicksAndRejections (native:7:39)
+2025-12-28T03:35:41.088Z [DEBUG] Failed to fetch Grove notice config: AxiosError: Request failed with status code 401
+2025-12-28T03:35:41.092Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2025-12-28T03:35:41.094Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.5198.1766892941094
+2025-12-28T03:35:41.094Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:35:41.103Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (8.8ms)
+2025-12-28T03:35:41.103Z [DEBUG] Temp file written successfully, size: 53855 bytes
+2025-12-28T03:35:41.103Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:35:41.103Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.5198.1766892941094 to /home/mischa/.claude.json
+2025-12-28T03:35:41.103Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-28T03:35:41.104Z [DEBUG] Skipping SessionStart:startup hook execution - workspace trust not accepted
+2025-12-28T03:35:41.107Z [DEBUG] Skills and commands included in Skill tool:
+2025-12-28T03:35:41.107Z [DEBUG] Slash commands included in SlashCommand tool:
+2025-12-28T03:35:41.125Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.5198.1766892941125
+2025-12-28T03:35:41.125Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:35:41.126Z [DEBUG] Temp file written successfully, size: 53747 bytes
+2025-12-28T03:35:41.126Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:35:41.126Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.5198.1766892941125 to /home/mischa/.claude.json
+2025-12-28T03:35:41.126Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-28T03:35:41.128Z [DEBUG] performStartupChecks called
+2025-12-28T03:35:41.128Z [DEBUG] Trust not accepted for current directory - skipping plugin installations
+2025-12-28T03:35:41.133Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-28T03:35:41.133Z [DEBUG] Loaded plugins - Enabled: 0, Disabled: 0, Commands: 0, Agents: 0, Errors: 0
+2025-12-28T03:35:41.135Z [DEBUG] Skipping SubagentStart:Explore hook execution - workspace trust not accepted
+2025-12-28T03:35:41.136Z [DEBUG] Skipping SubagentStart:Plan hook execution - workspace trust not accepted
+2025-12-28T03:35:41.138Z [DEBUG] Failed to check metrics opt-out status: Request failed with status code 401
+2025-12-28T03:35:41.138Z [ERROR] AxiosError: Error
+    at wO (/$bunfs/root/claude:58:1143)
+    at <anonymous> (/$bunfs/root/claude:59:10080)
+    at emit (node:events:92:22)
+    at endReadableNT (internal:streams/readable:862:50)
+    at processTicksAndRejections (native:7:39)
+    at request (/$bunfs/root/claude:61:2147)
+    at processTicksAndRejections (native:7:39)
+2025-12-28T03:35:41.146Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.5198.1766892941146
+2025-12-28T03:35:41.146Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:35:41.147Z [DEBUG] Temp file written successfully, size: 53747 bytes
+2025-12-28T03:35:41.147Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:35:41.147Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.5198.1766892941146 to /home/mischa/.claude.json
+2025-12-28T03:35:41.147Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-28T03:35:41.614Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.5198.1766892941614
+2025-12-28T03:35:41.614Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:35:41.622Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (8.0ms)
+2025-12-28T03:35:41.622Z [DEBUG] Temp file written successfully, size: 53747 bytes
+2025-12-28T03:35:41.622Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:35:41.622Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.5198.1766892941614 to /home/mischa/.claude.json
+2025-12-28T03:35:41.622Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-28T03:35:42.392Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.5198.1766892942392
+2025-12-28T03:35:42.392Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:35:42.400Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (8.2ms)
+2025-12-28T03:35:42.400Z [DEBUG] Temp file written successfully, size: 53855 bytes
+2025-12-28T03:35:42.400Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:35:42.400Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.5198.1766892942392 to /home/mischa/.claude.json
+2025-12-28T03:35:42.400Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-28T03:35:43.319Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.5198.1766892943319
+2025-12-28T03:35:43.319Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:35:43.328Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (9.5ms)
+2025-12-28T03:35:43.328Z [DEBUG] Temp file written successfully, size: 53855 bytes
+2025-12-28T03:35:43.328Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:35:43.328Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.5198.1766892943319 to /home/mischa/.claude.json
+2025-12-28T03:35:43.328Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-28T03:35:45.259Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:35:45.475Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:35:46.399Z [DEBUG] Skipping SubagentStop hook execution - workspace trust not accepted
+2025-12-28T03:35:50.078Z [DEBUG] Skipping SubagentStop hook execution - workspace trust not accepted
+2025-12-28T03:36:09.808Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (12.5ms)
+2025-12-28T03:36:09.820Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.5198.1766892969820
+2025-12-28T03:36:09.821Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:36:09.821Z [DEBUG] Temp file written successfully, size: 53883 bytes
+2025-12-28T03:36:09.821Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:36:09.822Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.5198.1766892969820 to /home/mischa/.claude.json
+2025-12-28T03:36:09.822Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-28T03:36:09.823Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:36:09.823Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:36:09.823Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:36:09.823Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:36:09.832Z [DEBUG] Skipping UserPromptSubmit hook execution - workspace trust not accepted
+2025-12-28T03:36:09.837Z [DEBUG] FileHistory: Added snapshot for 8ec54169-1b51-46ca-95f7-f00b4697b434, tracking 0 files
+2025-12-28T03:36:09.850Z [DEBUG] Total plugin output styles loaded: 0
+2025-12-28T03:36:11.960Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:36:13.908Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:36:18.593Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:36:18.593Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:36:18.623Z [DEBUG] tree-sitter: loaded from embedded
+2025-12-28T03:36:18.631Z [DEBUG] No session environment scripts found
+2025-12-28T03:36:18.658Z [DEBUG] Skipping PostToolUseFailure:Bash hook execution - workspace trust not accepted
+2025-12-28T03:36:18.664Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:36:18.664Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:36:18.664Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:36:18.664Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:36:21.994Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:36:24.417Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:36:24.417Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:36:24.458Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:36:24.465Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:36:24.465Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:36:24.465Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:36:24.465Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:36:25.588Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:36:27.479Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:36:31.002Z [DEBUG] executePreToolHooks called for tool: Write
+2025-12-28T03:36:31.002Z [DEBUG] Skipping PreToolUse:Write hook execution - workspace trust not accepted
+2025-12-28T03:36:31.012Z [DEBUG] Permission suggestions for Write: [
+  {
+    "type": "setMode",
+    "mode": "acceptEdits",
+    "destination": "session"
+  }
+]
+2025-12-28T03:36:31.022Z [DEBUG] Language not supported while highlighting code, falling back to markdown: desktop
+2025-12-28T03:36:31.028Z [DEBUG] executePermissionRequestHooks called for tool: Write
+2025-12-28T03:36:31.028Z [DEBUG] Skipping PermissionRequest:Write hook execution - workspace trust not accepted
+2025-12-28T03:36:37.030Z [DEBUG] Skipping Notification:permission_prompt hook execution - workspace trust not accepted
+2025-12-28T03:36:37.360Z [DEBUG] Applying permission update: Setting mode to 'acceptEdits'
+2025-12-28T03:36:37.363Z [DEBUG] FileHistory: Tracked file modification for /home/mischa/.local/share/applications/claude-code.desktop
+2025-12-28T03:36:37.371Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-28T03:36:37.615Z [DEBUG] Ripgrep first use test: PASSED (mode=builtin, path=/opt/claude-code/bin/claude)
+2025-12-28T03:36:37.633Z [DEBUG] Writing to temp file: /home/mischa/.local/share/applications/claude-code.desktop.tmp.5198.1766892997633
+2025-12-28T03:36:37.634Z [DEBUG] Temp file written successfully, size: 239 bytes
+2025-12-28T03:36:37.634Z [DEBUG] Renaming /home/mischa/.local/share/applications/claude-code.desktop.tmp.5198.1766892997633 to /home/mischa/.local/share/applications/claude-code.desktop
+2025-12-28T03:36:37.634Z [DEBUG] File /home/mischa/.local/share/applications/claude-code.desktop written atomically
+2025-12-28T03:36:37.635Z [DEBUG] Skipping PostToolUse:Write hook execution - workspace trust not accepted
+2025-12-28T03:36:37.637Z [DEBUG] Language not supported while highlighting code, falling back to markdown: desktop
+2025-12-28T03:36:37.643Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:36:37.643Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:36:37.643Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:36:37.643Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:36:42.644Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:36:45.011Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:36:45.012Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:36:45.790Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:36:45.854Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:36:46.092Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:36:46.222Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "chmod:*"
+      },
+      {
+        "toolName": "Bash",
+        "ruleContent": "update-desktop-database:*"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2025-12-28T03:36:46.232Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2025-12-28T03:36:46.233Z [DEBUG] Skipping PermissionRequest:Bash hook execution - workspace trust not accepted
+2025-12-28T03:36:52.233Z [DEBUG] Skipping Notification:permission_prompt hook execution - workspace trust not accepted
+2025-12-28T03:37:27.272Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2025-12-28T03:37:27.272Z [DEBUG] Persisting 2 allow rule(s) to localSettings
+2025-12-28T03:37:27.272Z [DEBUG] Writing to temp file: /home/mischa/.claude/settings.local.json.tmp.5198.1766893047272
+2025-12-28T03:37:27.281Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (8.1ms)
+2025-12-28T03:37:27.281Z [DEBUG] Temp file written successfully, size: 111 bytes
+2025-12-28T03:37:27.281Z [DEBUG] Renaming /home/mischa/.claude/settings.local.json.tmp.5198.1766893047272 to /home/mischa/.claude/settings.local.json
+2025-12-28T03:37:27.281Z [DEBUG] File /home/mischa/.claude/settings.local.json written atomically
+2025-12-28T03:37:27.282Z [DEBUG] Applying permission update: Adding 2 allow rule(s) to destination 'localSettings': ["Bash(chmod:*)","Bash(update-desktop-database:*)"]
+2025-12-28T03:37:27.294Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-28T03:37:27.315Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:37:27.320Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:37:27.321Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:37:27.321Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:37:27.321Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:37:28.352Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:37:30.864Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:37:32.251Z [DEBUG] executePreToolHooks called for tool: Read
+2025-12-28T03:37:32.252Z [DEBUG] Skipping PreToolUse:Read hook execution - workspace trust not accepted
+2025-12-28T03:37:32.266Z [DEBUG] Skipping PostToolUse:Read hook execution - workspace trust not accepted
+2025-12-28T03:37:32.271Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:37:32.271Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:37:32.271Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:37:32.271Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:37:41.146Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:37:45.386Z [DEBUG] Skipping Stop hook execution - workspace trust not accepted
+2025-12-28T03:37:45.399Z [DEBUG] [SLOW OPERATION DETECTED] execSyncWithDefaults (11.7ms): ps aux | grep -E "code|cursor|windsurf|idea|pycharm|webstorm|phpstorm|rubymine|clion|goland|rider|da
+2025-12-28T03:37:45.410Z [DEBUG] [SLOW OPERATION DETECTED] execSyncWithDefaults (10.0ms): ps aux | grep -E "code|cursor|windsurf|idea|pycharm|webstorm|phpstorm|rubymine|clion|goland|rider|da
+2025-12-28T03:37:45.411Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.5198.1766893065411
+2025-12-28T03:37:45.411Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:37:45.413Z [DEBUG] Temp file written successfully, size: 53932 bytes
+2025-12-28T03:37:45.413Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:37:45.413Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.5198.1766893065411 to /home/mischa/.claude.json
+2025-12-28T03:37:45.413Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-28T03:37:45.414Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.5198.1766893065414
+2025-12-28T03:37:45.414Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:37:45.415Z [DEBUG] Temp file written successfully, size: 53970 bytes
+2025-12-28T03:37:45.415Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:37:45.415Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.5198.1766893065414 to /home/mischa/.claude.json
+2025-12-28T03:37:45.415Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-28T03:38:17.126Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:38:17.126Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:38:17.126Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:38:17.126Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:38:17.131Z [DEBUG] Skipping UserPromptSubmit hook execution - workspace trust not accepted
+2025-12-28T03:38:17.131Z [DEBUG] FileHistory: Making snapshot for message 303623c4-0042-433f-96a1-630ff984a967
+2025-12-28T03:38:17.140Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (8.2ms)
+2025-12-28T03:38:17.140Z [DEBUG] FileHistory: Added snapshot for 303623c4-0042-433f-96a1-630ff984a967, tracking 1 files
+2025-12-28T03:38:18.649Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:38:21.230Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:38:23.437Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2025-12-28T03:38:23.437Z [DEBUG] Skipping PreToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-28T03:38:23.454Z [DEBUG] executePermissionRequestHooks called for tool: WebSearch
+2025-12-28T03:38:23.455Z [DEBUG] Skipping PermissionRequest:WebSearch hook execution - workspace trust not accepted
+2025-12-28T03:38:29.454Z [DEBUG] Skipping Notification:permission_prompt hook execution - workspace trust not accepted
+2025-12-28T03:39:02.894Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2025-12-28T03:39:02.894Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2025-12-28T03:39:02.895Z [DEBUG] Writing to temp file: /home/mischa/.claude/settings.local.json.tmp.5198.1766893142895
+2025-12-28T03:39:02.895Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:39:02.904Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (8.8ms)
+2025-12-28T03:39:02.904Z [DEBUG] Temp file written successfully, size: 130 bytes
+2025-12-28T03:39:02.904Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:39:02.904Z [DEBUG] Renaming /home/mischa/.claude/settings.local.json.tmp.5198.1766893142895 to /home/mischa/.claude/settings.local.json
+2025-12-28T03:39:02.904Z [DEBUG] File /home/mischa/.claude/settings.local.json written atomically
+2025-12-28T03:39:02.905Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["WebSearch"]
+2025-12-28T03:39:02.917Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-28T03:39:04.804Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:39:29.792Z [DEBUG] Skipping PostToolUse:WebSearch hook execution - workspace trust not accepted
+2025-12-28T03:39:29.803Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:39:29.803Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:39:29.803Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:39:29.803Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:39:37.533Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:39:41.384Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2025-12-28T03:39:41.384Z [DEBUG] Skipping PreToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-28T03:39:41.410Z [DEBUG] executePermissionRequestHooks called for tool: WebFetch
+2025-12-28T03:39:41.411Z [DEBUG] Skipping PermissionRequest:WebFetch hook execution - workspace trust not accepted
+2025-12-28T03:39:47.413Z [DEBUG] Skipping Notification:permission_prompt hook execution - workspace trust not accepted
+2025-12-28T03:40:02.645Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2025-12-28T03:40:02.645Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2025-12-28T03:40:02.645Z [DEBUG] Writing to temp file: /home/mischa/.claude/settings.local.json.tmp.5198.1766893202645
+2025-12-28T03:40:02.645Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:40:02.653Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (7.6ms)
+2025-12-28T03:40:02.653Z [DEBUG] Temp file written successfully, size: 171 bytes
+2025-12-28T03:40:02.653Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:40:02.653Z [DEBUG] Renaming /home/mischa/.claude/settings.local.json.tmp.5198.1766893202645 to /home/mischa/.claude/settings.local.json
+2025-12-28T03:40:02.653Z [DEBUG] File /home/mischa/.claude/settings.local.json written atomically
+2025-12-28T03:40:02.654Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["WebFetch(domain:brandfetch.com)"]
+2025-12-28T03:40:02.660Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-28T03:40:10.288Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:40:12.859Z [DEBUG] Skipping PostToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-28T03:40:12.868Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:40:12.868Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:40:12.868Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:40:12.868Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:40:21.043Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:40:24.495Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:40:24.495Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:40:24.536Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:40:24.541Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:40:24.541Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:40:24.541Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:40:24.541Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:40:26.145Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:40:28.258Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:40:30.261Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:40:30.261Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:40:32.822Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:40:32.931Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "curl:*"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2025-12-28T03:40:32.944Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2025-12-28T03:40:32.944Z [DEBUG] Skipping PermissionRequest:Bash hook execution - workspace trust not accepted
+2025-12-28T03:40:38.945Z [DEBUG] Skipping Notification:permission_prompt hook execution - workspace trust not accepted
+2025-12-28T03:41:05.921Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2025-12-28T03:41:05.921Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2025-12-28T03:41:05.922Z [DEBUG] Writing to temp file: /home/mischa/.claude/settings.local.json.tmp.5198.1766893265922
+2025-12-28T03:41:05.922Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:41:05.923Z [DEBUG] Temp file written successfully, size: 193 bytes
+2025-12-28T03:41:05.923Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:41:05.923Z [DEBUG] Renaming /home/mischa/.claude/settings.local.json.tmp.5198.1766893265922 to /home/mischa/.claude/settings.local.json
+2025-12-28T03:41:05.923Z [DEBUG] File /home/mischa/.claude/settings.local.json written atomically
+2025-12-28T03:41:05.924Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(curl:*)"]
+2025-12-28T03:41:05.932Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-28T03:41:18.638Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:41:18.648Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:41:18.648Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:41:18.648Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:41:18.648Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:41:19.728Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:41:23.862Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:41:25.271Z [DEBUG] executePreToolHooks called for tool: Read
+2025-12-28T03:41:25.272Z [DEBUG] Skipping PreToolUse:Read hook execution - workspace trust not accepted
+2025-12-28T03:41:25.292Z [DEBUG] Skipping PostToolUse:Read hook execution - workspace trust not accepted
+2025-12-28T03:41:25.300Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:41:25.300Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:41:25.300Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:41:25.300Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:41:31.479Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:41:33.324Z [DEBUG] executePreToolHooks called for tool: Edit
+2025-12-28T03:41:33.325Z [DEBUG] Skipping PreToolUse:Edit hook execution - workspace trust not accepted
+2025-12-28T03:41:33.341Z [DEBUG] Writing to temp file: /home/mischa/.local/share/applications/claude-code.desktop.tmp.5198.1766893293341
+2025-12-28T03:41:33.341Z [DEBUG] Preserving file permissions: 100711
+2025-12-28T03:41:33.350Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (9.0ms)
+2025-12-28T03:41:33.350Z [DEBUG] Temp file written successfully, size: 268 bytes
+2025-12-28T03:41:33.350Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:41:33.350Z [DEBUG] Renaming /home/mischa/.local/share/applications/claude-code.desktop.tmp.5198.1766893293341 to /home/mischa/.local/share/applications/claude-code.desktop
+2025-12-28T03:41:33.350Z [DEBUG] File /home/mischa/.local/share/applications/claude-code.desktop written atomically
+2025-12-28T03:41:33.359Z [DEBUG] Skipping PostToolUse:Edit hook execution - workspace trust not accepted
+2025-12-28T03:41:33.369Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:41:33.369Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:41:33.369Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:41:33.369Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:41:39.967Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:41:41.528Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:41:41.528Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:41:41.575Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:41:41.580Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:41:41.580Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:41:41.580Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:41:41.580Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:41:44.526Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:41:53.504Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:41:55.247Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:41:55.247Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:41:55.308Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:41:55.319Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:41:55.319Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:41:55.319Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:41:55.319Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:41:56.942Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:41:59.431Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:42:03.620Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2025-12-28T03:42:03.621Z [DEBUG] Skipping PreToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-28T03:42:03.645Z [DEBUG] executePermissionRequestHooks called for tool: WebFetch
+2025-12-28T03:42:03.645Z [DEBUG] Skipping PermissionRequest:WebFetch hook execution - workspace trust not accepted
+2025-12-28T03:42:09.649Z [DEBUG] Skipping Notification:permission_prompt hook execution - workspace trust not accepted
+2025-12-28T03:42:32.922Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2025-12-28T03:42:32.922Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2025-12-28T03:42:32.922Z [DEBUG] Writing to temp file: /home/mischa/.claude/settings.local.json.tmp.5198.1766893352922
+2025-12-28T03:42:32.922Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:42:32.930Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (7.8ms)
+2025-12-28T03:42:32.930Z [DEBUG] Temp file written successfully, size: 241 bytes
+2025-12-28T03:42:32.930Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:42:32.930Z [DEBUG] Renaming /home/mischa/.claude/settings.local.json.tmp.5198.1766893352922 to /home/mischa/.claude/settings.local.json
+2025-12-28T03:42:32.930Z [DEBUG] File /home/mischa/.claude/settings.local.json written atomically
+2025-12-28T03:42:32.931Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["WebFetch(domain:commons.wikimedia.org)"]
+2025-12-28T03:42:32.937Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-28T03:42:36.686Z [ERROR] AxiosError: Error
+    at wO (/$bunfs/root/claude:58:1143)
+    at <anonymous> (/$bunfs/root/claude:59:10080)
+    at emit (node:events:92:22)
+    at endReadableNT (internal:streams/readable:862:50)
+    at processTicksAndRejections (native:7:39)
+    at request (/$bunfs/root/claude:61:2147)
+    at processTicksAndRejections (native:7:39)
+2025-12-28T03:42:36.687Z [DEBUG] Skipping PostToolUseFailure:WebFetch hook execution - workspace trust not accepted
+2025-12-28T03:42:36.694Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:42:36.694Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:42:36.694Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:42:36.694Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:42:42.640Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:42:44.922Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2025-12-28T03:42:44.922Z [DEBUG] Skipping PreToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-28T03:42:44.941Z [DEBUG] executePermissionRequestHooks called for tool: WebFetch
+2025-12-28T03:42:44.941Z [DEBUG] Skipping PermissionRequest:WebFetch hook execution - workspace trust not accepted
+2025-12-28T03:42:49.081Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2025-12-28T03:42:49.081Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2025-12-28T03:42:49.082Z [DEBUG] Writing to temp file: /home/mischa/.claude/settings.local.json.tmp.5198.1766893369082
+2025-12-28T03:42:49.082Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:42:49.091Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (8.7ms)
+2025-12-28T03:42:49.091Z [DEBUG] Temp file written successfully, size: 279 bytes
+2025-12-28T03:42:49.091Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:42:49.091Z [DEBUG] Renaming /home/mischa/.claude/settings.local.json.tmp.5198.1766893369082 to /home/mischa/.claude/settings.local.json
+2025-12-28T03:42:49.091Z [DEBUG] File /home/mischa/.claude/settings.local.json written atomically
+2025-12-28T03:42:49.092Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["WebFetch(domain:lobehub.com)"]
+2025-12-28T03:42:49.099Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-28T03:42:52.350Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.5198.1766893372350
+2025-12-28T03:42:52.350Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:42:52.359Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (8.4ms)
+2025-12-28T03:42:52.359Z [DEBUG] Temp file written successfully, size: 54014 bytes
+2025-12-28T03:42:52.359Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:42:52.359Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.5198.1766893372350 to /home/mischa/.claude.json
+2025-12-28T03:42:52.359Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-28T03:42:55.851Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:42:57.560Z [DEBUG] Skipping PostToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-28T03:42:57.566Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:42:57.566Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:42:57.566Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:42:57.566Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:43:00.876Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:43:03.443Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2025-12-28T03:43:03.443Z [DEBUG] Skipping PreToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-28T03:43:08.106Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:43:11.952Z [DEBUG] Skipping PostToolUse:WebFetch hook execution - workspace trust not accepted
+2025-12-28T03:43:11.961Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:43:11.961Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:43:11.961Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:43:11.961Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:43:15.033Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:43:19.458Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:43:19.458Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:43:20.712Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:43:20.722Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:43:20.722Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:43:20.722Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:43:20.722Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:43:21.764Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:43:24.320Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:43:26.346Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:43:26.347Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:43:27.441Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:43:27.479Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "cat:*"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2025-12-28T03:43:27.489Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2025-12-28T03:43:27.489Z [DEBUG] Skipping PermissionRequest:Bash hook execution - workspace trust not accepted
+2025-12-28T03:43:33.490Z [DEBUG] Skipping Notification:permission_prompt hook execution - workspace trust not accepted
+2025-12-28T03:45:33.638Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2025-12-28T03:45:33.638Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2025-12-28T03:45:33.639Z [DEBUG] Writing to temp file: /home/mischa/.claude/settings.local.json.tmp.5198.1766893533639
+2025-12-28T03:45:33.639Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:45:33.648Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (9.4ms)
+2025-12-28T03:45:33.648Z [DEBUG] Temp file written successfully, size: 300 bytes
+2025-12-28T03:45:33.648Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:45:33.648Z [DEBUG] Renaming /home/mischa/.claude/settings.local.json.tmp.5198.1766893533639 to /home/mischa/.claude/settings.local.json
+2025-12-28T03:45:33.648Z [DEBUG] File /home/mischa/.claude/settings.local.json written atomically
+2025-12-28T03:45:33.656Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(cat:*)"]
+2025-12-28T03:45:33.656Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-28T03:45:33.686Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:45:33.695Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:45:33.695Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:45:33.695Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:45:33.695Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:45:35.170Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:45:47.005Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:45:51.823Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:45:51.824Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:45:53.214Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:45:53.220Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:45:53.220Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:45:53.220Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:45:53.220Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:45:54.693Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:45:59.802Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:46:01.733Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:46:01.733Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:46:03.526Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:46:03.537Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:46:03.537Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:46:03.537Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:46:03.537Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:46:04.743Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:46:15.024Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:46:17.290Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:46:17.290Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:46:17.341Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:46:17.348Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:46:17.348Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:46:17.348Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:46:17.348Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:46:18.487Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:46:24.288Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:46:26.664Z [DEBUG] executePreToolHooks called for tool: Edit
+2025-12-28T03:46:26.664Z [DEBUG] Skipping PreToolUse:Edit hook execution - workspace trust not accepted
+2025-12-28T03:46:26.677Z [DEBUG] Writing to temp file: /home/mischa/.local/share/applications/claude-code.desktop.tmp.5198.1766893586677
+2025-12-28T03:46:26.677Z [DEBUG] Preserving file permissions: 100711
+2025-12-28T03:46:26.698Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (21.4ms)
+2025-12-28T03:46:26.698Z [DEBUG] Temp file written successfully, size: 268 bytes
+2025-12-28T03:46:26.698Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:46:26.698Z [DEBUG] Renaming /home/mischa/.local/share/applications/claude-code.desktop.tmp.5198.1766893586677 to /home/mischa/.local/share/applications/claude-code.desktop
+2025-12-28T03:46:26.698Z [DEBUG] File /home/mischa/.local/share/applications/claude-code.desktop written atomically
+2025-12-28T03:46:26.706Z [DEBUG] Skipping PostToolUse:Edit hook execution - workspace trust not accepted
+2025-12-28T03:46:26.716Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:46:26.716Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:46:26.716Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:46:26.716Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:46:37.722Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:46:39.372Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:46:39.373Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:46:39.416Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:46:39.423Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:46:39.423Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:46:39.423Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:46:39.423Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:46:40.427Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:46:52.936Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:46:54.281Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:46:54.281Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:46:55.275Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:46:55.443Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "convert:*"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2025-12-28T03:46:55.458Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2025-12-28T03:46:55.458Z [DEBUG] Skipping PermissionRequest:Bash hook execution - workspace trust not accepted
+2025-12-28T03:47:01.460Z [DEBUG] Skipping Notification:permission_prompt hook execution - workspace trust not accepted
+2025-12-28T03:47:56.217Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2025-12-28T03:47:56.217Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2025-12-28T03:47:56.218Z [DEBUG] Writing to temp file: /home/mischa/.claude/settings.local.json.tmp.5198.1766893676218
+2025-12-28T03:47:56.218Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:47:56.227Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (8.9ms)
+2025-12-28T03:47:56.227Z [DEBUG] Temp file written successfully, size: 325 bytes
+2025-12-28T03:47:56.227Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:47:56.227Z [DEBUG] Renaming /home/mischa/.claude/settings.local.json.tmp.5198.1766893676218 to /home/mischa/.claude/settings.local.json
+2025-12-28T03:47:56.227Z [DEBUG] File /home/mischa/.claude/settings.local.json written atomically
+2025-12-28T03:47:56.228Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(convert:*)"]
+2025-12-28T03:47:56.240Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-28T03:47:56.258Z [DEBUG] Skipping PostToolUseFailure:Bash hook execution - workspace trust not accepted
+2025-12-28T03:47:56.265Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:47:56.265Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:47:56.265Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:47:56.265Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:48:02.306Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:48:04.533Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:48:04.533Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:48:04.594Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:48:04.599Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:48:04.599Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:48:04.600Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:48:04.600Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:48:05.322Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:48:17.016Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:48:19.271Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:48:19.271Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:48:19.371Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:48:19.388Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:48:19.388Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:48:19.388Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:48:19.388Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:48:20.943Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:48:39.804Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:48:41.790Z [DEBUG] executePreToolHooks called for tool: Edit
+2025-12-28T03:48:41.791Z [DEBUG] Skipping PreToolUse:Edit hook execution - workspace trust not accepted
+2025-12-28T03:48:41.808Z [DEBUG] Writing to temp file: /home/mischa/.local/share/applications/claude-code.desktop.tmp.5198.1766893721808
+2025-12-28T03:48:41.808Z [DEBUG] Preserving file permissions: 100711
+2025-12-28T03:48:41.809Z [DEBUG] Temp file written successfully, size: 268 bytes
+2025-12-28T03:48:41.809Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:48:41.809Z [DEBUG] Renaming /home/mischa/.local/share/applications/claude-code.desktop.tmp.5198.1766893721808 to /home/mischa/.local/share/applications/claude-code.desktop
+2025-12-28T03:48:41.809Z [DEBUG] File /home/mischa/.local/share/applications/claude-code.desktop written atomically
+2025-12-28T03:48:41.818Z [DEBUG] Skipping PostToolUse:Edit hook execution - workspace trust not accepted
+2025-12-28T03:48:41.830Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:48:41.830Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:48:41.830Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:48:41.830Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:48:53.204Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:48:54.460Z [DEBUG] [SLOW OPERATION DETECTED] fs.appendFileSync (426.6ms)
+2025-12-28T03:48:54.953Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-28T03:48:54.953Z [DEBUG] Skipping PreToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:48:55.875Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:48:55.966Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:48:56.344Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:48:56.539Z [DEBUG] Permission suggestions for Bash: [
+  {
+    "type": "addRules",
+    "rules": [
+      {
+        "toolName": "Bash",
+        "ruleContent": "gtk-update-icon-cache:*"
+      }
+    ],
+    "behavior": "allow",
+    "destination": "localSettings"
+  }
+]
+2025-12-28T03:48:56.545Z [DEBUG] executePermissionRequestHooks called for tool: Bash
+2025-12-28T03:48:56.545Z [DEBUG] Skipping PermissionRequest:Bash hook execution - workspace trust not accepted
+2025-12-28T03:49:08.367Z [DEBUG] Persisting permission update: addRules to source 'localSettings'
+2025-12-28T03:49:08.367Z [DEBUG] Persisting 1 allow rule(s) to localSettings
+2025-12-28T03:49:08.368Z [DEBUG] Writing to temp file: /home/mischa/.claude/settings.local.json.tmp.5198.1766893748368
+2025-12-28T03:49:08.368Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:49:08.369Z [DEBUG] Temp file written successfully, size: 364 bytes
+2025-12-28T03:49:08.369Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:49:08.369Z [DEBUG] Renaming /home/mischa/.claude/settings.local.json.tmp.5198.1766893748368 to /home/mischa/.claude/settings.local.json
+2025-12-28T03:49:08.369Z [DEBUG] File /home/mischa/.claude/settings.local.json written atomically
+2025-12-28T03:49:08.370Z [DEBUG] Applying permission update: Adding 1 allow rule(s) to destination 'localSettings': ["Bash(gtk-update-icon-cache:*)"]
+2025-12-28T03:49:08.379Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2025-12-28T03:49:08.413Z [DEBUG] Skipping PostToolUse:Bash hook execution - workspace trust not accepted
+2025-12-28T03:49:08.414Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-28T03:49:08.414Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-28T03:49:08.414Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-28T03:49:08.414Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-28T03:49:09.614Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:49:11.617Z [DEBUG] Stream started - received first chunk
+2025-12-28T03:49:19.358Z [DEBUG] Skipping Stop hook execution - workspace trust not accepted
+2025-12-28T03:49:19.371Z [DEBUG] [SLOW OPERATION DETECTED] execSyncWithDefaults (12.5ms): ps aux | grep -E "code|cursor|windsurf|idea|pycharm|webstorm|phpstorm|rubymine|clion|goland|rider|da
+2025-12-28T03:49:19.385Z [DEBUG] [SLOW OPERATION DETECTED] execSyncWithDefaults (12.3ms): ps aux | grep -E "code|cursor|windsurf|idea|pycharm|webstorm|phpstorm|rubymine|clion|goland|rider|da
+2025-12-28T03:49:19.387Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.5198.1766893759387
+2025-12-28T03:49:19.387Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:49:19.388Z [DEBUG] Temp file written successfully, size: 54039 bytes
+2025-12-28T03:49:19.388Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:49:19.388Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.5198.1766893759387 to /home/mischa/.claude.json
+2025-12-28T03:49:19.388Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-28T03:49:19.390Z [DEBUG] Writing to temp file: /home/mischa/.claude.json.tmp.5198.1766893759390
+2025-12-28T03:49:19.390Z [DEBUG] Preserving file permissions: 100600
+2025-12-28T03:49:19.391Z [DEBUG] Temp file written successfully, size: 54064 bytes
+2025-12-28T03:49:19.391Z [DEBUG] Applied original permissions to temp file
+2025-12-28T03:49:19.391Z [DEBUG] Renaming /home/mischa/.claude.json.tmp.5198.1766893759390 to /home/mischa/.claude.json
+2025-12-28T03:49:19.391Z [DEBUG] File /home/mischa/.claude.json written atomically
+2025-12-28T03:49:19.754Z [DEBUG] AutoUpdaterWrapper: Installation type: native

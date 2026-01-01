@@ -1,0 +1,6 @@
+2025-12-31T01:27:44.947Z [DEBUG] Skipping SessionEnd:clear hook execution - workspace trust not accepted
+2025-12-31T01:27:44.947Z [DEBUG] Cleared all session hooks for session c6a8246b-1a48-4928-b132-675f5bff0558
+2025-12-31T01:27:44.948Z [DEBUG] Skipping SessionStart:clear hook execution - workspace trust not accepted
+2025-12-31T01:27:44.956Z [DEBUG] [SLOW OPERATION DETECTED] fs.writeFileSync (7.6ms)
+2025-12-31T01:27:44.956Z [DEBUG] FileHistory: Added snapshot for dab7ba49-2624-4660-9da4-f2cfcb3526f1, tracking 0 files
+2025-12-31T01:27:44.966Z [DEBUG] AutoUpdaterWrapper: Installation type: native
