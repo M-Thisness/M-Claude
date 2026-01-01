@@ -8,6 +8,7 @@ Personal archive of Claude Code conversations, scripts, and utilities.
 - **[Transcripts (JSONL)](transcripts/)** - Raw conversation data (55 files, 3.8MB)
 - **[Scripts](scripts/)** - Python converter & export utilities
 - **[Security Docs](docs/SECURITY.md)** - Multi-layer secret protection setup
+- **[System Security Analysis](docs/M-SECURITY.md)** - Complete hardware-to-GitHub security audit
 - **[Chat Export](claude_code_chat_history_export.md)** - Chronological summary
 
 ## 🚀 Quick Links
@@ -45,12 +46,14 @@ python3 scripts/convert_to_markdown.py
 
 ## 🔒 Security
 
-Multi-layer protection via:
+**Repository Protection:**
 - Global `.gitignore` for secrets
 - [Gitleaks](https://github.com/gitleaks/gitleaks) pre-commit hooks
 - GitHub secret scanning
 
-See [docs/SECURITY.md](docs/SECURITY.md) for details.
+**System Security:**
+- [M-SECURITY.md](docs/M-SECURITY.md) - Complete security analysis (legion-cachy → M-Claude)
+- [SECURITY.md](docs/SECURITY.md) - Multi-layer secret protection guide
 
 ---
 
