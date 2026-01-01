@@ -1,63 +1,152 @@
 # M-Claude
 
-Personal archive of Claude Code conversations, scripts, and utilities.
+Personal archive of Claude Code conversations with automated processing, security scanning, and daily journals.
 
-## 📂 What's Inside
+## 📂 Repository Structure
 
-- **[Transcripts (Markdown)](transcripts-markdown/)** - 52 conversations in beautiful, chat-like format
-- **[Transcripts (JSONL)](transcripts/)** - Raw conversation data (55 files, 3.8MB)
-- **[Scripts](scripts/)** - Python converter & export utilities
-- **[Security Docs](docs/SECURITY.md)** - Multi-layer secret protection setup
-- **[System Security Analysis](docs/M-SECURITY.md)** - Complete hardware-to-GitHub security audit
-- **[Chat Export](claude_code_chat_history_export.md)** - Chronological summary
+### 📝 Conversations
+- **[CHRONOLOGICAL_TRANSCRIPT.md](CHRONOLOGICAL_TRANSCRIPT.md)** - All 66 conversations merged, chronologically ordered (741KB, 3,889 messages)
+- **[transcripts/](transcripts/)** - Raw JSONL conversation logs (66 files, 8.4MB) with comprehensive redaction
+- **[transcripts-markdown/](transcripts-markdown/)** - Individual markdown files per conversation
 
-## 🚀 Quick Links
+### 📔 Daily Journals
+- **[journals/](journals/)** - Daily activity summaries organized by date
+  - Format: `YYYY-MM-DD.md` (e.g., `2026-01-01.md`)
+  - Tweet-length summaries of collaborative work
+  - Chronological entries with timestamps
+  - Shows files modified and actions taken
 
-**Browse Conversations:**
-- [📊 Conversation Index](transcripts-markdown/README.md)
-- [🔍 View All Transcripts](transcripts-markdown/)
+### 🛠️ Scripts
+- **[sync_raw_logs.py](scripts/sync_raw_logs.py)** - Syncs & redacts conversations from `~/.claude`
+- **[convert_to_markdown.py](scripts/convert_to_markdown.py)** - Generates chronological transcript
+- **[generate_journals.py](scripts/generate_journals.py)** - Creates daily journal entries
 
-**Automation:**
-- [GitHub Action](.github/workflows/generate-markdown.yml) - Auto-generates markdown from JSONL
-- [Conversion Script](scripts/convert_to_markdown.py) - JSONL → Markdown converter
+### 📚 Documentation
+- **[SECURITY.md](docs/SECURITY.md)** - Multi-layer secret protection setup
+- **[SETUP.md](docs/SETUP.md)** - Repository setup guide
 
-## 💻 Local Usage
+## 🔒 Security Features
 
-**View chat history:**
+### Comprehensive Leak Prevention
+
+**Pre-commit Hook (3-Layer Scanning):**
+1. **Gitleaks** - Professional secret detection (API keys, tokens, credentials)
+2. **PII Detection** - Emails, phones, SSN, credit cards, IP addresses
+3. **Credential Scanning** - Hardcoded passwords, DB strings, private keys
+
+**Automatic Redaction in Sync:**
+- API keys & authentication tokens (OpenAI, GitHub, AWS, Slack, etc.)
+- Email addresses & phone numbers
+- SSN patterns & credit card numbers
+- IP addresses & JWT tokens
+- Database connection strings
+- Private keys (PEM format)
+- File paths with usernames
+
+**Enforces Best Practices:**
+- Environment variables for secrets
+- `.env` files (gitignored) for local development
+- GitHub Secrets for CI/CD
+- Clear error messages when violations detected
+
+## 🚀 Quick Start
+
+### View Conversations
+
+**Browse the complete timeline:**
 ```bash
-glow claude_code_chat_history_export.md
+glow CHRONOLOGICAL_TRANSCRIPT.md
 ```
 
-**Backup conversations:**
+**Read daily journals:**
 ```bash
-cp ~/.claude/history.jsonl ~/backup_$(date +%Y%m%d).jsonl
+glow journals/2026-01-01.md
 ```
 
-**Regenerate markdown:**
+**Browse individual conversations:**
 ```bash
-python3 scripts/convert_to_markdown.py
+glow transcripts-markdown/
 ```
+
+### Sync Latest Conversations
+
+**Manual sync:**
+```bash
+python scripts/sync_raw_logs.py
+```
+
+**Regenerate chronological transcript:**
+```bash
+python scripts/convert_to_markdown.py
+```
+
+**Update journals:**
+```bash
+python scripts/generate_journals.py
+```
+
+### Automatic Updates
+
+The GitHub Action automatically:
+1. Triggers when raw logs are pushed to `transcripts/*.jsonl`
+2. Regenerates `CHRONOLOGICAL_TRANSCRIPT.md`
+3. Commits and pushes the updated transcript
+
+## 📊 Statistics
+
+- **66 conversations** across 6 days (Dec 25, 2025 - Jan 1, 2026)
+- **3,889 messages** in chronological transcript
+- **8.4MB** raw conversation data (fully redacted)
+- **6 daily journals** with activity summaries
 
 ## 📍 Claude Code Data Locations
 
-- `~/.claude/history.jsonl` - History index
-- `~/.claude/projects/-home-mischa/` - Full transcripts
-- `~/.claude/settings.local.json` - Settings
+- `~/.claude/projects/-home-mischa/*.jsonl` - Full conversation transcripts
+- `~/.claude/history.jsonl` - History index (user prompts only)
+- `~/.claude/debug/*.txt` - Debug logs
+- `~/.claude/settings.local.json` - Settings & permissions
 
-## 🔒 Security
+## 🔧 Development
 
-**Repository Protection:**
-- Global `.gitignore` for secrets
-- [Gitleaks](https://github.com/gitleaks/gitleaks) pre-commit hooks
-- GitHub secret scanning
+### Scripts Overview
 
-**System Security:**
-- [M-SECURITY.md](docs/M-SECURITY.md) - Complete security analysis (legion-cachy → M-Claude)
-- [HARDENING-APPLIED.md](docs/HARDENING-APPLIED.md) - System hardening steps completed
-- [SECURITY.md](docs/SECURITY.md) - Multi-layer secret protection guide
+**sync_raw_logs.py:**
+- Syncs from `~/.claude/projects/-home-mischa/`
+- Applies comprehensive redaction patterns
+- Updates `transcripts/` directory
+- Updates README with sync timestamp
+
+**convert_to_markdown.py:**
+- Loads all JSONL files
+- Sorts messages chronologically
+- Generates single `CHRONOLOGICAL_TRANSCRIPT.md`
+- Formats with session headers and timestamps
+
+**generate_journals.py:**
+- Parses all conversations
+- Groups by date
+- Creates tweet-length summaries
+- Tracks files modified and actions taken
+- Outputs to `journals/YYYY-MM-DD.md`
+
+### Pre-commit Hook
+
+Located at `.git/hooks/pre-commit` - runs automatically on every commit:
+
+```bash
+# Test the hook
+.git/hooks/pre-commit
+
+# Bypass (NOT RECOMMENDED)
+git commit --no-verify
+```
+
+## 🌐 Repository
+
+**GitHub:** https://github.com/mischa-thisness/M-Claude
+**Created:** December 31, 2024
+**Auto-updated:** Via GitHub Actions on every push
 
 ---
 
-**Stats:** 52 conversations • 3.8MB JSONL • Auto-updated via GitHub Actions
-**Repository:** https://github.com/mischa-thisness/M-Claude
-**Created:** December 31, 2024
+*All sensitive data automatically redacted. Best security practices enforced.*
