@@ -6,19 +6,21 @@ This directory contains complete conversation transcripts from Claude Code sessi
 
 Each `.txt` file is a full transcript of a conversation session, named by session ID.
 
-**Total Transcripts:** 28
-**Total Size:** ~760KB
+**Total Transcripts:** 55 conversation files
+**Total Size:** ~3.8MB
 **Date Range:** December 23, 2024 - December 31, 2024
 
 ## Format
 
-Each transcript contains:
-- Complete user prompts and Claude's responses
-- Tool usage and function calls
-- Command outputs and results
-- File contents that were read or modified
-- Error messages and debugging information
-- System reminders and context
+Each `.jsonl` file contains a complete conversation in JSON Lines format with:
+- **User messages:** Your full prompts with timestamps
+- **Assistant messages:** Claude's complete responses including:
+  - Thinking blocks (reasoning process)
+  - Text responses
+  - Tool usage (Bash commands, file operations, web searches)
+  - Tool results and outputs
+- **File history snapshots:** Tracking what files were modified
+- **Metadata:** Session IDs, model info, token usage, cache statistics
 
 ## Finding Specific Sessions
 
@@ -67,4 +69,5 @@ grep -r "search term" transcripts/
 ---
 
 **Last Updated:** December 31, 2024
-**Source:** `~/.claude/debug/`
+**Source:** `~/.claude/projects/-home-mischa/`
+**Format:** JSONL (JSON Lines)
