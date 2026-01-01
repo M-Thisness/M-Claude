@@ -1,143 +1,59 @@
-# M-Claude-Code
+# M-Claude
 
-Personal repository for Claude Code chat history, scripts, and documentation.
+Personal archive of Claude Code conversations, scripts, and utilities.
 
-## Overview
+## 📂 What's Inside
 
-This repository contains:
-- **Chat History**: Complete conversation logs with Claude Code
-- **Scripts**: Custom tools and utilities created with Claude Code
-- **Documentation**: Notes, guides, and reference materials
+- **[Transcripts (Markdown)](transcripts-markdown/)** - 52 conversations in beautiful, chat-like format
+- **[Transcripts (JSONL)](transcripts/)** - Raw conversation data (55 files, 3.8MB)
+- **[Scripts](scripts/)** - Python converter & export utilities
+- **[Security Docs](docs/SECURITY.md)** - Multi-layer secret protection setup
+- **[Chat Export](claude_code_chat_history_export.md)** - Chronological summary
 
-## Repository Structure
+## 🚀 Quick Links
 
-```
-M-Claude-Code/
-├── README.md                           # This file
-├── claude_code_chat_history_export.md  # Main chat history export
-├── scripts/                            # Utility scripts
-│   └── export_full_transcripts.sh      # Script to export full conversation transcripts
-├── transcripts/                        # Full conversation transcripts (55 files, ~3.8MB)
-├── transcripts-markdown/               # Human-readable Markdown versions (auto-generated)
-└── docs/                               # Additional documentation
-```
+**Browse Conversations:**
+- [📊 Conversation Index](transcripts-markdown/README.md)
+- [🔍 View All Transcripts](transcripts-markdown/)
 
-## Chat History
+**Automation:**
+- [GitHub Action](.github/workflows/generate-markdown.yml) - Auto-generates markdown from JSONL
+- [Conversion Script](scripts/convert_to_markdown.py) - JSONL → Markdown converter
 
-### Summary Export
+## 💻 Local Usage
 
-The `claude_code_chat_history_export.md` file contains a chronological summary of all interactions with Claude Code, including:
-- Session timestamps
-- User prompts
-- Session IDs for full transcript lookup
-- Statistics and topic summaries
-
-### Full Transcripts
-
-The `transcripts/` directory contains complete conversation logs in JSONL format:
-- Full user prompts and Claude's responses
-- Tool usage and command outputs
-- File contents read or modified
-- Error messages and debugging information
-- Metadata (tokens, cache usage, model info)
-
-### Human-Readable Markdown Versions
-
-The `transcripts-markdown/` directory contains **automatically generated** beautiful Markdown versions of all conversations:
-- 💭 Collapsible thinking blocks
-- 💬 Clear message formatting
-- 🔧 Syntax-highlighted code and commands
-- 📊 Organized index with timestamps
-
-**Auto-updated:** GitHub Actions regenerates these whenever transcripts change.
-
-See `transcripts/README.md` for JSONL details or browse `transcripts-markdown/` for easy reading.
-
-### Viewing Chat History
-
-**Terminal (with glow):**
+**View chat history:**
 ```bash
 glow claude_code_chat_history_export.md
 ```
 
-**In a new terminal window:**
+**Backup conversations:**
 ```bash
-alacritty -e glow -p claude_code_chat_history_export.md &
+cp ~/.claude/history.jsonl ~/backup_$(date +%Y%m%d).jsonl
 ```
 
-**Plain text:**
+**Regenerate markdown:**
 ```bash
-cat claude_code_chat_history_export.md
+python3 scripts/convert_to_markdown.py
 ```
 
-## Scripts
+## 📍 Claude Code Data Locations
 
-### export_full_transcripts.sh
+- `~/.claude/history.jsonl` - History index
+- `~/.claude/projects/-home-mischa/` - Full transcripts
+- `~/.claude/settings.local.json` - Settings
 
-Exports complete conversation transcripts from `~/.claude/debug/` into a comprehensive markdown document.
+## 🔒 Security
 
-**Usage:**
-```bash
-./scripts/export_full_transcripts.sh
-```
+Multi-layer protection via:
+- Global `.gitignore` for secrets
+- [Gitleaks](https://github.com/gitleaks/gitleaks) pre-commit hooks
+- GitHub secret scanning
 
-This generates a timestamped export file with all available conversation transcripts.
-
-## Local Claude Code Data
-
-Claude Code stores data in several locations on your system:
-
-- **History Index**: `~/.claude/history.jsonl`
-- **Full Transcripts**: `~/.claude/debug/*.txt`
-- **File History**: `~/.claude/file-history/`
-- **Settings**: `~/.claude/settings.local.json`
-
-## Backup & Export
-
-To create a backup of all Claude Code conversations:
-
-```bash
-# Backup history file
-cp ~/.claude/history.jsonl ~/claude_history_backup_$(date +%Y%m%d).jsonl
-
-# Backup all transcripts
-tar -czf ~/claude_transcripts_backup_$(date +%Y%m%d).tar.gz ~/.claude/debug/
-```
-
-## Privacy Notice
-
-This is a **private repository** containing personal chat history and may include:
-- System configuration details
-- File paths and directory structures
-- Personal workflow patterns
-
-Do not make this repository public without reviewing all content first.
-
-## Statistics
-
-**As of Last Update:**
-- Total Sessions: 15+
-- Total User Prompts: 68+
-- Date Range: December 23, 2024 - Present
-- Most Active Topics: Cosmic Desktop, System Configuration, Terminal Setup
-
-## Topics Covered
-
-1. Desktop Environment Configuration (Cosmic Desktop)
-2. Terminal Customization (Alacritty)
-3. System Administration (Shortcuts, Launchers, Admin Access)
-4. Audio Troubleshooting
-5. UI/Theme Management
-6. Browser Integration (Claude for Chrome)
-7. Network Diagnostics
-8. Security Tools (1Password CLI)
-
-## Updates
-
-This repository is updated periodically with new chat sessions and scripts created with Claude Code.
+See [docs/SECURITY.md](docs/SECURITY.md) for details.
 
 ---
 
-**Created**: December 31, 2024
-**Repository**: https://github.com/mischa-thisness/M-Claude-Code
-**Visibility**: Private
+**Stats:** 52 conversations • 3.8MB JSONL • Auto-updated via GitHub Actions
+**Repository:** https://github.com/mischa-thisness/M-Claude
+**Created:** December 31, 2024
