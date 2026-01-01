@@ -29,7 +29,7 @@ jobs:
     - name: Check for changes
       id: check_changes
       run: |
-        if git diff --quiet transcripts-markdown/; then
+        if git diff --quiet CHRONOLOGICAL_TRANSCRIPT.md; then
           echo "changes=false" >> $GITHUB_OUTPUT
         else
           echo "changes=true" >> $GITHUB_OUTPUT
@@ -40,8 +40,8 @@ jobs:
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add transcripts-markdown/
-        git commit -m "🤖 Transform raw chat logs into human-readable markdown" \
-                   -m "Converted raw JSONL chat logs into simple, concise markdown format." \
+        git add CHRONOLOGICAL_TRANSCRIPT.md
+        git commit -m "🤖 Update chronological transcript" \
+                   -m "Regenerated chronological markdown from raw JSONL chat logs." \
                    -m "Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
         git push

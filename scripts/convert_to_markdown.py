@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """
-Convert Claude Code JSONL transcripts to beautiful human-readable Markdown.
+Convert Claude Code JSONL transcripts to a single chronological Markdown file.
 
-This script processes conversation transcripts from Claude Code and generates
-clean, formatted Markdown files that are easy to read and navigate.
+This script processes all conversation transcripts from Claude Code and generates
+a single, chronologically ordered Markdown file for easy reading.
 """
 
 import json
 import os
 from pathlib import Path
 from datetime import datetime
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Tuple
 
 def format_timestamp(timestamp_str: str) -> str:
     """Convert ISO timestamp to readable format."""
@@ -98,41 +98,68 @@ def format_assistant_message(msg: Dict[str, Any]) -> str:
 
     return '\n'.join(output) + '\n\n' if output else ''
 
-def convert_jsonl_to_markdown(jsonl_path: Path, output_dir: Path) -> Dict[str, Any]:
-    """Convert a single JSONL file to markdown."""
-    messages = []
+def load_all_messages(transcripts_dir: Path) -> List[Tuple[Dict[str, Any], str]]:
+    """Load all messages from all JSONL files with their session IDs."""
+    all_messages = []
 
-    # Read JSONL file
-    with open(jsonl_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            if line.strip():
-                try:
-                    messages.append(json.loads(line))
-                except json.JSONDecodeError:
-                    continue
+    jsonl_files = list(transcripts_dir.glob('*.jsonl'))
+    print(f"Loading messages from {len(jsonl_files)} conversation files...")
 
-    if not messages:
-        return None
+    for jsonl_path in jsonl_files:
+        try:
+            with open(jsonl_path, 'r', encoding='utf-8', errors='replace') as f:
+                for line in f:
+                    if line.strip():
+                        try:
+                            msg = json.loads(line)
+                            session_id = msg.get('sessionId', jsonl_path.stem)
+                            # Store message with session ID
+                            all_messages.append((msg, session_id))
+                        except json.JSONDecodeError:
+                            continue
+        except Exception as e:
+            print(f"  Warning: Error reading {jsonl_path.name}: {e}")
 
-    # Extract metadata
-    first_msg = messages[0]
-    session_id = first_msg.get('sessionId', jsonl_path.stem)
-    timestamp = first_msg.get('timestamp', '')
+    return all_messages
+
+def create_chronological_markdown(messages_with_sessions: List[Tuple[Dict[str, Any], str]], output_path: Path):
+    """Create a single chronologically ordered markdown file."""
+
+    # Sort all messages by timestamp
+    print("Sorting messages chronologically...")
+    sorted_messages = sorted(
+        messages_with_sessions,
+        key=lambda x: x[0].get('timestamp', '')
+    )
 
     # Start building markdown
     md_lines = []
-    md_lines.append(f"# {session_id}\n\n")
-
-    # Count messages
-    user_count = sum(1 for m in messages if m.get('type') == 'user')
-    assistant_count = sum(1 for m in messages if m.get('type') == 'assistant')
-    md_lines.append(f"*{format_timestamp(timestamp)} • {user_count} prompts, {assistant_count} responses*\n\n")
+    md_lines.append("# Claude Code Conversations - Complete Chronological History\n\n")
+    md_lines.append(f"**Generated:** {datetime.now().strftime('%B %d, %Y at %I:%M %p')}\n")
+    md_lines.append(f"**Total Messages:** {len(sorted_messages)}\n\n")
+    md_lines.append("All conversations merged and sorted chronologically from oldest to newest.\n\n")
     md_lines.append("---\n\n")
 
-    # Process messages
-    for msg in messages:
-        msg_type = msg.get('type')
+    current_session = None
+    session_start_time = None
 
+    for msg, session_id in sorted_messages:
+        msg_type = msg.get('type')
+        timestamp = msg.get('timestamp', '')
+
+        # Add session header when we encounter a new session
+        if session_id != current_session:
+            if current_session is not None:
+                md_lines.append("\n---\n\n")  # Separator between sessions
+
+            current_session = session_id
+            session_start_time = timestamp
+
+            md_lines.append(f"## Session: {session_id}\n\n")
+            if timestamp:
+                md_lines.append(f"*Started: {format_timestamp(timestamp)}*\n\n")
+
+        # Format messages
         if msg_type == 'user':
             formatted = format_user_message(msg)
             if formatted:
@@ -143,91 +170,46 @@ def convert_jsonl_to_markdown(jsonl_path: Path, output_dir: Path) -> Dict[str, A
             if formatted:
                 md_lines.append(formatted)
 
-        elif msg_type == 'file-history-snapshot':
-            # Add a subtle separator for file snapshots
-            md_lines.append("---\n\n")
+    # Footer
+    md_lines.append("\n\n---\n\n")
+    md_lines.append("*Generated automatically from Claude Code conversation logs*\n")
 
-    # Write markdown file
-    md_filename = jsonl_path.stem + '.md'
-    md_path = output_dir / md_filename
-
-    with open(md_path, 'w', encoding='utf-8') as f:
+    # Write to file
+    print(f"Writing chronological markdown to {output_path}...")
+    with open(output_path, 'w', encoding='utf-8') as f:
         f.write(''.join(md_lines))
 
-    return {
-        'session_id': session_id,
-        'filename': md_filename,
-        'timestamp': timestamp,
-        'user_messages': user_count,
-        'assistant_messages': assistant_count
-    }
-
-def create_index(sessions: List[Dict[str, Any]], output_dir: Path):
-    """Create an index markdown file."""
-    md_lines = [
-        "# Claude Code Conversations - Markdown Transcripts\n\n",
-        "Beautiful, human-readable versions of all conversation transcripts.\n\n",
-        f"**Total Conversations:** {len(sessions)}\n",
-        f"**Generated:** {datetime.now().strftime('%B %d, %Y at %I:%M %p')}\n\n",
-        "---\n\n",
-        "## Conversations\n\n"
-    ]
-
-    # Sort by timestamp (newest first)
-    sorted_sessions = sorted(
-        sessions,
-        key=lambda x: x.get('timestamp', ''),
-        reverse=True
-    )
-
-    for session in sorted_sessions:
-        session_id = session['session_id']
-        filename = session['filename']
-        timestamp = format_timestamp(session.get('timestamp', ''))
-        user_msgs = session.get('user_messages', 0)
-        assistant_msgs = session.get('assistant_messages', 0)
-
-        md_lines.append(
-            f"### [{session_id}]({filename})\n\n"
-            f"- **Date:** {timestamp}\n"
-            f"- **Messages:** {user_msgs} prompts, {assistant_msgs} responses\n\n"
-        )
-
-    md_lines.append("\n---\n\n")
-    md_lines.append("*Generated automatically by GitHub Actions*\n")
-
-    index_path = output_dir / 'README.md'
-    with open(index_path, 'w', encoding='utf-8') as f:
-        f.write(''.join(md_lines))
+    print(f"✓ Created chronological transcript with {len(sorted_messages)} messages")
 
 def main():
     """Main conversion process."""
     # Setup paths
     project_root = Path(__file__).parent.parent
     transcripts_dir = project_root / 'transcripts'
-    output_dir = project_root / 'transcripts-markdown'
+    output_file = project_root / 'CHRONOLOGICAL_TRANSCRIPT.md'
 
-    # Create output directory
-    output_dir.mkdir(exist_ok=True)
+    print("=" * 70)
+    print("Claude Code JSONL → Chronological Markdown Converter")
+    print("=" * 70)
+    print()
 
-    # Process all JSONL files
-    sessions = []
-    jsonl_files = list(transcripts_dir.glob('*.jsonl'))
+    # Load all messages from all files
+    messages_with_sessions = load_all_messages(transcripts_dir)
 
-    print(f"Converting {len(jsonl_files)} JSONL files to Markdown...")
+    if not messages_with_sessions:
+        print("No messages found!")
+        return
 
-    for jsonl_path in jsonl_files:
-        print(f"  Processing: {jsonl_path.name}")
-        session_info = convert_jsonl_to_markdown(jsonl_path, output_dir)
-        if session_info:
-            sessions.append(session_info)
+    print(f"Loaded {len(messages_with_sessions)} total messages")
+    print()
 
-    # Create index
-    print("Creating index...")
-    create_index(sessions, output_dir)
+    # Create single chronological markdown file
+    create_chronological_markdown(messages_with_sessions, output_file)
 
-    print(f"✓ Converted {len(sessions)} conversations to Markdown")
-    print(f"✓ Output directory: {output_dir}")
+    print()
+    print("=" * 70)
+    print(f"✓ Complete! Output: {output_file}")
+    print("=" * 70)
 
 if __name__ == '__main__':
     main()
