@@ -142,38 +142,29 @@ def load_all_sessions(transcripts_dir: Path) -> Dict[str, List[Tuple[datetime, s
 
 def create_journal_entry(date: str, sessions: List[Tuple[datetime, str, List[Dict]]], output_path: Path):
     """Create a daily journal entry."""
-    # Group sessions by time of day
-    time_periods = {
-        "Morning": [],
-        "Day": [],
-        "Night": []
-    }
+    # Collect all entries for the day
+    entries = []
 
     for timestamp, session_id, messages in sessions:
-        period = get_time_of_day(timestamp.hour)
         summary = summarize_session(messages)
 
         # Only include meaningful summaries
         if summary and summary != "Brief session":
             time_str = timestamp.strftime('%I:%M %p')
-            time_periods[period].append((timestamp, time_str, summary))
+            entries.append((timestamp, time_str, summary))
 
-    # Sort entries within each period by time
-    for period in time_periods:
-        time_periods[period].sort(key=lambda x: x[0])
+    # Sort all entries by time
+    entries.sort(key=lambda x: x[0])
 
     # Build markdown
     md_lines = []
     md_lines.append(f"# {date}\n\n")
 
-    for period in ["Morning", "Day", "Night"]:
-        md_lines.append(f"## {period}\n\n")
-
-        if time_periods[period]:
-            for _, time_str, summary in time_periods[period]:
-                md_lines.append(f"**{time_str}:** {summary}\n\n")
-        else:
-            md_lines.append("*No activity*\n\n")
+    if entries:
+        for _, time_str, summary in entries:
+            md_lines.append(f"**{time_str}:** {summary}\n\n")
+    else:
+        md_lines.append("*No activity*\n\n")
 
     # Write file
     with open(output_path, 'w', encoding='utf-8') as f:
@@ -203,9 +194,8 @@ def main():
     for date in sorted(sessions_by_date.keys()):
         sessions = sessions_by_date[date]
 
-        # Create filename with first session's timestamp
-        first_timestamp = sessions[0][0]
-        filename = f"{first_timestamp.strftime('%Y-%m-%d_%H-%M-%S')}.md"
+        # Create filename from date
+        filename = f"{date}.md"
         output_path = journals_dir / filename
 
         create_journal_entry(date, sessions, output_path)
