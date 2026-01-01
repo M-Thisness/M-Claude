@@ -62,7 +62,7 @@ gh auth status
 ### Clone this repository
 
 ```bash
-gh repo clone mischa-thisness/M-Claude-Code
+gh repo clone mischa-thisness/M-Claude
 ```
 
 ### Update chat history
@@ -87,7 +87,7 @@ Create a backup script to regularly export Claude Code history:
 
 ```bash
 #!/bin/bash
-BACKUP_DIR=~/M-Claude-Code
+BACKUP_DIR=~/M-Claude
 DATE=$(date +%Y%m%d)
 
 # Copy latest history
@@ -103,5 +103,5 @@ echo "Backup complete: $DATE"
 
 Add to crontab for weekly backups:
 ```bash
-0 0 * * 0 ~/M-Claude-Code/scripts/backup.sh
+0 0 * * 0 ~/M-Claude/scripts/backup.sh
 ```
