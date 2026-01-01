@@ -1,0 +1,21 @@
+# Sensitive data
+*.env
+.credentials.json
+*secret*
+*password*
+*token*
+
+# Large files
+*.tar.gz
+*.zip
+
+# Temporary files
+*.tmp
+*.log
+.DS_Store
+
+# System files
+Thumbs.db
+
+# Optional: Uncomment to exclude full transcripts if they contain sensitive info
+# transcripts/
