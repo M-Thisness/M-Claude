@@ -17,7 +17,7 @@ M-Claude-Code/
 ├── claude_code_chat_history_export.md  # Main chat history export
 ├── scripts/                            # Utility scripts
 │   └── export_full_transcripts.sh      # Script to export full conversation transcripts
-├── transcripts/                        # Full conversation transcripts (28 files, ~760KB)
+├── transcripts/                        # Full conversation transcripts (55 files, ~3.8MB)
 └── docs/                               # Additional documentation
 ```
 
