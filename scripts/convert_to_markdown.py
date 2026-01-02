@@ -91,7 +91,7 @@ def format_assistant_message(msg: Dict[str, Any]) -> str:
             elif tool_name == 'Task':
                 subagent = tool_input.get('subagent_type', '')
                 desc = tool_input.get('description', '')
-                output.append(f"*→ Task: {desc} ({subagent})*")
+                output.append(f"*-> Task: {desc} ({subagent})*")
 
             else:
                 output.append(f"*Tool: {tool_name}*")
@@ -179,7 +179,7 @@ def create_chronological_markdown(messages_with_sessions: List[Tuple[Dict[str, A
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(''.join(md_lines))
 
-    print(f"✓ Created chronological transcript with {len(sorted_messages)} messages")
+    print(f"[OK] Created chronological transcript with {len(sorted_messages)} messages")
 
 def main():
     """Main conversion process."""
@@ -189,7 +189,7 @@ def main():
     output_file = project_root / 'CHAT_LOG.md'
 
     print("=" * 70)
-    print("Claude Code JSONL → Chronological Markdown Converter")
+    print("Claude Code JSONL -> Chronological Markdown Converter")
     print("=" * 70)
     print()
 
@@ -208,7 +208,7 @@ def main():
 
     print()
     print("=" * 70)
-    print(f"✓ Complete! Output: {output_file}")
+    print(f"[OK] Complete! Output: {output_file}")
     print("=" * 70)
 
 if __name__ == '__main__':

@@ -87,7 +87,7 @@ def summarize_session(messages: List[Dict]) -> str:
 
         # Build full summary
         if context:
-            summary = f"{main_task} → {' + '.join(context)}"
+            summary = f"{main_task} -> {' + '.join(context)}"
         else:
             summary = main_task
 
@@ -203,8 +203,8 @@ def main():
 
     print()
     print("=" * 70)
-    print(f"✓ Generated {len(sessions_by_date)} journal entries")
-    print(f"✓ Output: {journals_dir}")
+    print(f"[OK] Generated {len(sessions_by_date)} journal entries")
+    print(f"[OK] Output: {journals_dir}")
     print("=" * 70)
 
 if __name__ == '__main__':
