@@ -2,7 +2,8 @@
 
 This directory contains redacted raw conversation logs from Claude Code sessions.
 
-**Last Sync:** 2026-01-01 03:20:09
+**Last Sync:** 2026-01-01 15:57:44
+**Platform:** Windows
 
 ## Format
 - Files are in JSONL format (one JSON object per line)
@@ -25,5 +26,3 @@ To sync the latest logs:
 ```bash
 python scripts/sync_raw_logs.py
 ```
-
-This is automatically triggered by the GitHub Action when changes are pushed.

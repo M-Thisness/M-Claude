@@ -2,20 +2,37 @@
 """
 Claude Code Raw Log Sync Script
 Syncs conversation logs from ~/.claude to M-Claude repo with comprehensive redaction
+Supports both Linux (CachyOS) and Windows platforms
 """
 
 import os
 import shutil
 import json
 import re
+import platform
 from pathlib import Path
 from datetime import datetime
 
 # Configuration
 HOME = Path.home()
-CLAUDE_PROJECTS = HOME / ".claude/projects/-home-mischa"
 REPO_ROOT = Path(__file__).parent.parent
 TRANSCRIPTS_DEST = REPO_ROOT / "CHAT_LOGS"
+
+# Platform-specific source directories
+if platform.system() == "Windows":
+    # Windows: multiple project directories with encoded paths
+    CLAUDE_PROJECT_DIRS = [
+        HOME / ".claude/projects/C--Users-Mischa",
+        HOME / ".claude/projects/C--Windows-System32",
+    ]
+else:
+    # Linux/CachyOS
+    CLAUDE_PROJECT_DIRS = [
+        HOME / ".claude/projects/-home-mischa",
+    ]
+
+# Build backslash strings using chr() to avoid escape issues
+BS = chr(92)  # backslash character
 
 # Comprehensive secret and PII patterns
 SECRET_PATTERNS = [
@@ -34,7 +51,6 @@ SECRET_PATTERNS = [
     (r"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})", "[REDACTED_EMAIL]"),
 
     # Phone numbers (PII) - but NOT ISO timestamps
-    # Negative lookbehind to avoid matching timestamps like 2025-12-30T01:49:59
     (r"(?<!\d{4}-\d{2}-\d{2}T\d{2}:)(\+?1?[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})(?!:\d{2})", "[REDACTED_PHONE]"),
 
     # Credit card numbers (PII)
@@ -55,12 +71,6 @@ SECRET_PATTERNS = [
     (r"(secret\s*[:=]\s*['\"]?[^\s'\"]{20,}['\"]?)", "secret=[REDACTED]"),
     (r"(api_key\s*[:=]\s*['\"]?[^\s'\"]{20,}['\"]?)", "api_key=[REDACTED]"),
 
-    # YubiKey OTP
-    (r"(JhRKknRTKbjJIdGDFjDuGhEtBBfjJGHiLhkFK" + "G)", "[REDACTED_YUBIKEY_OTP]"),
-
-    # Specific patterns (customize as needed)
-    (r"(gen" + "try)", "[REDACTED_PII]"),  # Example from M-Gemini
-
     # Database connection strings
     (r"(postgres://[^\s]+)", "[REDACTED_DB_CONNECTION]"),
     (r"(mysql://[^\s]+)", "[REDACTED_DB_CONNECTION]"),
@@ -69,9 +79,13 @@ SECRET_PATTERNS = [
     # File paths that might contain usernames
     (r"(/home/[a-zA-Z0-9_-]+)", "/home/[USER]"),
     (r"(/Users/[a-zA-Z0-9_-]+)", "/Users/[USER]"),
-    # Removed Windows path - causes regex issues
-    # (r"(C:\\Users\\[a-zA-Z0-9_-]+)", r"C:\Users\[USER]"),
+    # Windows paths with usernames (forward slashes)
+    (r"(C:/Users/[a-zA-Z0-9_-]+)", "C:/Users/[USER]"),
 ]
+
+# Windows backslash path pattern (built with chr() to avoid escape issues)
+WIN_PATH_PATTERN = f'C:{BS}{BS}Users{BS}{BS}[a-zA-Z0-9_-]+'
+WIN_PATH_REPLACEMENT = f'C:{BS}Users{BS}[USER]'
 
 def redact_text(text):
     """Apply all redaction patterns to text."""
@@ -80,94 +94,91 @@ def redact_text(text):
 
     for pattern, replacement in SECRET_PATTERNS:
         text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
+    
+    # Handle Windows backslash paths using lambda to avoid escape issues
+    text = re.sub(WIN_PATH_PATTERN, lambda m: WIN_PATH_REPLACEMENT, text, flags=re.IGNORECASE)
 
     return text
 
-def redact_json_structure(data):
-    """Recursively redact strings in a JSON object."""
-    if isinstance(data, dict):
-        return {k: redact_json_structure(v) for k, v in data.items()}
-    elif isinstance(data, list):
-        return [redact_json_structure(i) for i in data]
-    elif isinstance(data, str):
-        return redact_text(data)
-    else:
-        return data
-
 def sync_jsonl_logs():
     """Sync and redact .jsonl conversation logs using text-based redaction."""
-    if not CLAUDE_PROJECTS.exists():
-        print(f"Warning: Source directory not found: {CLAUDE_PROJECTS}")
-        return
-
     os.makedirs(TRANSCRIPTS_DEST, exist_ok=True)
 
-    jsonl_files = list(CLAUDE_PROJECTS.glob("*.jsonl"))
-    print(f"Found {len(jsonl_files)} conversation logs in {CLAUDE_PROJECTS}")
+    total_synced = 0
+    total_updated = 0
+    total_skipped = 0
 
-    synced_count = 0
-    updated_count = 0
-    skipped_count = 0
+    for claude_projects in CLAUDE_PROJECT_DIRS:
+        if not claude_projects.exists():
+            print(f"Skipping (not found): {claude_projects}")
+            continue
 
-    for src_file in jsonl_files:
-        dest_file = TRANSCRIPTS_DEST / src_file.name
+        jsonl_files = list(claude_projects.glob("*.jsonl"))
+        print(f"Found {len(jsonl_files)} conversation logs in {claude_projects}")
 
-        try:
-            # Read entire file as text and apply redaction
-            with open(src_file, 'r', encoding='utf-8', errors='replace') as f:
-                content = f.read()
+        synced_count = 0
+        updated_count = 0
+        skipped_count = 0
 
-            # Apply all redaction patterns to the raw text
-            redacted_content = content
-            for pattern, replacement in SECRET_PATTERNS:
-                redacted_content = re.sub(pattern, replacement, redacted_content, flags=re.IGNORECASE)
+        for src_file in jsonl_files:
+            dest_file = TRANSCRIPTS_DEST / src_file.name
 
-            # Check if we need to update
-            should_write = True
-            if dest_file.exists():
-                try:
-                    with open(dest_file, 'r', encoding='utf-8', errors='replace') as f:
-                        existing_content = f.read()
-                    if existing_content == redacted_content:
-                        should_write = False
-                        skipped_count += 1
-                except:
-                    # If we can't read the existing file, overwrite it
-                    pass
+            try:
+                # Read entire file as text and apply redaction
+                with open(src_file, 'r', encoding='utf-8', errors='replace') as f:
+                    content = f.read()
 
-            if should_write:
-                # Write redacted content
-                with open(dest_file, 'w', encoding='utf-8') as f:
-                    f.write(redacted_content)
+                # Apply redaction
+                redacted_content = redact_text(content)
 
-                # Check if this is an update or new file
-                # We already checked if dest_file.exists() above
-                if os.path.getsize(dest_file) > 0:
-                    # Approximate check - if file size changed significantly, count as update
+                # Check if we need to update
+                should_write = True
+                if dest_file.exists():
                     try:
-                        src_size = os.path.getsize(src_file)
-                        if abs(src_size - os.path.getsize(dest_file)) > 100:
-                            updated_count += 1
-                        else:
-                            synced_count += 1
+                        with open(dest_file, 'r', encoding='utf-8', errors='replace') as f:
+                            existing_content = f.read()
+                        if existing_content == redacted_content:
+                            should_write = False
+                            skipped_count += 1
                     except:
-                        synced_count += 1
+                        pass
 
-        except Exception as e:
-            print(f"Error processing {src_file.name}: {e}")
+                if should_write:
+                    with open(dest_file, 'w', encoding='utf-8') as f:
+                        f.write(redacted_content)
 
-    print(f"Synced/updated {synced_count + updated_count} files, skipped {skipped_count} unchanged files")
+                    if os.path.getsize(dest_file) > 0:
+                        try:
+                            src_size = os.path.getsize(src_file)
+                            if abs(src_size - os.path.getsize(dest_file)) > 100:
+                                updated_count += 1
+                            else:
+                                synced_count += 1
+                        except:
+                            synced_count += 1
+
+            except Exception as e:
+                print(f"Error processing {src_file.name}: {e}")
+
+        print(f"  Synced: {synced_count}, Updated: {updated_count}, Skipped: {skipped_count}")
+        total_synced += synced_count
+        total_updated += updated_count
+        total_skipped += skipped_count
+
+    print(f"\nTotal: Synced/updated {total_synced + total_updated} files, skipped {total_skipped} unchanged files")
 
 def update_readme():
     """Update README with sync timestamp."""
     readme_path = TRANSCRIPTS_DEST / "README.md"
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    system = platform.system()
 
     content = f"""# Claude Code Raw Conversation Logs
 
 This directory contains redacted raw conversation logs from Claude Code sessions.
 
 **Last Sync:** {timestamp}
+**Platform:** {system}
 
 ## Format
 - Files are in JSONL format (one JSON object per line)
@@ -190,8 +201,6 @@ To sync the latest logs:
 ```bash
 python scripts/sync_raw_logs.py
 ```
-
-This is automatically triggered by the GitHub Action when changes are pushed.
 """
 
     with open(readme_path, 'w', encoding='utf-8') as f:
@@ -201,7 +210,11 @@ def main():
     print("=" * 60)
     print("Claude Code Raw Log Sync")
     print("=" * 60)
-    print(f"Source: {CLAUDE_PROJECTS}")
+    print(f"Platform: {platform.system()}")
+    print(f"Source directories:")
+    for d in CLAUDE_PROJECT_DIRS:
+        exists = "[OK]" if d.exists() else "[--]"
+        print(f"  {exists} {d}")
     print(f"Destination: {TRANSCRIPTS_DEST}")
     print()
 
