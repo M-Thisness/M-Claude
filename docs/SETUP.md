@@ -1,107 +1,242 @@
 # Setup Guide
 
-## Installing Claude Code
+## Prerequisites
 
-Claude Code is Anthropic's official CLI tool for interacting with Claude.
+- Linux/macOS/Windows
+- Python 3.11+
+- Git
+- GitHub CLI (optional)
 
-### Prerequisites
+## Install Claude Code
 
-- Linux, macOS, or Windows
-- Terminal access
-- GitHub account (optional, for GitHub integration)
+```bash
+# Follow official guide
+# https://github.com/anthropics/claude-code
+```
 
-### Installation
-
-Follow the official installation guide at: https://github.com/anthropics/claude-code
-
-## Viewing Markdown Files
-
-### Install glow (recommended)
+## Install Dependencies
 
 **Arch Linux / CachyOS:**
 ```bash
-sudo pacman -S glow
+sudo pacman -S glow github-cli python
 ```
 
-**Other systems:**
-See https://github.com/charmbracelet/glow
-
-**Usage:**
+**Other distros:**
 ```bash
-glow file.md                    # Simple view
-glow -p file.md                 # Pager mode (scrollable)
-glow -s dark file.md            # Dark theme
-glow -w 120 file.md             # Custom width
+# glow: https://github.com/charmbracelet/glow
+# gh: https://cli.github.com/
 ```
 
-## GitHub CLI Setup
-
-### Install gh
-
-**Arch Linux / CachyOS:**
-```bash
-sudo pacman -S github-cli
-```
-
-### Authenticate
+## Clone Repository
 
 ```bash
-gh auth login
+gh repo clone M-Thisness/M-Claude
+# OR
+git clone https://github.com/M-Thisness/M-Claude.git
 ```
 
-Follow the prompts to authenticate via web browser.
+## Python Scripts
 
-### Verify Authentication
+**No external dependencies required** - uses stdlib only:
+- `json`
+- `pathlib`
+- `datetime`
+- `re`
+
+## Sync Workflow
+
+### 1. Copy Latest Conversations
 
 ```bash
-gh auth status
+cd M-Claude
+python3 scripts/sync_raw_logs.py
 ```
 
-## Repository Management
+**Source:** `~/.claude/projects/-home-mischa/*.jsonl`
+**Destination:** `CHAT_LOGS/*.jsonl` (redacted)
 
-### Clone this repository
+### 2. Generate Markdown
 
 ```bash
-gh repo clone mischa-thisness/M-Claude
+python3 scripts/convert_to_markdown.py
 ```
 
-### Update chat history
+**Generates:** `CHAT_LOG.md` (chronological transcript)
 
-1. Export new history:
+### 3. Update Journals
+
 ```bash
-# Run the export script or create new export
+python3 scripts/generate_journals.py
 ```
 
-2. Commit changes:
+**Generates:** `journals/YYYY-MM-DD.md` (daily summaries)
+
+### 4. Commit & Push
+
 ```bash
 git add .
-git commit -m "Update chat history - $(date +%Y-%m-%d)"
+git commit -m "Sync chat logs $(date +%Y-%m-%d)"
 git push
 ```
 
+## GitHub Actions
+
+**Workflow:** `.github/workflows/generate-markdown.yml`
+
+**Auto-triggers on:**
+- Push to `main` affecting `CHAT_LOGS/*.jsonl`
+- Manual workflow dispatch
+
+**Automatic actions:**
+1. Runs `convert_to_markdown.py`
+2. Commits updated `CHAT_LOG.md`
+3. Pushes to repository
+
+## Security Setup
+
+### Install Pre-commit Hook
+
+```bash
+# Clone includes .git/hooks/pre-commit
+# Ensure it's executable
+chmod +x .git/hooks/pre-commit
+```
+
+### Install Gitleaks
+
+**Arch Linux / CachyOS:**
+```bash
+sudo pacman -S gitleaks
+```
+
+**Other:**
+```bash
+# https://github.com/gitleaks/gitleaks
+```
+
+### Configure Blocked Patterns
+
+```bash
+# Create custom pattern file
+mkdir -p ~/.config/git_hooks
+echo "sensitive_string" >> ~/.config/git_hooks/blocked_patterns.txt
+```
+
+**Hook checks:**
+1. Gitleaks scan (API keys, tokens)
+2. PII detection (email, phone, SSN, IP)
+3. Custom patterns (`~/.config/git_hooks/blocked_patterns.txt`)
+
+## Viewing Markdown
+
+**glow (recommended):**
+```bash
+glow CHAT_LOG.md              # Simple view
+glow -p journals/2026-01-09.md  # Pager mode
+glow -s dark file.md          # Dark theme
+glow -w 120 file.md           # Custom width
+```
+
+**Alternatives:**
+- `mdcat`
+- `pandoc | lynx -stdin`
+- VSCode/VSCodium
+- GitHub web interface
+
 ## Backup Strategy
 
-### Automated Backup Script
+### Manual Backup
 
-Create a backup script to regularly export Claude Code history:
+```bash
+# Copy to external storage
+rsync -av ~/M-Claude /mnt/backup/
 
+# Create archive
+tar -czf M-Claude-$(date +%Y%m%d).tar.gz ~/M-Claude
+```
+
+### Automated Backup
+
+**Script:** `~/backup-claude.sh`
 ```bash
 #!/bin/bash
-BACKUP_DIR=~/M-Claude
-DATE=$(date +%Y%m%d)
-
-# Copy latest history
-cp ~/.claude/history.jsonl $BACKUP_DIR/backups/history_$DATE.jsonl
-
-# Create transcript archive
-tar -czf $BACKUP_DIR/backups/transcripts_$DATE.tar.gz ~/.claude/debug/
-
-echo "Backup complete: $DATE"
+rsync -av ~/.claude/projects/-home-mischa/ ~/M-Claude/backups/raw/
+tar -czf ~/backups/M-Claude-$(date +%Y%m%d).tar.gz ~/M-Claude
 ```
 
-### Scheduled Backups
-
-Add to crontab for weekly backups:
+**Crontab (weekly):**
 ```bash
-0 0 * * 0 ~/M-Claude/scripts/backup.sh
+0 0 * * 0 ~/backup-claude.sh
 ```
+
+## Troubleshooting
+
+### Permission Issues
+
+```bash
+# Fix hook permissions
+chmod +x .git/hooks/pre-commit
+
+# Fix script permissions
+chmod +x scripts/*.py
+```
+
+### JSONL Parse Errors
+
+**Symptom:** `Expecting value: line 1 column X`
+
+**Solution:**
+- Corrupted JSONL file in `~/.claude/projects/`
+- Check with: `python3 -m json.tool < file.jsonl`
+- Skip or repair corrupted files
+
+### GitHub Push Rejected
+
+**Symptom:** `! [rejected] main -> main (fetch first)`
+
+**Solution:**
+```bash
+git pull --rebase
+git push
+```
+
+## Development
+
+### Script Locations
+
+```
+scripts/
+├── sync_raw_logs.py           # Redaction & sync
+├── convert_to_markdown.py     # Markdown generation
+├── generate_journals.py       # Daily journals
+└── secure-boot/
+    ├── setup_secureboot_refind.sh
+    ├── install_hook.sh
+    └── sbctl-pacman-hook.hook
+```
+
+### Adding Custom Redaction
+
+Edit `scripts/sync_raw_logs.py`:
+
+```python
+REDACTION_PATTERNS = [
+    # Add custom patterns
+    (r'my_pattern', '[REDACTED_CUSTOM]'),
+]
+```
+
+### Testing Pre-commit Hook
+
+```bash
+# Test without committing
+.git/hooks/pre-commit
+
+# Bypass (NOT RECOMMENDED)
+git commit --no-verify -m "message"
+```
+
+---
+
+*For security features, see [SECURITY.md](SECURITY.md)*
+*For Secure Boot setup, see [SECURE-BOOT-SETUP.md](SECURE-BOOT-SETUP.md)*

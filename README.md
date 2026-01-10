@@ -1,152 +1,138 @@
 # M-Claude
 
-Personal archive of Claude Code conversations with automated processing, security scanning, and daily journals.
+Claude Code conversation archive with automated processing, security scanning, and daily journals.
 
-## 📂 Repository Structure
+**System:** Lenovo Legion Pro 7 | CachyOS (Arch) | COSMIC Desktop
+**Repository:** https://github.com/M-Thisness/M-Claude
 
-### 📝 Conversations
-- **[CHAT_LOG.md](CHAT_LOG.md)** - All 66 conversations merged, chronologically ordered (741KB, 3,889 messages)
-- **[CHAT_LOGS/](CHAT_LOGS/)** - Raw JSONL conversation logs (66 files, 8.4MB) with comprehensive redaction
-- **[CHAT_LOGS-markdown/](CHAT_LOGS-markdown/)** - Individual markdown files per conversation
+## Repository Structure
 
-### 📔 Daily Journals
-- **[journals/](journals/)** - Daily activity summaries organized by date
-  - Format: `YYYY-MM-DD.md` (e.g., `2026-01-01.md`)
-  - Tweet-length summaries of collaborative work
-  - Chronological entries with timestamps
-  - Shows files modified and actions taken
+```
+M-Claude/
+├── CHAT_LOG.md              # Chronological transcript (6,014 messages, 31K lines)
+├── CHAT_LOGS/               # Raw JSONL conversations (114 files, 13MB)
+├── CHAT_LOGS-markdown/      # Individual markdown transcripts (110 files)
+├── journals/                # Daily summaries (13 days)
+├── scripts/                 # Automation & processing
+│   ├── sync_raw_logs.py
+│   ├── convert_to_markdown.py
+│   ├── generate_journals.py
+│   └── secure-boot/         # rEFInd + Secure Boot setup
+└── docs/                    # Technical documentation
+    ├── SECURE-BOOT-SETUP.md
+    ├── M-SECURITY.md
+    ├── HARDENING-APPLIED.md
+    ├── SECURITY.md
+    └── SETUP.md
+```
 
-### 🛠️ Scripts
-- **[sync_raw_logs.py](scripts/sync_raw_logs.py)** - Syncs & redacts conversations from `~/.claude`
-- **[convert_to_markdown.py](scripts/convert_to_markdown.py)** - Generates chronological transcript
-- **[generate_journals.py](scripts/generate_journals.py)** - Creates daily journal entries
+## Quick Start
 
-### 📚 Documentation
-- **[SECURITY.md](docs/SECURITY.md)** - Multi-layer secret protection setup
-- **[SETUP.md](docs/SETUP.md)** - Repository setup guide
-
-## 🔒 Security Features
-
-### Comprehensive Leak Prevention
-
-**Pre-commit Hook (3-Layer Scanning):**
-1. **Gitleaks** - Professional secret detection (API keys, tokens, credentials)
-2. **PII Detection** - Emails, phones, SSN, credit cards, IP addresses
-3. **Credential Scanning** - Hardcoded passwords, DB strings, private keys
-
-**Automatic Redaction in Sync:**
-- API keys & authentication tokens (OpenAI, GitHub, AWS, Slack, etc.)
-- Email addresses & phone numbers
-- SSN patterns & credit card numbers
-- IP addresses & JWT tokens
-- Database connection strings
-- Private keys (PEM format)
-- File paths with usernames
-
-**Enforces Best Practices:**
-- Environment variables for secrets
-- `.env` files (gitignored) for local development
-- GitHub Secrets for CI/CD
-- Clear error messages when violations detected
-
-## 🚀 Quick Start
-
-### View Conversations
-
-**Browse the complete timeline:**
+**View chronological transcript:**
 ```bash
 glow CHAT_LOG.md
 ```
 
-**Read daily journals:**
+**View daily journals:**
 ```bash
-glow journals/2026-01-01.md
+glow journals/2026-01-09.md
 ```
 
-**Browse individual conversations:**
+**Sync latest conversations:**
 ```bash
-glow CHAT_LOGS-markdown/
+python3 scripts/sync_raw_logs.py       # Copy & redact from ~/.claude
+python3 scripts/convert_to_markdown.py # Generate CHAT_LOG.md
+python3 scripts/generate_journals.py   # Generate daily journals
 ```
 
-### Sync Latest Conversations
+## Statistics
 
-**Manual sync:**
-```bash
-python scripts/sync_raw_logs.py
+- **114 conversations** (Dec 6, 2025 - Jan 10, 2026)
+- **6,014 messages** in chronological log
+- **13MB** raw JSONL data (redacted)
+- **13 daily journals**
+- **110 markdown transcripts**
+
+## Key Projects Documented
+
+### System Configuration
+- **Secure Boot setup** for rEFInd + CachyOS (sbctl, shim, MOK)
+- **System hardening** (LUKS encryption, firewall, ASLR, seccomp)
+- **Security analysis** (hardware, kernel, network stack)
+
+### Development
+- **COSMIC power monitor applet** (Rust, libcosmic, iced)
+- **Chat log automation** (Python, JSONL parsing, GitHub Actions)
+- **Git security hooks** (gitleaks, PII detection, credential scanning)
+
+## Security Features
+
+### Pre-commit Hook (3-Layer)
+1. **Gitleaks** - API keys, tokens, credentials
+2. **PII Detection** - Emails, phones, SSN, IPs
+3. **Pattern Matching** - Custom blocked strings (`~/.config/git_hooks/blocked_patterns.txt`)
+
+### Automatic Redaction
+- API keys & auth tokens (OpenAI, GitHub, AWS, Slack, Stripe, etc.)
+- Email addresses & phone numbers
+- IP addresses & UUIDs
+- File paths containing usernames
+- Custom blocked patterns
+
+**All redaction occurs during sync** - source files in `~/.claude` remain unmodified.
+
+## Claude Code Data Locations
+
+```
+~/.claude/
+├── projects/-home-mischa/*.jsonl  # Full conversation transcripts
+├── history.jsonl                   # User prompts index
+├── debug/*.txt                     # Debug logs
+└── settings.local.json            # Settings & permissions
 ```
 
-**Regenerate chronological transcript:**
-```bash
-python scripts/convert_to_markdown.py
-```
+## Scripts
 
-**Update journals:**
-```bash
-python scripts/generate_journals.py
-```
+**sync_raw_logs.py**
+- Copies from `~/.claude/projects/-home-mischa/`
+- Applies comprehensive redaction (API keys, PII, custom patterns)
+- Outputs to `CHAT_LOGS/`
 
-### Automatic Updates
-
-The GitHub Action automatically:
-1. Triggers when raw logs are pushed to `CHAT_LOGS/*.jsonl`
-2. Regenerates `CHAT_LOG.md`
-3. Commits and pushes the updated chat log
-
-## 📊 Statistics
-
-- **66 conversations** across 6 days (Dec 25, 2025 - Jan 1, 2026)
-- **3,889 messages** in chronological transcript
-- **8.4MB** raw conversation data (fully redacted)
-- **6 daily journals** with activity summaries
-
-## 📍 Claude Code Data Locations
-
-- `~/.claude/projects/-home-mischa/*.jsonl` - Full conversation transcripts
-- `~/.claude/history.jsonl` - History index (user prompts only)
-- `~/.claude/debug/*.txt` - Debug logs
-- `~/.claude/settings.local.json` - Settings & permissions
-
-## 🔧 Development
-
-### Scripts Overview
-
-**sync_raw_logs.py:**
-- Syncs from `~/.claude/projects/-home-mischa/`
-- Applies comprehensive redaction patterns
-- Updates `CHAT_LOGS/` directory
-- Updates README with sync timestamp
-
-**convert_to_markdown.py:**
+**convert_to_markdown.py**
 - Loads all JSONL files
-- Sorts messages chronologically
-- Generates single `CHAT_LOG.md`
-- Formats with session headers and timestamps
+- Sorts chronologically by timestamp
+- Generates single `CHAT_LOG.md` transcript
+- Formats with session headers
 
-**generate_journals.py:**
-- Parses all conversations
-- Groups by date
-- Creates tweet-length summaries
-- Tracks files modified and actions taken
+**generate_journals.py**
+- Groups conversations by date
+- Creates daily summaries with timestamps
+- Lists files modified and actions taken
 - Outputs to `journals/YYYY-MM-DD.md`
 
-### Pre-commit Hook
+## GitHub Actions
 
-Located at `.git/hooks/pre-commit` - runs automatically on every commit:
+Workflow: `.github/workflows/generate-markdown.yml`
 
-```bash
-# Test the hook
-.git/hooks/pre-commit
+**Triggers:** Push to `CHAT_LOGS/*.jsonl`
 
-# Bypass (NOT RECOMMENDED)
-git commit --no-verify
-```
+**Actions:**
+1. Run `convert_to_markdown.py`
+2. Commit regenerated `CHAT_LOG.md`
+3. Push to `main`
 
-## 🌐 Repository
+## Documentation
 
-**GitHub:** https://github.com/mischa-thisness/M-Claude
-**Created:** December 31, 2024
-**Auto-updated:** Via GitHub Actions on every push
+- **[SECURE-BOOT-SETUP.md](docs/SECURE-BOOT-SETUP.md)** - rEFInd + sbctl configuration
+- **[M-SECURITY.md](docs/M-SECURITY.md)** - System security analysis
+- **[HARDENING-APPLIED.md](docs/HARDENING-APPLIED.md)** - Applied hardening measures
+- **[SECURITY.md](docs/SECURITY.md)** - Repository security features
+- **[SETUP.md](docs/SETUP.md)** - Setup guide
+
+## License
+
+MIT License - See [LICENSE](LICENSE)
 
 ---
 
-*All sensitive data automatically redacted. Best security practices enforced.*
+*Last sync: 2026-01-09 | All sensitive data redacted*
