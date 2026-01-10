@@ -1,0 +1,72 @@
+name: Security Issue
+description: Report a security vulnerability (PRIVATE - will not be public)
+title: "[Security]: "
+labels: ["security", "critical"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **⚠️ SECURITY NOTICE**
+
+        If this is a serious security vulnerability that could affect other users,
+        please DO NOT file a public issue. Instead, email the details directly.
+
+        For redaction bugs or minor security improvements, you can use this template.
+
+  - type: textarea
+    id: vulnerability
+    attributes:
+      label: Vulnerability Description
+      description: Describe the security issue (DO NOT include exploits for serious vulns!)
+      placeholder: The redaction pattern for X does not catch...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Critical - Secrets actively leaking
+        - High - Potential for secret exposure
+        - Medium - Security improvement needed
+        - Low - Minor hardening opportunity
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component
+      options:
+        - Redaction patterns
+        - Pre-commit hook
+        - GitHub Actions
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: What is the potential impact of this vulnerability?
+    validations:
+      required: true
+
+  - type: textarea
+    id: mitigation
+    attributes:
+      label: Suggested Mitigation
+      description: If you have ideas for fixing this, please share
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have verified this issue is not already fixed in the latest version
+          required: true
+        - label: I have checked that no secrets are exposed in this issue report
+          required: true
