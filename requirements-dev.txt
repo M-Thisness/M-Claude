@@ -1,0 +1,20 @@
+# Development dependencies for M-Claude
+# All production scripts use Python standard library only (no dependencies!)
+
+# Testing
+pytest>=8.0.0
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+
+# Code Quality
+black>=24.0.0
+flake8>=7.0.0
+mypy>=1.8.0
+
+# Optional: Enhanced testing
+pytest-xdist>=3.5.0  # Parallel test execution
+pytest-timeout>=2.2.0  # Test timeouts
+
+# Optional: Documentation
+sphinx>=7.2.0
+sphinx-rtd-theme>=2.0.0

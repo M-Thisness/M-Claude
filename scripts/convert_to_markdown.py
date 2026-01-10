@@ -8,16 +8,25 @@ a single, chronologically ordered Markdown file for easy reading.
 
 import json
 import os
+import logging
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Any, Tuple
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 def format_timestamp(timestamp_str: str) -> str:
     """Convert ISO timestamp to readable format."""
     try:
         dt = datetime.fromisoformat(timestamp_str.replace('Z', '+00:00'))
         return dt.strftime('%B %d, %Y at %I:%M:%S %p')
-    except:
+    except (ValueError, AttributeError) as e:
+        logger.debug(f"Invalid timestamp format: {timestamp_str}: {e}")
         return timestamp_str
 
 def format_user_message(msg: Dict[str, Any]) -> str:
