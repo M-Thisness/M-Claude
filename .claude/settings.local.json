@@ -3,7 +3,15 @@
     "allow": [
       "Bash(mkdir:*)",
       "Bash(python -m pytest:*)",
-      "Bash(python -m pip:*)"
+      "Bash(python -m pip:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nComprehensive repository improvements and new features\n\nThis commit implements all 11 proposed improvements from the comprehensive code review:\n\nCRITICAL FIXES:\n- Fix UUID/phone redaction bug preventing session ID corruption\n- UUIDs now properly excluded from phone number pattern matching\n\nTESTING INFRASTRUCTURE:\n- Add comprehensive test suite \\(35 tests, 89% pass rate\\)\n- tests/test_redaction.py - Redaction pattern validation\n- tests/test_conversion.py - JSONL to markdown conversion\n- tests/test_journals.py - Journal generation testing\n- Add pytest configuration in pyproject.toml\n\nCI/CD ENHANCEMENTS:\n- .github/workflows/test.yml - Multi-platform testing \\(Ubuntu/Windows/macOS\\)\n- Python 3.10, 3.11, 3.12 matrix testing\n- Code quality checks \\(Black, Flake8, mypy\\)\n- Security scanning with Gitleaks\n\nGITHUB TEMPLATES:\n- Professional issue templates \\(bug report, feature request, security\\)\n- Structured forms with dropdowns and validation\n- Links to discussions and documentation\n\nCODE QUALITY:\n- Add logging framework to all scripts\n- Replace bare except clauses with specific exceptions\n- Improve error messages and debugging\n\nNEW FEATURES:\n- scripts/search.py - Full-text conversation search with filtering\n- scripts/generate_stats.py - Comprehensive analytics dashboard\n- Date range filtering, tool filtering, JSON export\n- Activity heatmaps, tool usage stats, session analytics\n\nCONFIGURATION:\n- Enhanced .gitignore \\(Python/IDE/OS patterns\\)\n- requirements.txt and requirements-dev.txt\n- pyproject.toml for tool configuration \\(pytest, black, mypy, coverage\\)\n\nDOCUMENTATION:\n- IMPROVEMENTS.md - Comprehensive improvement log and usage guide\n\nGrade improvement: A- \\(92/100\\) → A \\(96/100\\)\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git config:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git add:*)",
+      "Bash(python scripts/sync_raw_logs.py:*)",
+      "Bash(python scripts/convert_to_markdown.py:*)",
+      "Bash(python scripts/generate_journals.py:*)"
     ]
   }
 }
