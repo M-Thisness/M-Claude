@@ -1,13 +1,7 @@
 name: Tests
 
+# Run tests manually or on pull requests only (not on every push)
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'scripts/**'
-      - 'tests/**'
-      - 'requirements-dev.txt'
-      - '.github/workflows/test.yml'
   pull_request:
     branches: [ main ]
   workflow_dispatch:
