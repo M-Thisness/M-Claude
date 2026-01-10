@@ -10,8 +10,16 @@ import shutil
 import json
 import re
 import platform
+import logging
 from pathlib import Path
 from datetime import datetime
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 # Configuration
 HOME = Path.home()
@@ -50,8 +58,10 @@ SECRET_PATTERNS = [
     # Email addresses (PII)
     (r"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})", "[REDACTED_EMAIL]"),
 
-    # Phone numbers (PII) - but NOT ISO timestamps
-    (r"(?<!\d{4}-\d{2}-\d{2}T\d{2}:)(\+?1?[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})(?!:\d{2})", "[REDACTED_PHONE]"),
+    # Phone numbers (PII) - but NOT ISO timestamps or UUIDs
+    # Negative lookbehind: not after timestamp or UUID segment
+    # Negative lookahead: not before timestamp continuation or UUID segment
+    (r"(?<!\d{4}-\d{2}-\d{2}T\d{2}:)(?<![-a-f0-9]{4}-)(\+?1?[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})(?!:\d{2})(?!-[a-f0-9]{4})", "[REDACTED_PHONE]"),
 
     # Credit card numbers (PII)
     (r"(\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4})", "[REDACTED_CARD]"),
@@ -110,11 +120,11 @@ def sync_jsonl_logs():
 
     for claude_projects in CLAUDE_PROJECT_DIRS:
         if not claude_projects.exists():
-            print(f"Skipping (not found): {claude_projects}")
+            logger.info(f"Skipping (not found): {claude_projects}")
             continue
 
         jsonl_files = list(claude_projects.glob("*.jsonl"))
-        print(f"Found {len(jsonl_files)} conversation logs in {claude_projects}")
+        logger.info(f"Found {len(jsonl_files)} conversation logs in {claude_projects}")
 
         synced_count = 0
         updated_count = 0
@@ -158,14 +168,14 @@ def sync_jsonl_logs():
                             synced_count += 1
 
             except Exception as e:
-                print(f"Error processing {src_file.name}: {e}")
+                logger.error(f"Error processing {src_file.name}: {e}")
 
-        print(f"  Synced: {synced_count}, Updated: {updated_count}, Skipped: {skipped_count}")
+        logger.info(f"  Synced: {synced_count}, Updated: {updated_count}, Skipped: {skipped_count}")
         total_synced += synced_count
         total_updated += updated_count
         total_skipped += skipped_count
 
-    print(f"\nTotal: Synced/updated {total_synced + total_updated} files, skipped {total_skipped} unchanged files")
+    logger.info(f"\nTotal: Synced/updated {total_synced + total_updated} files, skipped {total_skipped} unchanged files")
 
 def update_readme():
     """Update README with sync timestamp."""

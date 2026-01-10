@@ -8,10 +8,18 @@ summarizing collaborative work accomplished.
 
 import json
 import re
+import logging
 from pathlib import Path
 from datetime import datetime
 from collections import defaultdict
 from typing import Dict, List, Tuple
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 def parse_timestamp(timestamp_str: str) -> datetime:
     """Parse ISO timestamp string to datetime."""
@@ -19,7 +27,8 @@ def parse_timestamp(timestamp_str: str) -> datetime:
         # Handle Z suffix
         ts = timestamp_str.replace('Z', '+00:00')
         return datetime.fromisoformat(ts)
-    except:
+    except (ValueError, AttributeError) as e:
+        logger.debug(f"Invalid timestamp: {timestamp_str}: {e}")
         return None
 
 def get_time_of_day(hour: int) -> str:
