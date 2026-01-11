@@ -9,10 +9,14 @@ Claude Code conversation archive with automated processing, security scanning, a
 
 ```
 M-Claude/
-├── CHAT_LOG.md              # Chronological transcript (6,014 messages, 31K lines)
-├── CHAT_LOGS/               # Raw JSONL conversations (114 files, 13MB)
+├── CHAT_LOG.md              # Chronological transcript (6,623 messages, 35K lines)
+├── CHAT_LOGS/               # Raw JSONL conversations (117 files, 13MB)
 ├── CHAT_LOGS-markdown/      # Individual markdown transcripts (110 files)
-├── journals/                # Daily summaries (13 days)
+├── journals/                # Daily summaries (14 days)
+├── gemini-slate/            # GL-BE3600 router project
+│   ├── docs/                # Router documentation & guides
+│   ├── scripts/             # Optimization & device management
+│   └── SESSION_NOTES.md     # Complete session summary
 ├── scripts/                 # Automation & processing
 │   ├── sync_raw_logs.py
 │   ├── convert_to_markdown.py
@@ -47,13 +51,21 @@ python3 scripts/generate_journals.py   # Generate daily journals
 
 ## Statistics
 
-- **114 conversations** (Dec 6, 2025 - Jan 10, 2026)
-- **6,014 messages** in chronological log
+- **117 conversations** (Dec 6, 2025 - Jan 11, 2026)
+- **6,623 messages** in chronological log
 - **13MB** raw JSONL data (redacted)
-- **13 daily journals**
+- **14 daily journals**
 - **110 markdown transcripts**
 
 ## Key Projects Documented
+
+### Network Infrastructure
+- **GL-BE3600 Router Configuration** (`gemini-slate/`)
+  - Complete hardware/software analysis (728 packages documented)
+  - Network optimization plan (static IPs, WiFi 7, IoT isolation)
+  - Mullvad WireGuard VPN with leak protection
+  - Blocky DNS filtering integration
+  - System cleanup (ZeroTier, parental controls removed)
 
 ### System Configuration
 - **Secure Boot setup** for rEFInd + CachyOS (sbctl, shim, MOK)
@@ -135,4 +147,4 @@ MIT License - See [LICENSE](LICENSE)
 
 ---
 
-*Last sync: 2026-01-09 | All sensitive data redacted*
+*Last sync: 2026-01-10 | All sensitive data redacted*
