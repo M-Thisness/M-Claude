@@ -1,0 +1,119 @@
+name: "📦 Cosmic Dependency Audit"
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.py'
+      - 'requirements*.txt'
+      - 'pyproject.toml'
+      - 'setup.py'
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 8 * * *'  # Daily at 8 AM UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  pip-audit:
+    name: "🐍 Pip-Audit Scan"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pip-audit
+        run: pip install pip-audit
+
+      - name: Generate requirements if needed
+        run: |
+          if [ ! -f requirements.txt ]; then
+            echo "No requirements.txt found, scanning installed packages"
+            pip freeze > requirements.txt
+          fi
+
+      - name: Run pip-audit
+        run: |
+          pip-audit --strict --format json --output pip-audit-results.json || true
+          if [ -f pip-audit-results.json ]; then
+            VULNS=$(jq 'length' pip-audit-results.json)
+            if [ "$VULNS" -gt 0 ]; then
+              echo "::warning::Found $VULNS vulnerabilities"
+              jq '.' pip-audit-results.json
+            fi
+          fi
+
+  safety-check:
+    name: "🛡️ Safety Check"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Safety
+        run: pip install safety
+
+      - name: Run Safety scan
+        continue-on-error: true
+        run: |
+          safety check --full-report --json > safety-report.json 2>&1 || true
+          if [ -f safety-report.json ]; then
+            cat safety-report.json
+          fi
+
+  osv-scanner:
+    name: "🌐 OSV Scanner"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run OSV-Scanner
+        uses: google/osv-scanner-action@v1
+        continue-on-error: true
+        with:
+          scan-args: |-
+            --recursive
+            --format=json
+            ./
+
+  license-check:
+    name: "📜 License Compliance"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check licenses
+        run: |
+          pip install pip-licenses
+          pip-licenses --format=markdown --with-urls || true
+          
+          # Check for problematic licenses
+          BANNED="GPL-3.0 AGPL-3.0 SSPL"
+          pip-licenses --format=json > licenses.json || true
+          
+          for license in $BANNED; do
+            if grep -q "\"$license\"" licenses.json 2>/dev/null; then
+              echo "::warning::Found potentially problematic license: $license"
+            fi
+          done

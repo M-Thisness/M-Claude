@@ -1,0 +1,173 @@
+name: "🛡️ Cosmic Repository Hardening"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 12 * * 0'  # Weekly on Sunday at 12 PM UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  workflow-security:
+    name: "⚙️ Workflow Security Audit"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Audit workflow permissions
+        run: |
+          echo "🔍 Auditing workflow permissions..."
+          
+          for workflow in .github/workflows/*.yml; do
+            echo "📄 Checking: $workflow"
+            
+            # Check for overly permissive permissions
+            if grep -q "permissions: write-all" "$workflow"; then
+              echo "::error::$workflow has write-all permissions!"
+            fi
+            
+            # Check for pull_request_target (dangerous)
+            if grep -q "pull_request_target" "$workflow"; then
+              echo "::warning::$workflow uses pull_request_target - review carefully"
+            fi
+            
+            # Check for untrusted input in run
+            if grep -E '\$\{\{.*github\.(event\.issue\.title|event\.issue\.body|event\.pull_request\.title|event\.pull_request\.body).*\}\}' "$workflow"; then
+              echo "::error::$workflow may have command injection via untrusted input!"
+            fi
+          done
+          
+          echo "✅ Workflow audit complete"
+
+  commit-verification:
+    name: "✍️ Commit Signature Check"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for unsigned commits
+        run: |
+          echo "🔍 Checking commit signatures..."
+          
+          UNSIGNED=$(git log --pretty=format:'%H %GS' origin/main..HEAD | grep -v "Good signature" | wc -l)
+          
+          if [ "$UNSIGNED" -gt 0 ]; then
+            echo "::warning::Found $UNSIGNED unsigned commits"
+            git log --pretty=format:'%H %an <%ae> - %s (Signed: %G?)' origin/main..HEAD
+          else
+            echo "✅ All commits are signed"
+          fi
+
+  sensitive-files:
+    name: "📁 Sensitive File Detection"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check for sensitive files
+        run: |
+          echo "🔍 Checking for sensitive files..."
+          FOUND=0
+          
+          SENSITIVE_PATTERNS=(
+            "id_rsa"
+            "id_dsa"
+            "id_ecdsa"
+            "id_ed25519"
+            "*.pem"
+            "*.key"
+            "*.p12"
+            "*.pfx"
+            ".env"
+            ".env.*"
+            "*.env"
+            "credentials*"
+            "secrets*"
+            ".htpasswd"
+            ".netrc"
+            ".npmrc"
+            ".pypirc"
+            "*.keystore"
+            "*.jks"
+          )
+          
+          for pattern in "${SENSITIVE_PATTERNS[@]}"; do
+            matches=$(find . -name "$pattern" -not -path "./.git/*" 2>/dev/null)
+            if [ -n "$matches" ]; then
+              echo "::error::Found sensitive file pattern: $pattern"
+              echo "$matches"
+              FOUND=1
+            fi
+          done
+          
+          if [ $FOUND -eq 1 ]; then
+            exit 1
+          fi
+          
+          echo "✅ No sensitive files detected"
+
+  gitignore-audit:
+    name: "📋 Gitignore Audit"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify gitignore coverage
+        run: |
+          echo "🔍 Auditing .gitignore..."
+          
+          REQUIRED_PATTERNS=(
+            ".env"
+            "*.pem"
+            "*.key"
+            "__pycache__"
+            "*.pyc"
+            ".secrets*"
+            "credentials*"
+          )
+          
+          if [ ! -f .gitignore ]; then
+            echo "::error::No .gitignore file found!"
+            exit 1
+          fi
+          
+          for pattern in "${REQUIRED_PATTERNS[@]}"; do
+            if ! grep -q "$pattern" .gitignore; then
+              echo "::warning::Missing recommended pattern in .gitignore: $pattern"
+            fi
+          done
+          
+          echo "✅ Gitignore audit complete"
+
+  scorecards:
+    name: "📊 OpenSSF Scorecard"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Run Scorecard
+        uses: ossf/scorecard-action@v2
+        with:
+          results_file: scorecard-results.sarif
+          results_format: sarif
+
+      - name: Upload Scorecard SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: scorecard-results.sarif

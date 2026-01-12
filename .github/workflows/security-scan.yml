@@ -1,0 +1,154 @@
+name: "🔐 Cosmic Secret Detection"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 6 AM UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  gitleaks:
+    name: "🔍 Gitleaks Scan"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Gitleaks Detection
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_NOTIFY_USER_LIST: ${{ github.actor }}
+
+  trufflehog:
+    name: "🐷 TruffleHog Deep Scan"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: TruffleHog Verified Secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          extra_args: --only-verified --json
+
+  detect-secrets:
+    name: "🕵️ Detect-Secrets Baseline"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install detect-secrets
+        run: pip install detect-secrets
+
+      - name: Scan for secrets
+        run: |
+          detect-secrets scan \
+            --all-files \
+            --exclude-files '\.git/.*' \
+            --exclude-files '.*\.jsonl$' \
+            > .secrets-baseline.json
+          
+          # Check for high-entropy strings
+          FINDINGS=$(jq '.results | length' .secrets-baseline.json)
+          if [ "$FINDINGS" -gt 0 ]; then
+            echo "::warning::Found $FINDINGS potential secrets"
+            jq '.results' .secrets-baseline.json
+          fi
+
+  pii-scan:
+    name: "👤 PII Detection"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Scan for PII patterns
+        run: |
+          echo "🔍 Scanning for PII patterns..."
+          
+          # Email addresses (excluding .md and config references)
+          echo "📧 Checking emails..."
+          if grep -rIE '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' \
+              --include="*.py" --include="*.js" --include="*.json" \
+              --exclude-dir=.git . 2>/dev/null | grep -v "noreply" | grep -v "example"; then
+            echo "::warning::Potential email addresses found"
+          fi
+          
+          # Phone numbers
+          echo "📞 Checking phone numbers..."
+          if grep -rIE '\b(\+?1[-.]?)?\(?[0-9]{3}\)?[-.]?[0-9]{3}[-.]?[0-9]{4}\b' \
+              --include="*.py" --include="*.js" --include="*.json" \
+              --exclude-dir=.git . 2>/dev/null; then
+            echo "::warning::Potential phone numbers found"
+          fi
+          
+          # SSN patterns
+          echo "🆔 Checking SSN patterns..."
+          if grep -rIE '\b[0-9]{3}-[0-9]{2}-[0-9]{4}\b' \
+              --include="*.py" --include="*.js" --include="*.json" \
+              --exclude-dir=.git . 2>/dev/null; then
+            echo "::error::Potential SSN found!"
+            exit 1
+          fi
+          
+          echo "✅ PII scan complete"
+
+  credential-patterns:
+    name: "🔑 Credential Patterns"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Scan for credential patterns
+        run: |
+          echo "🔍 Scanning for hardcoded credentials..."
+          FOUND=0
+          
+          # API Keys patterns
+          patterns=(
+            'api[_-]?key["\s]*[:=]["\s]*[a-zA-Z0-9]{20,}'
+            'secret[_-]?key["\s]*[:=]["\s]*[a-zA-Z0-9]{20,}'
+            'access[_-]?token["\s]*[:=]["\s]*[a-zA-Z0-9]{20,}'
+            'auth[_-]?token["\s]*[:=]["\s]*[a-zA-Z0-9]{20,}'
+            'bearer["\s]+[a-zA-Z0-9._-]{20,}'
+            'ghp_[a-zA-Z0-9]{36}'
+            'gho_[a-zA-Z0-9]{36}'
+            'sk-[a-zA-Z0-9]{48}'
+            'pk_live_[a-zA-Z0-9]{24}'
+            'sk_live_[a-zA-Z0-9]{24}'
+            'AKIA[0-9A-Z]{16}'
+            'xox[baprs]-[0-9a-zA-Z]{10,}'
+          )
+          
+          for pattern in "${patterns[@]}"; do
+            if grep -rIE "$pattern" --exclude-dir=.git --exclude="*.md" . 2>/dev/null; then
+              echo "::error::Found pattern: $pattern"
+              FOUND=1
+            fi
+          done
+          
+          if [ $FOUND -eq 1 ]; then
+            exit 1
+          fi
+          
+          echo "✅ No hardcoded credentials detected"
