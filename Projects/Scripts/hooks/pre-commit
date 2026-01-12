@@ -1,0 +1,28 @@
+#!/bin/sh
+# M-Claude Pre-Commit Hook
+# Syncs Claude CLI conversations and converts to journals before each commit
+
+echo "🔄 Running sync + convert..."
+
+# Detect Python command
+if command -v python3 &> /dev/null; then
+    PYTHON=python3
+elif command -v python &> /dev/null; then
+    PYTHON=python
+else
+    echo "⚠️ Python not found, skipping sync"
+    exit 0
+fi
+
+# Get repo root
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+# Run sync+convert
+$PYTHON "$REPO_ROOT/Projects/Scripts/sync_raw_logs.py"
+
+# Stage any new/modified files in Archives and Journals
+git add "$REPO_ROOT/Archives/"*.jsonl 2>/dev/null || true
+git add "$REPO_ROOT/Journals/"*.md 2>/dev/null || true
+
+echo "✅ Sync complete"
+exit 0
