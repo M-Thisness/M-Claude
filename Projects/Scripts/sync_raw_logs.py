@@ -222,21 +222,33 @@ def parse_session(jsonl_path: Path) -> Tuple[datetime, str, List[Dict]]:
 
 def extract_session_summary(messages: List[Dict]) -> Dict:
     """
-    Extract meaningful summary from session messages.
-    Returns structured data about the session.
+    Extract comprehensive summary from session messages.
+    Parses user prompts, assistant responses, tool usage, and outcomes.
     """
     summary = {
-        'user_prompts': [],
-        'tools_used': set(),
-        'files_modified': [],
-        'topics': [],
-        'accomplishments': []
+        'title': '',           # Session summary/title from JSONL
+        'user_prompts': [],    # All user prompts
+        'assistant_texts': [], # Assistant text responses
+        'tools_used': set(),   # Tool names used
+        'files_modified': [],  # Files written/edited
+        'files_read': [],      # Files read/analyzed
+        'commands_run': [],    # Bash commands executed
+        'key_actions': [],     # Notable actions taken
+        'duration_ms': 0,      # Session duration
     }
     
     for msg in messages:
         msg_type = msg.get('type')
         
-        # User messages - extract prompts
+        # Extract session title from summary type
+        if msg_type == 'summary':
+            summary['title'] = msg.get('summary', '')
+        
+        # Extract duration
+        if msg_type == 'system' and msg.get('subtype') == 'turn_duration':
+            summary['duration_ms'] += msg.get('durationMs', 0)
+        
+        # User messages
         if msg_type == 'user':
             content = msg.get('message', {}).get('content', '')
             if isinstance(content, str) and content:
@@ -244,123 +256,191 @@ def extract_session_summary(messages: List[Dict]) -> Dict:
                 skip_patterns = [
                     'caveat:', 'command-name', 'local-command', 'stdout', 'stderr',
                     'rate-limit', 'login successful', 'touch_key', 'warmup', 'resume',
-                    '[file content]', 'file-history', 'is-snapshot'
+                    '[file content]', 'file-history', 'is-snapshot', 'trackedfilebackups'
                 ]
-                if not any(x in content.lower() for x in skip_patterns):
+                lower_content = content.lower()
+                if not any(x in lower_content for x in skip_patterns):
                     clean = content.strip()
-                    if clean and len(clean) > 5 and len(clean) < 500:
+                    if clean and len(clean) > 3 and len(clean) < 1000:
                         summary['user_prompts'].append(clean)
         
-        # Assistant messages - extract tool usage
+        # Assistant messages - extract text and tool usage
         elif msg_type == 'assistant':
             content = msg.get('message', {}).get('content', [])
             if isinstance(content, list):
                 for item in content:
-                    if isinstance(item, dict) and item.get('type') == 'tool_use':
-                        tool = item.get('name', '')
-                        summary['tools_used'].add(tool)
+                    if isinstance(item, dict):
+                        # Text responses
+                        if item.get('type') == 'text':
+                            text = item.get('text', '')
+                            if text and len(text) > 20:
+                                # Extract first meaningful paragraph
+                                lines = [l.strip() for l in text.split('\n') if l.strip()]
+                                if lines:
+                                    first_para = lines[0]
+                                    if len(first_para) > 30 and not first_para.startswith('```'):
+                                        summary['assistant_texts'].append(first_para[:300])
                         
-                        # Track file modifications
-                        inp = item.get('input', {})
-                        if tool in ['Write', 'Edit', 'MultiEdit']:
-                            filepath = inp.get('file_path', '') or inp.get('filePath', '')
-                            if filepath:
-                                filename = Path(filepath).name
-                                if filename and filename not in summary['files_modified']:
-                                    summary['files_modified'].append(filename)
-                        
-                        # Track command executions as accomplishments
-                        elif tool == 'Bash':
-                            cmd = inp.get('command', '')
-                            if cmd and len(cmd) < 100:
-                                summary['accomplishments'].append(f"Ran: `{cmd[:60]}`")
+                        # Tool usage
+                        elif item.get('type') == 'tool_use':
+                            tool = item.get('name', '')
+                            inp = item.get('input', {})
+                            summary['tools_used'].add(tool)
+                            
+                            # File writes/edits
+                            if tool in ['Write', 'Edit', 'MultiEdit', 'write_to_file', 'edit_file']:
+                                filepath = inp.get('file_path', '') or inp.get('filePath', '') or inp.get('path', '')
+                                if filepath:
+                                    filename = Path(filepath).name
+                                    if filename and filename not in summary['files_modified']:
+                                        summary['files_modified'].append(filename)
+                                        summary['key_actions'].append(f"Modified `{filename}`")
+                            
+                            # File reads
+                            elif tool in ['Read', 'read_file', 'view_file']:
+                                filepath = inp.get('file_path', '') or inp.get('path', '')
+                                if filepath:
+                                    filename = Path(filepath).name
+                                    if filename and filename not in summary['files_read']:
+                                        summary['files_read'].append(filename)
+                            
+                            # Command executions
+                            elif tool in ['Bash', 'run_command']:
+                                cmd = inp.get('command', '') or inp.get('CommandLine', '')
+                                if cmd and len(cmd) < 150:
+                                    # Clean up and truncate command
+                                    cmd_clean = cmd.strip().split('\n')[0][:80]
+                                    summary['commands_run'].append(cmd_clean)
+                                    summary['key_actions'].append(f"Ran `{cmd_clean}`")
+                            
+                            # Sub-agents/tasks
+                            elif tool in ['Task', 'dispatch_agent']:
+                                task_desc = inp.get('description', '') or inp.get('task', '')
+                                if task_desc:
+                                    summary['key_actions'].append(f"Spawned agent: {task_desc[:60]}")
     
     return summary
 
-def summarize_session_narrative(summary: Dict) -> str:
-    """Create a human-readable narrative from session summary."""
-    parts = []
+def summarize_session_narrative(summary: Dict) -> Tuple[str, str]:
+    """
+    Create rich human-readable narrative from session summary.
+    Returns: (title, body_markdown)
+    """
+    # Title: use session title if available, else first prompt
+    title = summary.get('title', '')
+    if not title and summary['user_prompts']:
+        title = summary['user_prompts'][0]
+        if len(title) > 80:
+            title = title[:77] + "..."
     
-    # Main topic from first user prompt
-    if summary['user_prompts']:
-        main_prompt = summary['user_prompts'][0]
-        # Truncate long prompts
-        if len(main_prompt) > 150:
-            main_prompt = main_prompt[:147] + "..."
-        parts.append(main_prompt)
+    if not title:
+        title = "Brief interaction"
     
-    # Add file modifications
+    # Build body
+    body_parts = []
+    
+    # Key actions performed
+    if summary['key_actions']:
+        actions = summary['key_actions'][:5]  # Limit to 5
+        body_parts.append("**Actions:** " + " • ".join(actions))
+    
+    # Files modified
     if summary['files_modified']:
-        files = summary['files_modified'][:3]
-        if len(summary['files_modified']) > 3:
-            parts.append(f"Modified `{', '.join(files)}` + {len(summary['files_modified'])-3} more")
+        files = summary['files_modified'][:5]
+        body_parts.append(f"**Files:** `{'`, `'.join(files)}`")
+    
+    # Duration
+    if summary['duration_ms'] > 0:
+        duration_sec = summary['duration_ms'] / 1000
+        if duration_sec > 60:
+            duration_str = f"{duration_sec / 60:.1f}m"
         else:
-            parts.append(f"Modified `{', '.join(files)}`")
+            duration_str = f"{duration_sec:.0f}s"
+        body_parts.append(f"⏱️ {duration_str}")
     
-    # Add tool context
-    tools = summary['tools_used']
-    if 'Bash' in tools and not summary['files_modified']:
-        parts.append("Executed commands")
-    elif 'Task' in tools:
-        parts.append("Spawned sub-agents")
-    elif 'Read' in tools and not summary['files_modified']:
-        parts.append("Explored codebase")
+    body = " | ".join(body_parts) if body_parts else ""
     
-    if parts:
-        return " → ".join(parts)
-    
-    return "Brief interaction"
+    return title, body
 
 # ============================================================================
 # JOURNAL GENERATION
 # ============================================================================
 
+def format_duration(ms: int) -> str:
+    """Format milliseconds to human readable duration."""
+    if ms <= 0:
+        return ""
+    sec = ms / 1000
+    if sec > 3600:
+        return f"{sec / 3600:.1f}h"
+    elif sec > 60:
+        return f"{sec / 60:.0f}m"
+    else:
+        return f"{sec:.0f}s"
+
 def update_journal_for_date(date_str: str, sessions: List[Tuple[datetime, str, List[Dict]]]):
     """
-    Update or create journal entry for a specific date.
-    Only adds new sessions, preserves existing entries.
+    Create rich journal entry for a specific date.
+    Produces human-readable markdown with session details.
     """
     os.makedirs(JOURNALS_DEST, exist_ok=True)
     journal_path = JOURNALS_DEST / f"{date_str}.md"
     
-    # Parse existing journal to get existing session IDs
-    existing_entries = {}
-    if journal_path.exists():
-        try:
-            with open(journal_path, 'r', encoding='utf-8') as f:
-                content = f.read()
-                # Simple parse - extract time entries
-                for line in content.split('\n'):
-                    if line.startswith('**') and ':**' in line:
-                        existing_entries[line] = True
-        except Exception:
-            pass
-    
-    # Build new entries
+    # Build entries for all sessions
     entries = []
+    total_duration = 0
+    
     for timestamp, session_id, messages in sessions:
         if not timestamp:
             continue
-            
-        summary_data = extract_session_summary(messages)
-        narrative = summarize_session_narrative(summary_data)
         
-        if narrative and narrative != "Brief interaction":
+        summary = extract_session_summary(messages)
+        title, body = summarize_session_narrative(summary)
+        
+        total_duration += summary['duration_ms']
+        
+        if title and title != "Brief interaction":
             time_str = timestamp.strftime('%I:%M %p')
-            entry_line = f"**{time_str}:** {narrative}"
-            entries.append((timestamp, entry_line))
+            entries.append({
+                'timestamp': timestamp,
+                'time_str': time_str,
+                'title': title,
+                'body': body,
+                'prompts': summary['user_prompts'][1:4],  # Additional prompts
+                'files': summary['files_modified'],
+            })
     
     # Sort by time
-    entries.sort(key=lambda x: x[0])
+    entries.sort(key=lambda x: x['timestamp'])
     
     # Build markdown
     md_lines = [f"# {date_str}\n\n"]
     
+    # Summary line
     if entries:
-        for _, entry_line in entries:
-            md_lines.append(f"{entry_line}\n\n")
-    else:
-        md_lines.append("*No significant activity*\n\n")
+        duration_str = format_duration(total_duration)
+        if duration_str:
+            md_lines.append(f"*{len(entries)} sessions • {duration_str} total*\n\n")
+        else:
+            md_lines.append(f"*{len(entries)} sessions*\n\n")
+        md_lines.append("---\n\n")
+    
+    # Each session entry
+    for entry in entries:
+        md_lines.append(f"### {entry['time_str']} — {entry['title']}\n\n")
+        
+        if entry['body']:
+            md_lines.append(f"{entry['body']}\n\n")
+        
+        # Show additional prompts if interesting
+        if entry['prompts']:
+            for prompt in entry['prompts'][:2]:
+                if len(prompt) > 20:
+                    short = prompt[:100] + "..." if len(prompt) > 100 else prompt
+                    md_lines.append(f"> {short}\n\n")
+    
+    if not entries:
+        md_lines.append("*No significant activity recorded*\n\n")
     
     # Write file
     with open(journal_path, 'w', encoding='utf-8') as f:
