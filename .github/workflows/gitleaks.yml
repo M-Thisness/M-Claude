@@ -1,0 +1,166 @@
+name: Gitleaks Security Scan
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+  schedule:
+    # Run weekly scan on Mondays at 9 AM UTC
+    - cron: '0 9 * * 1'
+
+jobs:
+  gitleaks:
+    name: Scan for Secrets
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}  # Optional: for Gitleaks Pro
+          GITLEAKS_ENABLE_COMMENTS: false
+          GITLEAKS_NOTIFY_USER_LIST: ""
+
+      - name: Upload Gitleaks Report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitleaks-report
+          path: gitleaks-report.json
+          retention-days: 30
+
+      - name: Comment on PR (if secrets found)
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let report = '';
+
+            try {
+              if (fs.existsSync('gitleaks-report.json')) {
+                const data = fs.readFileSync('gitleaks-report.json', 'utf8');
+                const findings = JSON.parse(data);
+
+                if (findings.length > 0) {
+                  report = `## 🔒 Gitleaks Security Scan Failed\n\n`;
+                  report += `Found ${findings.length} potential secret(s) in this PR.\n\n`;
+                  report += `### Findings:\n\n`;
+
+                  findings.slice(0, 5).forEach((finding, index) => {
+                    report += `**${index + 1}. ${finding.RuleID}**\n`;
+                    report += `- File: \`${finding.File}\`\n`;
+                    report += `- Line: ${finding.StartLine}\n`;
+                    report += `- Secret (redacted): \`${finding.Secret.substring(0, 10)}...\`\n\n`;
+                  });
+
+                  if (findings.length > 5) {
+                    report += `\n... and ${findings.length - 5} more findings.\n\n`;
+                  }
+
+                  report += `### Action Required\n\n`;
+                  report += `1. Remove any real secrets from your code\n`;
+                  report += `2. Use environment variables or secrets management\n`;
+                  report += `3. If these are false positives, update \`.gitleaks.toml\`\n\n`;
+                  report += `📖 [View full report in artifacts](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`;
+                }
+              }
+            } catch (error) {
+              report = `## 🔒 Gitleaks Security Scan Failed\n\nUnable to parse report. Check the [workflow run](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) for details.`;
+            }
+
+            if (report) {
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: report
+              });
+            }
+
+  # Job to scan historical commits (runs on schedule only)
+  historical-scan:
+    name: Full History Scan
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history
+
+      - name: Run Gitleaks on full history
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_COMMENTS: false
+
+      - name: Upload Historical Scan Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitleaks-historical-report
+          path: gitleaks-report.json
+          retention-days: 90
+
+      - name: Create Issue if Secrets Found
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            try {
+              if (fs.existsSync('gitleaks-report.json')) {
+                const data = fs.readFileSync('gitleaks-report.json', 'utf8');
+                const findings = JSON.parse(data);
+
+                if (findings.length > 0) {
+                  const title = `🔒 [Security] Gitleaks found ${findings.length} potential secret(s) in repository history`;
+                  const body = `## Weekly Gitleaks Security Scan Report\n\n` +
+                    `**Date:** ${new Date().toISOString()}\n` +
+                    `**Findings:** ${findings.length} potential secret(s) detected\n\n` +
+                    `### Summary\n\n` +
+                    `The scheduled weekly security scan has detected potential secrets in the repository history. ` +
+                    `Please review the findings and take appropriate action.\n\n` +
+                    `### Action Items\n\n` +
+                    `1. ✅ Review the [detailed report](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})\n` +
+                    `2. ✅ Identify if these are real secrets or false positives\n` +
+                    `3. ✅ For real secrets:\n` +
+                    `   - Rotate/revoke the exposed secrets immediately\n` +
+                    `   - Use \`git-filter-repo\` or BFG Repo-Cleaner to remove from history\n` +
+                    `   - Update .gitleaks.toml to prevent future occurrences\n` +
+                    `4. ✅ For false positives:\n` +
+                    `   - Add to .gitleaks.toml allowlist\n\n` +
+                    `### Resources\n\n` +
+                    `- [Removing sensitive data from a repository](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)\n` +
+                    `- [git-filter-repo](https://github.com/newren/git-filter-repo)\n` +
+                    `- [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/)\n\n` +
+                    `---\n` +
+                    `*This issue was automatically created by the Gitleaks security scan workflow.*`;
+
+                  github.rest.issues.create({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    title: title,
+                    body: body,
+                    labels: ['security', 'gitleaks']
+                  });
+                }
+              }
+            } catch (error) {
+              console.error('Error creating issue:', error);
+            }

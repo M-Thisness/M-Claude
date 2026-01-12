@@ -85,3 +85,8 @@ Desktop.ini
 
 # Optional: Uncomment to exclude full transcripts if they contain sensitive info
 # transcripts/
+
+# Gitleaks reports
+gitleaks-report.json
+.gitleaks-report.json
+gitleaks.log
