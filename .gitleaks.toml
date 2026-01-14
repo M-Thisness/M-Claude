@@ -11,6 +11,7 @@ useDefault = true
 description = "Minimal allowlist for maximum security"
 paths = [
     '''tests/test_redaction\.py''',           # Only test_redaction.py (contains intentional test secrets)
+    '''Archives/.*\.jsonl''',                 # Conversation archives (Claude API signatures, already redacted)
 ]
 
 # NO commit allowlist - all commits scanned
