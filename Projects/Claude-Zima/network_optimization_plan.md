@@ -323,7 +323,7 @@ nload eth0  # WAN traffic
 sysupgrade -b /tmp/backup-$(date +%Y%m%d).tar.gz
 
 # Copy to local machine
-scp root@192.168.8.1:/tmp/backup-*.tar.gz ~/M-Claude/gemini-slate/
+scp root@192.168.8.1:/tmp/backup-*.tar.gz ~/M-Claude/Claude-Zima/
 ```
 
 ---

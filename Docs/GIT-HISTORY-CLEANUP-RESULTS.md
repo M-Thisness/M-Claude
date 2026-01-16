@@ -204,9 +204,9 @@ size-garbage: 0 bytes
 | Type | Count | Location | Assessment |
 |------|-------|----------|------------|
 | **base64-high-entropy** | 108 | CHAT_LOG.md | Conversation content |
-| **hardcoded-ip** | 45 | gemini-slate/OPTIMIZATION_SUMMARY.md | Network config docs |
-| **hardcoded-ip** | 39 | gemini-slate/manual_configuration_guide.md | Router setup examples |
-| **hardcoded-ip** | 35 | gemini-slate/network_optimization_plan.md | Network planning |
+| **hardcoded-ip** | 45 | Claude-Zima/OPTIMIZATION_SUMMARY.md | Network config docs |
+| **hardcoded-ip** | 39 | Claude-Zima/manual_configuration_guide.md | Router setup examples |
+| **hardcoded-ip** | 35 | Claude-Zima/network_optimization_plan.md | Network planning |
 | **hardcoded-ip** | 21 | docs/M-SECURITY.md | Security assessment |
 | **Other types** | 144 | Various documentation | Examples and configs |
 
@@ -229,7 +229,7 @@ size-garbage: 0 bytes
    - Option B: Remove entire file from history
    - Option C: Accept as conversation archive (current approach)
 
-2. **gemini-slate/** documentation (119 findings)
+2. **Claude-Zima/** documentation (119 findings)
    - All findings are legitimate network configuration examples
    - Private IP ranges (192.168.x.x) used for documentation
    - No action needed

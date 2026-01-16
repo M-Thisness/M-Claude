@@ -21,7 +21,7 @@ M-Claude/
 │   │   ├── sync_raw_logs.py
 │   │   ├── convert_to_markdown.py
 │   │   └── generate_journals.py
-│   ├── Gemini-Slate/        # GL-BE3600 router project
+│   ├── Claude-Zima/         # Homelab: GL-BE3600 router + Zimaboard server
 │   └── Tests/               # Test suite
 ├── CHAT_LOG.md              # Chronological transcript
 ├── SECURITY.md              # Security policy
@@ -56,8 +56,8 @@ python Projects/Scripts/generate_journals.py
 
 ## Key Projects
 
-### Gemini-Slate (`Projects/Gemini-Slate/`)
-GL-BE3600 router configuration with WiFi 7, Mullvad VPN, and Blocky DNS.
+### Claude-Zima Homelab (`Projects/Claude-Zima/`)
+Complete homelab infrastructure with GL-BE3600 (Slate 7) WiFi 7 router and Zimaboard server. Features Mullvad VPN, Blocky DNS filtering, IoT network isolation, and comprehensive configuration automation.
 
 ### Scripts (`Projects/Scripts/`)
 Automation for log syncing, markdown generation, and journal creation.

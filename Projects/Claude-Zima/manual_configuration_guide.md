@@ -9,7 +9,7 @@ This guide provides step-by-step instructions for manually configuring the route
 ### 1. Backup Current Configuration
 ```bash
 ssh root@192.168.8.1 "sysupgrade -b /tmp/backup-before-optimization.tar.gz"
-scp root@192.168.8.1:/tmp/backup-before-optimization.tar.gz ~/M-Claude/gemini-slate/
+scp root@192.168.8.1:/tmp/backup-before-optimization.tar.gz ~/M-Claude/Claude-Zima/
 ```
 
 ### 2. Collect Missing MAC Addresses
@@ -40,7 +40,7 @@ ssh root@192.168.8.1 "iw dev wlan0 station dump && iw dev wlan1 station dump"
 ### Run the Optimization Script
 
 ```bash
-cd ~/M-Claude/gemini-slate/
+cd ~/M-Claude/Claude-Zima/
 ./router_optimization_script.sh
 ```
 
@@ -564,7 +564,7 @@ ssh root@192.168.8.1 "nft list ruleset | grep counter"
 4. **Create final backup**
    ```bash
    ssh root@192.168.8.1 "sysupgrade -b /tmp/backup-optimized-final.tar.gz"
-   scp root@192.168.8.1:/tmp/backup-optimized-final.tar.gz ~/M-Claude/gemini-slate/
+   scp root@192.168.8.1:/tmp/backup-optimized-final.tar.gz ~/M-Claude/Claude-Zima/
    ```
 
 ---

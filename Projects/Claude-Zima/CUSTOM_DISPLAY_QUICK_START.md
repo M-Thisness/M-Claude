@@ -7,7 +7,7 @@
 ## 🚀 Quick Install
 
 ```bash
-cd ~/M-Claude/gemini-slate/
+cd ~/M-Claude/Claude-Zima/
 ./install_custom_display.sh
 ```
 
