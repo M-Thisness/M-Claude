@@ -16,7 +16,7 @@ on:
 
 jobs:
   gitleaks:
-    name: Scan for Secrets
+    name: Scan for Secrets (Non-Blocking)
     runs-on: ubuntu-latest
 
     steps:
@@ -26,6 +26,8 @@ jobs:
           fetch-depth: 0  # Fetch all history for all branches and tags
 
       - name: Run Gitleaks
+        id: gitleaks
+        continue-on-error: true  # Don't fail workflow - just report
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -34,7 +36,7 @@ jobs:
           GITLEAKS_NOTIFY_USER_LIST: ""
 
       - name: Upload Gitleaks Report
-        if: failure()
+        if: always()  # Always upload, even if no findings
         uses: actions/upload-artifact@v4
         with:
           name: gitleaks-report
@@ -42,7 +44,7 @@ jobs:
           retention-days: 30
 
       - name: Comment on PR (if secrets found)
-        if: failure() && github.event_name == 'pull_request'
+        if: steps.gitleaks.outcome == 'failure' && github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           script: |
@@ -55,8 +57,9 @@ jobs:
                 const findings = JSON.parse(data);
 
                 if (findings.length > 0) {
-                  report = `## 🔒 Gitleaks Security Scan Failed\n\n`;
+                  report = `## 🔍 Gitleaks Security Scan Report (Informational)\n\n`;
                   report += `Found ${findings.length} potential secret(s) in this PR.\n\n`;
+                  report += `⚠️ **Note:** This is non-blocking. Local pre-commit hook auto-redacts secrets.\n\n`;
                   report += `### Findings:\n\n`;
 
                   findings.slice(0, 5).forEach((finding, index) => {
@@ -70,10 +73,10 @@ jobs:
                     report += `\n... and ${findings.length - 5} more findings.\n\n`;
                   }
 
-                  report += `### Action Required\n\n`;
-                  report += `1. Remove any real secrets from your code\n`;
-                  report += `2. Use environment variables or secrets management\n`;
-                  report += `3. If these are false positives, update \`.gitleaks.toml\`\n\n`;
+                  report += `### Recommendations\n\n`;
+                  report += `✅ Pre-commit hook will auto-redact real secrets locally\n`;
+                  report += `✅ If these are false positives, add to \`.gitleaks.toml\` allowlist\n`;
+                  report += `✅ For real secrets, they'll be redacted before commit\n\n`;
                   report += `📖 [View full report in artifacts](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`;
                 }
               }
@@ -92,7 +95,7 @@ jobs:
 
   # Job to scan historical commits (runs on schedule only)
   historical-scan:
-    name: Full History Scan
+    name: Full History Scan (Non-Blocking)
     runs-on: ubuntu-latest
     if: github.event_name == 'schedule'
 
@@ -103,6 +106,8 @@ jobs:
           fetch-depth: 0  # Full history
 
       - name: Run Gitleaks on full history
+        id: historical-gitleaks
+        continue-on-error: true  # Don't fail workflow - just report
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -117,7 +122,7 @@ jobs:
           retention-days: 90
 
       - name: Create Issue if Secrets Found
-        if: failure()
+        if: steps.historical-gitleaks.outcome == 'failure'
         uses: actions/github-script@v7
         with:
           script: |

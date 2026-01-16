@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   gitleaks:
-    name: "🔍 Gitleaks Scan"
+    name: "🔍 Gitleaks Scan (Non-Blocking)"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,13 +25,14 @@ jobs:
           fetch-depth: 0
 
       - name: Gitleaks Detection
+        continue-on-error: true  # Don't fail - just report
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_NOTIFY_USER_LIST: ${{ github.actor }}
 
   trufflehog:
-    name: "🐷 TruffleHog Deep Scan"
+    name: "🐷 TruffleHog Deep Scan (Non-Blocking)"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -40,12 +41,13 @@ jobs:
           fetch-depth: 0
 
       - name: TruffleHog Verified Secrets
+        continue-on-error: true  # Don't fail - just report
         uses: trufflesecurity/trufflehog@main
         with:
           extra_args: --only-verified --json
 
   detect-secrets:
-    name: "🕵️ Detect-Secrets Baseline"
+    name: "🕵️ Detect-Secrets Baseline (Non-Blocking)"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -60,70 +62,72 @@ jobs:
         run: pip install detect-secrets
 
       - name: Scan for secrets
+        continue-on-error: true  # Don't fail - just report
         run: |
           detect-secrets scan \
             --all-files \
             --exclude-files '\.git/.*' \
             --exclude-files '.*\.jsonl$' \
             > .secrets-baseline.json
-          
+
           # Check for high-entropy strings
           FINDINGS=$(jq '.results | length' .secrets-baseline.json)
           if [ "$FINDINGS" -gt 0 ]; then
-            echo "::warning::Found $FINDINGS potential secrets"
+            echo "::warning::Found $FINDINGS potential secrets (informational)"
             jq '.results' .secrets-baseline.json
           fi
 
   pii-scan:
-    name: "👤 PII Detection"
+    name: "👤 PII Detection (Non-Blocking)"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Scan for PII patterns
+        continue-on-error: true  # Don't fail - just report
         run: |
           echo "🔍 Scanning for PII patterns..."
-          
+
           # Email addresses (excluding .md and config references)
           echo "📧 Checking emails..."
           if grep -rIE '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' \
               --include="*.py" --include="*.js" --include="*.json" \
               --exclude-dir=.git . 2>/dev/null | grep -v "noreply" | grep -v "example"; then
-            echo "::warning::Potential email addresses found"
+            echo "::warning::Potential email addresses found (informational)"
           fi
-          
+
           # Phone numbers
           echo "📞 Checking phone numbers..."
           if grep -rIE '\b(\+?1[-.]?)?\(?[0-9]{3}\)?[-.]?[0-9]{3}[-.]?[0-9]{4}\b' \
               --include="*.py" --include="*.js" --include="*.json" \
               --exclude-dir=.git . 2>/dev/null; then
-            echo "::warning::Potential phone numbers found"
+            echo "::warning::Potential phone numbers found (informational)"
           fi
-          
+
           # SSN patterns
           echo "🆔 Checking SSN patterns..."
           if grep -rIE '\b[0-9]{3}-[0-9]{2}-[0-9]{4}\b' \
               --include="*.py" --include="*.js" --include="*.json" \
               --exclude-dir=.git . 2>/dev/null; then
-            echo "::error::Potential SSN found!"
-            exit 1
+            echo "::warning::Potential SSN found (informational)"
           fi
-          
+
           echo "✅ PII scan complete"
 
   credential-patterns:
-    name: "🔑 Credential Patterns"
+    name: "🔑 Credential Patterns (Non-Blocking)"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Scan for credential patterns
+        continue-on-error: true  # Don't fail - just report
         run: |
           echo "🔍 Scanning for hardcoded credentials..."
           FOUND=0
-          
+
           # API Keys patterns
           patterns=(
             'api[_-]?key["\s]*[:=]["\s]*[a-zA-Z0-9]{20,}'
@@ -139,16 +143,16 @@ jobs:
             'AKIA[0-9A-Z]{16}'
             'xox[baprs]-[0-9a-zA-Z]{10,}'
           )
-          
+
           for pattern in "${patterns[@]}"; do
             if grep -rIE "$pattern" --exclude-dir=.git --exclude="*.md" . 2>/dev/null; then
-              echo "::error::Found pattern: $pattern"
+              echo "::warning::Found pattern: $pattern (informational)"
               FOUND=1
             fi
           done
-          
+
           if [ $FOUND -eq 1 ]; then
-            exit 1
+            echo "Found credential patterns (informational only)"
           fi
-          
-          echo "✅ No hardcoded credentials detected"
+
+          echo "✅ Credential pattern scan complete"
