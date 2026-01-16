@@ -1,0 +1,266 @@
+version: '3.8'
+
+# Knowledge Management Stack
+# Components: Silverbullet, Paperless-ngx (with Tika & Gotenberg), PostgreSQL, Redis
+# Date: January 16, 2026
+
+services:
+  # =============================================================================
+  # Silverbullet - Personal Knowledge Management
+  # =============================================================================
+  silverbullet:
+    image: ghcr.io/silverbulletmd/silverbullet:latest
+    container_name: silverbullet
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data/silverbullet/space:/space
+    environment:
+      - SB_USER=${SB_USER:-admin}
+      # Optional: Set password via SB_PASSWORD environment variable
+      # - SB_PASSWORD=${SB_PASSWORD}
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+    networks:
+      - knowledge-stack
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # =============================================================================
+  # Paperless-ngx - Document Management System
+  # =============================================================================
+  paperless-ngx:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless-ngx
+    restart: unless-stopped
+    depends_on:
+      paperless-db:
+        condition: service_healthy
+      paperless-redis:
+        condition: service_healthy
+      gotenberg:
+        condition: service_started
+      tika:
+        condition: service_started
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data/paperless/data:/usr/src/paperless/data
+      - ./data/paperless/media:/usr/src/paperless/media
+      - ./data/paperless/export:/usr/src/paperless/export
+      - ./data/paperless/consume:/usr/src/paperless/consume
+    environment:
+      # Redis & Database
+      PAPERLESS_REDIS: redis://paperless-redis:6379
+      PAPERLESS_DBHOST: paperless-db
+      PAPERLESS_DBNAME: ${PAPERLESS_DBNAME:-paperless}
+      PAPERLESS_DBUSER: ${PAPERLESS_DBUSER:-paperless}
+      PAPERLESS_DBPASS: ${PAPERLESS_DBPASS:-paperless}
+
+      # Security
+      PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY:-change-this-to-a-long-random-string}
+      PAPERLESS_ADMIN_USER: ${PAPERLESS_ADMIN_USER:-admin}
+      PAPERLESS_ADMIN_PASSWORD: ${PAPERLESS_ADMIN_PASSWORD:-admin}
+      PAPERLESS_ADMIN_MAIL: ${PAPERLESS_ADMIN_MAIL:-admin@localhost}
+
+      # OCR & Document Processing
+      PAPERLESS_OCR_LANGUAGE: ${PAPERLESS_OCR_LANGUAGE:-eng}
+      PAPERLESS_OCR_MODE: ${PAPERLESS_OCR_MODE:-skip}  # skip, redo, or force
+      PAPERLESS_OCR_CLEAN: ${PAPERLESS_OCR_CLEAN:-clean}
+      PAPERLESS_OCR_DESKEW: ${PAPERLESS_OCR_DESKEW:-true}
+      PAPERLESS_OCR_ROTATE_PAGES: ${PAPERLESS_OCR_ROTATE_PAGES:-true}
+      PAPERLESS_OCR_ROTATE_PAGES_THRESHOLD: ${PAPERLESS_OCR_ROTATE_PAGES_THRESHOLD:-12.0}
+
+      # Tika & Gotenberg Integration
+      PAPERLESS_TIKA_ENABLED: 1
+      PAPERLESS_TIKA_ENDPOINT: http://tika:9998
+      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
+
+      # Performance Optimization
+      PAPERLESS_WEBSERVER_WORKERS: ${PAPERLESS_WEBSERVER_WORKERS:-2}
+      PAPERLESS_TASK_WORKERS: ${PAPERLESS_TASK_WORKERS:-2}
+      PAPERLESS_THREADS_PER_WORKER: ${PAPERLESS_THREADS_PER_WORKER:-2}
+
+      # Other Settings
+      PAPERLESS_TIME_ZONE: ${TZ:-America/New_York}
+      PAPERLESS_URL: ${PAPERLESS_URL:-http://localhost:8000}
+      PAPERLESS_ENABLE_HTTP_REMOTE_USER: ${PAPERLESS_ENABLE_HTTP_REMOTE_USER:-false}
+
+      # Consumer Settings
+      PAPERLESS_CONSUMER_POLLING: ${PAPERLESS_CONSUMER_POLLING:-60}
+      PAPERLESS_CONSUMER_RECURSIVE: ${PAPERLESS_CONSUMER_RECURSIVE:-true}
+      PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: ${PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS:-true}
+
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2.0'
+        reservations:
+          memory: 2G
+          cpus: '1.0'
+    networks:
+      - knowledge-stack
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # =============================================================================
+  # PostgreSQL - Database for Paperless-ngx
+  # =============================================================================
+  paperless-db:
+    image: postgres:16-alpine
+    container_name: paperless-db
+    restart: unless-stopped
+    volumes:
+      - ./data/paperless/pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${PAPERLESS_DBNAME:-paperless}
+      POSTGRES_USER: ${PAPERLESS_DBUSER:-paperless}
+      POSTGRES_PASSWORD: ${PAPERLESS_DBPASS:-paperless}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+          cpus: '0.5'
+    networks:
+      - knowledge-stack
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PAPERLESS_DBUSER:-paperless}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # =============================================================================
+  # Redis - Cache/Queue for Paperless-ngx
+  # =============================================================================
+  paperless-redis:
+    image: redis:8-alpine
+    container_name: paperless-redis
+    restart: unless-stopped
+    volumes:
+      - ./data/paperless/redis:/data
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+    networks:
+      - knowledge-stack
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # =============================================================================
+  # Gotenberg - PDF Conversion Service
+  # =============================================================================
+  gotenberg:
+    image: gotenberg/gotenberg:8.25
+    container_name: gotenberg
+    restart: unless-stopped
+    command:
+      - "gotenberg"
+      - "--chromium-disable-javascript=true"
+      - "--chromium-allow-list=file:///tmp/.*"
+      - "--api-timeout=300s"
+      - "--api-timeout-error-http-status-code=504"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+        reservations:
+          memory: 512M
+          cpus: '0.2'
+    networks:
+      - knowledge-stack
+
+  # =============================================================================
+  # Apache Tika - Document Parsing & Text Extraction
+  # =============================================================================
+  tika:
+    image: apache/tika:latest
+    container_name: tika
+    restart: unless-stopped
+    environment:
+      # Java heap settings for Tika
+      JAVA_OPTS: "-Xms512m -Xmx2048m"
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+    networks:
+      - knowledge-stack
+
+  # =============================================================================
+  # Optional: PostgreSQL Backup
+  # =============================================================================
+  # Uncomment to enable automated database backups
+  # db-backup:
+  #   image: prodrigestivill/postgres-backup-local:16-alpine
+  #   container_name: paperless-db-backup
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - paperless-db
+  #   volumes:
+  #     - ./backups/postgres:/backups
+  #   environment:
+  #     - POSTGRES_HOST=paperless-db
+  #     - POSTGRES_DB=${PAPERLESS_DBNAME:-paperless}
+  #     - POSTGRES_USER=${PAPERLESS_DBUSER:-paperless}
+  #     - POSTGRES_PASSWORD=${PAPERLESS_DBPASS:-paperless}
+  #     - SCHEDULE=@daily
+  #     - BACKUP_KEEP_DAYS=7
+  #     - BACKUP_KEEP_WEEKS=4
+  #     - BACKUP_KEEP_MONTHS=6
+  #     - HEALTHCHECK_PORT=8080
+  #   networks:
+  #     - knowledge-stack
+
+# =============================================================================
+# Networks
+# =============================================================================
+networks:
+  knowledge-stack:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+# =============================================================================
+# Volumes (optional - using bind mounts by default)
+# =============================================================================
+# Uncomment if you prefer named volumes over bind mounts
+# volumes:
+#   silverbullet-data:
+#   paperless-data:
+#   paperless-media:
+#   paperless-pgdata:
+#   paperless-redis:

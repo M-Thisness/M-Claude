@@ -1,0 +1,609 @@
+version: '3.8'
+
+# ============================================================================
+# COMPLETE MEDIA ACQUISITION, MANAGEMENT, AND STREAMING STACK FOR ZIMABOARD
+# Optimized for: Intel Celeron N3450, 8-16GB RAM, Dual SATA
+# Network: All acquisition containers routed through VPN (Gluetun)
+# ============================================================================
+
+networks:
+  media_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+services:
+  # ==========================================================================
+  # VPN CONTAINER - All acquisition traffic routed through this
+  # ==========================================================================
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      # qBittorrent WebUI
+      - "8080:8080"
+      # qBittorrent connection port
+      - "6881:6881"
+      - "6881:6881/udp"
+      # Prowlarr
+      - "9696:9696"
+      # autobrr
+      - "7474:7474"
+    volumes:
+      - /mnt/storage/appdata/gluetun:/gluetun
+    environment:
+      - VPN_SERVICE_PROVIDER=mullvad  # Change to your provider
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${VPN_PRIVATE_KEY}
+      - WIREGUARD_ADDRESSES=${VPN_ADDRESSES}
+      - SERVER_CITIES=${VPN_SERVER_CITY}
+      - FIREWALL_OUTBOUND_SUBNETS=172.20.0.0/16
+      - TZ=America/New_York
+    networks:
+      media_network:
+        ipv4_address: 172.20.0.2
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+
+  # ==========================================================================
+  # ACQUISITION TOOLS
+  # ==========================================================================
+
+  # Lightweight torrent client - most efficient for Zimaboard
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - WEBUI_PORT=8080
+    volumes:
+      - /mnt/storage/appdata/qbittorrent:/config
+      - /mnt/storage/downloads:/downloads
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  # Private tracker automation and management
+  autobrr:
+    image: ghcr.io/autobrr/autobrr:latest
+    container_name: autobrr
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
+      - qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /mnt/storage/appdata/autobrr:/config
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+  # IPFS node for decentralized media sharing
+  ipfs:
+    image: ipfs/kubo:v0.39.0
+    container_name: ipfs
+    ports:
+      - "4001:4001"      # Swarm port
+      - "4001:4001/udp"  # Swarm port UDP
+      - "8081:8080"      # HTTP Gateway (changed from 8080 to avoid conflict)
+      - "127.0.0.1:5001:5001"  # API port (localhost only for security)
+    volumes:
+      - /mnt/storage/appdata/ipfs/staging:/export
+      - /mnt/storage/appdata/ipfs/data:/data/ipfs
+    environment:
+      - IPFS_PROFILE=server
+    networks:
+      - media_network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  # YouTube/Twitch archival solution
+  tubearchivist:
+    image: bbilly1/tubearchivist:latest
+    container_name: tubearchivist
+    ports:
+      - "8082:8000"
+    volumes:
+      - /mnt/storage/media/youtube:/youtube
+      - /mnt/storage/appdata/tubearchivist/cache:/cache
+    environment:
+      - ES_URL=http://tubearchivist-es:9200
+      - REDIS_HOST=tubearchivist-redis
+      - HOST_UID=1000
+      - HOST_GID=1000
+      - TA_HOST=tubearchivist.local  # Change to your hostname
+      - TA_USERNAME=admin
+      - TA_PASSWORD=${TUBEARCHIVIST_PASSWORD}
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - TZ=America/New_York
+    depends_on:
+      - tubearchivist-es
+      - tubearchivist-redis
+    networks:
+      - media_network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+
+  tubearchivist-redis:
+    image: redis/redis-stack-server:latest
+    container_name: tubearchivist-redis
+    volumes:
+      - /mnt/storage/appdata/tubearchivist/redis:/data
+    networks:
+      - media_network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+  tubearchivist-es:
+    image: bbilly1/tubearchivist-es:latest
+    container_name: tubearchivist-es
+    environment:
+      - "ELASTIC_PASSWORD=${ELASTIC_PASSWORD}"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "xpack.security.enabled=true"
+      - "discovery.type=single-node"
+      - "path.repo=/usr/share/elasticsearch/data/snapshot"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - /mnt/storage/appdata/tubearchivist/es:/usr/share/elasticsearch/data
+    networks:
+      - media_network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  # ==========================================================================
+  # *ARR STACK - Media Automation
+  # ==========================================================================
+
+  # Indexer manager - connects to all other *arr apps
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /mnt/storage/appdata/prowlarr:/config
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  # TV Show automation
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    ports:
+      - "8989:8989"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /mnt/storage/appdata/sonarr:/config
+      - /mnt/storage/media/tv:/tv
+      - /mnt/storage/downloads:/downloads
+    networks:
+      media_network:
+        ipv4_address: 172.20.0.10
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  # Movie automation
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    ports:
+      - "7878:7878"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /mnt/storage/appdata/radarr:/config
+      - /mnt/storage/media/movies:/movies
+      - /mnt/storage/downloads:/downloads
+    networks:
+      media_network:
+        ipv4_address: 172.20.0.11
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  # Music automation
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    ports:
+      - "8686:8686"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /mnt/storage/appdata/lidarr:/config
+      - /mnt/storage/media/music:/music
+      - /mnt/storage/downloads:/downloads
+    networks:
+      media_network:
+        ipv4_address: 172.20.0.12
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  # Book automation
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    ports:
+      - "8787:8787"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /mnt/storage/appdata/readarr:/config
+      - /mnt/storage/media/books:/books
+      - /mnt/storage/downloads:/downloads
+    networks:
+      media_network:
+        ipv4_address: 172.20.0.13
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  # Comics and Manga automation
+  mylar3:
+    image: lscr.io/linuxserver/mylar3:latest
+    container_name: mylar3
+    ports:
+      - "8090:8090"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /mnt/storage/appdata/mylar3:/config
+      - /mnt/storage/media/comics:/comics
+      - /mnt/storage/downloads:/downloads
+    networks:
+      media_network:
+        ipv4_address: 172.20.0.14
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  # Adult content automation (optional - uncomment if needed)
+  # whisparr:
+  #   image: ghcr.io/thespad/whisparr:latest
+  #   container_name: whisparr
+  #   ports:
+  #     - "6969:6969"
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=America/New_York
+  #   volumes:
+  #     - /mnt/storage/appdata/whisparr:/config
+  #     - /mnt/storage/media/adult:/adult
+  #     - /mnt/storage/downloads:/downloads
+  #   networks:
+  #     media_network:
+  #       ipv4_address: 172.20.0.15
+  #   restart: unless-stopped
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '1.0'
+  #         memory: 512M
+  #       reservations:
+  #         cpus: '0.25'
+  #         memory: 256M
+
+  # ==========================================================================
+  # MEDIA SERVERS
+  # ==========================================================================
+
+  # Jellyfin - Free, open-source with hardware transcoding included
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    ports:
+      - "8096:8096"
+      - "8920:8920"  # HTTPS
+      - "7359:7359/udp"  # Discovery
+      - "1900:1900/udp"  # DLNA
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      # Enable Intel Quick Sync
+      - DOCKER_MODS=linuxserver/mods:jellyfin-opencl-intel
+    volumes:
+      - /mnt/storage/appdata/jellyfin:/config
+      - /mnt/storage/media:/media
+      - /mnt/storage/appdata/jellyfin/cache:/cache
+    devices:
+      # Intel Quick Sync hardware acceleration
+      - /dev/dri:/dev/dri
+    networks:
+      - media_network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '3.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+
+  # Audiobook management and streaming
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    container_name: audiobookshelf
+    ports:
+      - "13378:80"
+    environment:
+      - AUDIOBOOKSHELF_UID=1000
+      - AUDIOBOOKSHELF_GID=1000
+      - TZ=America/New_York
+    volumes:
+      - /mnt/storage/media/audiobooks:/audiobooks
+      - /mnt/storage/media/podcasts:/podcasts
+      - /mnt/storage/appdata/audiobookshelf:/config
+      - /mnt/storage/appdata/audiobookshelf/metadata:/metadata
+    networks:
+      - media_network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  # Podcast management
+  podgrab:
+    image: akhilrex/podgrab:latest
+    container_name: podgrab
+    ports:
+      - "8083:8080"
+    environment:
+      - CHECK_FREQUENCY=240  # Check for new episodes every 4 hours
+      - TZ=America/New_York
+    volumes:
+      - /mnt/storage/appdata/podgrab:/config
+      - /mnt/storage/media/podcasts:/assets
+    networks:
+      - media_network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+  # ==========================================================================
+  # REQUEST MANAGEMENT
+  # ==========================================================================
+
+  # User request interface for Jellyfin
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    ports:
+      - "5055:5055"
+    environment:
+      - LOG_LEVEL=info
+      - TZ=America/New_York
+    volumes:
+      - /mnt/storage/appdata/jellyseerr:/app/config
+    networks:
+      - media_network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  # ==========================================================================
+  # MONITORING & MANAGEMENT
+  # ==========================================================================
+
+  # Dashboard for all services
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    ports:
+      - "3000:3000"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /mnt/storage/appdata/homepage:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - media_network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+  # Container monitoring
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    environment:
+      - TZ=America/New_York
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_SCHEDULE=0 0 4 * * *  # 4 AM daily
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      - WATCHTOWER_NOTIFICATION_URL=${WATCHTOWER_NOTIFICATION_URL}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - media_network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+# ==============================================================================
+# VOLUME STRUCTURE NOTES:
+# ==============================================================================
+# /mnt/storage/                     # Root of your SATA drives (RAID/ZFS pool)
+# ├── appdata/                      # Application configuration data
+# │   ├── gluetun/
+# │   ├── qbittorrent/
+# │   ├── prowlarr/
+# │   ├── sonarr/
+# │   ├── radarr/
+# │   ├── lidarr/
+# │   ├── readarr/
+# │   ├── mylar3/
+# │   ├── jellyfin/
+# │   ├── audiobookshelf/
+# │   ├── podgrab/
+# │   ├── tubearchivist/
+# │   └── ...
+# ├── downloads/                    # Temporary download location
+# │   ├── complete/
+# │   ├── incomplete/
+# │   └── watch/
+# └── media/                        # Final media library
+#     ├── movies/
+#     ├── tv/
+#     ├── music/
+#     ├── books/
+#     ├── audiobooks/
+#     ├── podcasts/
+#     ├── comics/
+#     ├── youtube/
+#     └── adult/                    # If using Whisparr
+#
+# IMPORTANT: Keep downloads and media on the same filesystem for instant moves
+# ==============================================================================
