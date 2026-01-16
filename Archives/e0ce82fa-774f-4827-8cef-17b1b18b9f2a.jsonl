@@ -1,0 +1,83 @@
+{"type":"file-history-snapshot","messageId":"752c4f96-eaf9-4474-bf35-8a78ec02923c","snapshot":{"messageId":"752c4f96-eaf9-4474-bf35-8a78ec02923c","trackedFileBackups":{},"timestamp":"2026-01-15T05:23:18.835Z"},"isSnapshotUpdate":false}
+{"parentUuid":null,"isSidechain":false,"userType":"external","cwd":"/Users/[USER]","sessionId":"e0ce82fa-774f-4827-8cef-17b1b18b9f2a","version":"2.1.7","gitBranch":"","type":"user","message":{"role":"user","content":"claude --teleport session_01Nb9BCWhSmkDT3fRFNDXD8C"},"uuid":"752c4f96-eaf9-4474-bf35-8a78ec02923c","timestamp":"2026-01-15T05:23:18.831Z","thinkingMetadata":{"level":"high","disabled":false,"triggers":[]},"todos":[]}
+{"parentUuid":"752c4f96-eaf9-4474-bf35-8a78ec02923c","isSidechain":false,"userType":"external","cwd":"/Users/[USER]","sessionId":"e0ce82fa-774f-4827-8cef-17b1b18b9f2a","version":"2.1.7","gitBranch":"","type":"system","subtype":"api_error","level":"error","cause":{"code":"ConnectionRefused","path":"https://api.anthropic.com/v1/messages?beta=true","errno":0},"error":{"cause":{"code":"ConnectionRefused","path":"https://api.anthropic.com/v1/messages?beta=true","errno":0}},"retryInMs":590.6383372558878,"retryAttempt":1,"maxRetries":10,"timestamp":"2026-01-15T05:24:05.665Z","uuid":"4c5bfb02-3e6c-4a65-b76b-64927737610a"}
+{"parentUuid":"4c5bfb02-3e6c-4a65-b76b-64927737610a","isSidechain":false,"userType":"external","cwd":"/Users/[USER]","sessionId":"e0ce82fa-774f-4827-8cef-17b1b18b9f2a","version":"2.1.7","gitBranch":"","type":"system","subtype":"api_error","level":"error","cause":{"code":"ConnectionRefused","path":"https://api.anthropic.com/v1/messages?beta=true","errno":0},"error":{"cause":{"code":"ConnectionRefused","path":"https://api.anthropic.com/v1/messages?beta=true","errno":0}},"retryInMs":1028.411582978113,"retryAttempt":2,"maxRetries":10,"timestamp":"2026-01-15T05:24:36.115Z","uuid":"bee1a761-925b-4242-beb8-a6d5d1875bc3"}
+{"parentUuid":"bee1a761-925b-4242-beb8-a6d5d1875bc3","isSidechain":false,"userType":"external","cwd":"/Users/[USER]","sessionId":"e0ce82fa-774f-4827-8cef-17b1b18b9f2a","version":"2.1.7","gitBranch":"","type":"system","subtype":"api_error","level":"error","cause":{"code":"ConnectionRefused","path":"https://api.anthropic.com/v1/messages?beta=true","errno":0},"error":{"cause":{"code":"ConnectionRefused","path":"https://api.anthropic.com/v1/messages?beta=true","errno":0}},"retryInMs":2172.174227217848,"retryAttempt":3,"maxRetries":10,"timestamp":"2026-01-15T05:25:07.157Z","uuid":"1f00b045-5bc8-4c12-8985-748d916f041f"}
+{"parentUuid":"1f00b045-5bc8-4c12-8985-748d916f041f","isSidechain":false,"userType":"external","cwd":"/Users/[USER]","sessionId":"e0ce82fa-774f-4827-8cef-17b1b18b9f2a","version":"2.1.7","gitBranch":"","type":"system","subtype":"api_error","level":"error","cause":{"code":"ConnectionRefused","path":"https://api.anthropic.com/v1/messages?beta=true","errno":0},"error":{"cause":{"code":"ConnectionRefused","path":"https://api.anthropic.com/v1/messages?beta=true","errno":0}},"retryInMs":4111.9925260662,"retryAttempt":4,"maxRetries":10,"timestamp":"2026-01-15T05:25:39.197Z","uuid":"d58f490e-aeb4-4d8d-9e31-d9bfe262babc"}
+{"parentUuid":"d58f490e-aeb4-4d8d-9e31-d9bfe262babc","isSidechain":false,"userType":"external","cwd":"/Users/[USER]","sessionId":"e0ce82fa-774f-4827-8cef-17b1b18b9f2a","version":"2.1.7","gitBranch":"","type":"system","subtype":"api_error","level":"error","cause":{"code":"ConnectionRefused","path":"https://api.anthropic.com/v1/messages?beta=true","errno":0},"error":{"cause":{"code":"ConnectionRefused","path":"https://api.anthropic.com/v1/messages?beta=true","errno":0}},"retryInMs":8643.518702198728,"retryAttempt":5,"maxRetries":10,"timestamp":"2026-01-15T05:26:13.325Z","uuid":"1ff20c08-7aa3-4791-86e0-0d9ac53a21fa"}
+{"parentUuid":"1ff20c08-7aa3-4791-86e0-0d9ac53a21fa","isSidechain":false,"userType":"external","cwd":"/Users/[USER]","sessionId":"e0ce82fa-774f-4827-8cef-17b1b18b9f2a","version":"2.1.7","gitBranch":"","type":"system","subtype":"api_error","level":"error","cause":{"code":"ConnectionRefused","path":"https://api.anthropic.com/v1/messages?beta=true","errno":0},"error":{"cause":{"code":"ConnectionRefused","path":"https://api.anthropic.com/v1/messages?beta=true","errno":0}},"retryInMs":19786.167295667186,"retryAttempt":6,"maxRetries":10,"timestamp":"2026-01-15T05:26:48.345Z","uuid":"d4a0a26e-279e-4ed5-93f1-edee50750315"}
+{"parentUuid":"d4a0a26e-279e-4ed5-93f1-edee50750315","isSidechain":false,"userType":"external","cwd":"/Users/[USER]","sessionId":"e0ce82fa-774f-4827-8cef-17b1b18b9f2a","version":"2.1.7","gitBranch":"","type":"system","subtype":"api_error","level":"error","cause":{"code":"ConnectionRefused","path":"https://api.anthropic.com/v1/messages?beta=true","errno":0},"error":{"cause":{"code":"ConnectionRefused","path":"https://api.anthropic.com/v1/messages?beta=true","errno":0}},"retryInMs":35613.22639415374,"retryAttempt":7,"maxRetries":10,"timestamp":"2026-01-15T05:27:08.145Z","uuid":"a41c1c92-140d-42aa-b144-e93133d3b56a"}
+{"type":"summary","summary":"API Error: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"OAuth token has expired. Please obtain a new token or refresh your existing token.\"},\"request_id\":\"req_011CX8cNHWE7ws92HtMtdVMt\"} · Please run /login","leafUuid":"1eafb767-4211-4e41-ac65-293328926779"}
+{"type":"summary","summary":"M-Claude Repo Sync & Session Summary","leafUuid":"84113cb9-8671-46ea-b30b-d6f3d47837ae"}
+{"type":"summary","summary":"M-Claude repository sync and session summarization","leafUuid":"538c05a7-e5a3-4347-9710-181afe24a105"}
+{"parentUuid":"a41c1c92-140d-42aa-b144-e93133d3b56a","isSidechain":false,"userType":"external","cwd":"/Users/[USER]","sessionId":"e0ce82fa-774f-4827-8cef-17b1b18b9f2a","version":"2.1.7","gitBranch":"","type":"assistant","uuid":"7b9ec4f4-afa0-48a6-a09c-f406135dcd07","timestamp":"2026-01-15T05:27:44.075Z","message":{"id":"9fba0af5-ddf0-42dc-a1ee-37305d1930be","container":null,"model":"<synthetic>","role":"assistant","stop_reason":"stop_sequence","stop_sequence":"","type":"message","usage":{"input_tokens":0,"output_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"server_tool_use":{"web_search_requests":0,"web_fetch_requests":0},"service_tier":null,"cache_creation":{"ephemeral_1h_input_tokens":0,"ephemeral_5m_input_tokens":0}},"content":[{"type":"text","text":"API Error: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"OAuth token has expired. Please obtain a new token or refresh your existing token.\"},\"request_id\":\"req_011CX8cNV7UzR7XiKTNuMCpd\"} · Please run /login"}],"context_management":null},"error":"authentication_failed","isApiErrorMessage":true}
+{"parentUuid":"7b9ec4f4-afa0-48a6-a09c-f406135dcd07","isSidechain":false,"userType":"external","cwd":"/Users/[USER]","sessionId":"e0ce82fa-774f-4827-8cef-17b1b18b9f2a","version":"2.1.7","gitBranch":"","type":"system","subtype":"turn_duration","durationMs":265264,"timestamp":"2026-01-15T05:27:44.105Z","uuid":"8aedaad7-0ba5-46e7-8100-36e930fec1cb","isMeta":false}
+{"type":"summary","summary":"M-Claude Repo Sync and Session Summary","leafUuid":"3e9d6aef-85b0-4ed2-b5eb-4492d1695340"}
+{"type":"summary","summary":"M-Claude Repo Sync and Session Summary","leafUuid":"232cfca9-14df-43f3-96b7-4ab9e66d7662"}
+{"type":"summary","summary":"Sync M-Claude repo and evaluate Mac security","leafUuid":"bae91e9f-0c55-4104-ab2d-6a75d194bb88"}
+{"type":"summary","summary":"Mac Security & Performance Evaluation Report","leafUuid":"cee3b383-2ea9-4be2-bada-9ab9cde08804"}
+{"type":"summary","summary":"M-Claude Repo Sync & System Evaluation","leafUuid":"c2b2cdac-90f3-463d-a082-fbacc3bb11b8"}
+{"type":"summary","summary":"M-Claude Repo Sync & System Eval","leafUuid":"70e9ac8e-2612-4f19-b6c2-9db13180da98"}
+{"type":"summary","summary":"M-Claude repo sync & Mac security evaluation","leafUuid":"224e52bb-46a2-4c49-9315-363a73fadb3f"}
+{"type":"summary","summary":"Sync M-Claude repo and evaluate Mac security","leafUuid":"01d497d8-0140-4beb-bd2e-9803e05ead3d"}
+{"type":"summary","summary":"M-Claude Repo Sync & Security Audit","leafUuid":"5ea684a1-a01f-47e0-ae5a-5c39620561fd"}
+{"type":"summary","summary":"Git repo sync & Mac security evaluation report","leafUuid":"d5c27af0-8a44-403c-ab5a-24ae641aa09f"}
+{"type":"summary","summary":"M-Claude Repo Sync & Mac Security Audit","leafUuid":"18910f3b-2b03-4ae4-bfbe-13141fa2a5a8"}
+{"type":"summary","summary":"M-Claude Repo Sync & Mac Security Audit","leafUuid":"69e6958b-35af-4a71-8b6c-30e0d98484db"}
+{"type":"summary","summary":"M-Book Security Evaluation & Report Generation","leafUuid":"58756b67-edda-49db-8a85-30e065c7d539"}
+{"type":"summary","summary":"Mac Security & Performance Comprehensive Evaluation Report","leafUuid":"fe9ac93d-1cbd-4b0a-9773-adcc43208231"}
+{"type":"summary","summary":"M-Claude Repo Sync & Mac Security Audit","leafUuid":"9a339e11-07bc-45cf-a6c0-1b0c2831f7b5"}
+{"type":"summary","summary":"M-Claude Repo Sync & System Security Eval","leafUuid":"bddb896d-fadc-4350-a91f-e229552dd7c0"}
+{"type":"summary","summary":"M-Book Security Evaluation & Report Generation","leafUuid":"abd515f3-2709-433c-884a-a2da1b1e2d5e"}
+{"type":"summary","summary":"Mac Security & Performance Comprehensive Evaluation Report","leafUuid":"7d4489cb-edde-45d6-ae16-a5e7acb30cac"}
+{"type":"summary","summary":"M-Claude Repo Sync & Mac Security Evaluation","leafUuid":"47387dbb-10c0-4c55-99fd-79534e1aea8d"}
+{"type":"summary","summary":"Sync repo and evaluate Mac security","leafUuid":"bbe48448-4bea-47b8-ab1f-ca6fec138122"}
+{"type":"summary","summary":"Mac Security Assessment & Optimization Report","leafUuid":"587b4a4c-8d65-460f-991b-4736b9e8d8cd"}
+{"type":"summary","summary":"Mac Security Assessment & System Optimization","leafUuid":"f924c7fd-e94c-4b88-89cc-b8d3f769bd43"}
+{"type":"summary","summary":"Mac Security Assessment & System Optimization","leafUuid":"2459956e-dd51-4102-8f85-9e326837c03c"}
+{"type":"summary","summary":"Mac Security Assessment & NVMe Investigation","leafUuid":"e35863e8-0a33-4d79-80dc-1400022b61b0"}
+{"type":"summary","summary":"Mac Security Assessment & NVMe Investigation","leafUuid":"46fc5fd9-1fae-48da-aa22-4ff8802e094b"}
+{"type":"summary","summary":"Mac Security Assessment & NVMe Investigation","leafUuid":"fe33a956-2988-4024-8e8a-f1eb9dd132df"}
+{"type":"summary","summary":"Mac Security Assessment & NVMe Investigation","leafUuid":"95494185-b228-495d-88af-4fa4dec2ec2f"}
+{"type":"summary","summary":"Mac Security Assessment & NVMe Investigation","leafUuid":"6acdfa8f-901a-405a-b757-401d2baa6f97"}
+{"type":"summary","summary":"Mac Security Assessment & System Optimization","leafUuid":"1eee10e1-4aca-4187-b410-579778141ad3"}
+{"type":"summary","summary":"Mac Security Audit & System Optimization","leafUuid":"37bdd09b-db14-439b-9f19-d8fc0d116faa"}
+{"type":"summary","summary":"Mac Security & NVMe Error Investigation","leafUuid":"94c240dd-8669-4c4b-9fc8-5a2c22713bb9"}
+{"type":"summary","summary":"M-Claude Repo Security & System Hardening","leafUuid":"a8ae374a-84cf-4772-877a-29fdcfb483f7"}
+{"type":"summary","summary":"Git Security Hardening & Leak Prevention","leafUuid":"86411469-c021-4ba8-a6b0-c51e494c7282"}
+{"type":"summary","summary":"Mac Security Assessment & NVMe Hardware Investigation","leafUuid":"93a6c36f-6ae2-4bdb-8eb3-68457c604f78"}
+{"type":"summary","summary":"Repo sync, Mac security audit, gitleaks hardening","leafUuid":"eda52cc2-2633-474c-af5e-1783e5ccffb4"}
+{"type":"summary","summary":"Mac Security Audit & NVMe Error Investigation","leafUuid":"ddb9a163-fbdf-4661-ba01-c3a277353b6b"}
+{"type":"summary","summary":"Git security hardening and secret detection","leafUuid":"eaa479f9-4714-4769-b485-cc2332bd44e9"}
+{"type":"summary","summary":"M-Claude Repo Security Hardening & Mac Evaluation","leafUuid":"da2ccdb4-2e1e-45b0-a8d4-f2001a6240f7"}
+{"type":"summary","summary":"Mac Security Assessment & Hardening","leafUuid":"b75caad3-bc04-41b1-be9b-86d5e861f67a"}
+{"type":"summary","summary":"M-Claude Repo Sync & Mac Security Hardening","leafUuid":"a35a957e-bd4e-4ad8-a3d0-bdd34a6261fc"}
+{"type":"summary","summary":"Git Secrets Hardened with Enhanced Detection Rules","leafUuid":"431dab61-407b-4ee5-9152-6a6f16f9b017"}
+{"type":"summary","summary":"Sync repo, security assessment, NVMe diagnostics, gitleaks hardening","leafUuid":"1c0f9197-eb1a-4ba9-bbab-1bce11ce9082"}
+{"type":"summary","summary":"Mac Security Assessment & NVMe Diagnostics","leafUuid":"7c17ebc7-4b0a-4273-9cc7-f540b2c480e9"}
+{"type":"summary","summary":"Gitleaks Maximum Strict Security Hardening","leafUuid":"7d5842b5-f290-4415-a6fd-938e55cda0f6"}
+{"type":"summary","summary":"Git Secrets Detection Hardened to Maximum Strictness","leafUuid":"ffb12ef1-83d6-4256-b788-3b19b3191076"}
+{"type":"summary","summary":"Mac security audit & gitleaks hardening","leafUuid":"acab8eb9-57b6-48b7-985e-6275f21de8ce"}
+{"type":"summary","summary":"Mac security audit, NVMe error diagnosis, gitleaks hardening","leafUuid":"130236b1-e780-44ea-87be-6d116d4310ba"}
+{"type":"summary","summary":"Mac security hardening + gitleaks max strict","leafUuid":"d6abe553-7892-4175-ae93-74ee3191c184"}
+{"type":"summary","summary":"M-Claude repo security hardening and history scrubbing","leafUuid":"451e969b-c0d4-4dab-97a1-3f64ed3567f6"}
+{"type":"summary","summary":"Mac security audit + gitleaks hardening","leafUuid":"fad2c90c-046b-4136-be67-235779d72cc5"}
+{"type":"summary","summary":"Mac security audit & repo secret purge","leafUuid":"26dcd5c5-5794-413c-ac5c-1e72bf875547"}
+{"type":"summary","summary":"Git History Scrubbing & Secret Sanitization Complete","leafUuid":"0025ecd6-ef38-4ac0-9001-9d98e4573702"}
+{"type":"summary","summary":"Mac security assessment + gitleaks hardening","leafUuid":"1d1d6750-e7e2-4ebd-94e8-cbbdb81523d6"}
+{"type":"summary","summary":"Mac security audit & gitleaks hardening","leafUuid":"9bf46e60-a658-4f2b-ab64-54a608d785fd"}
+{"type":"summary","summary":"Mac security audit & repo secret purge","leafUuid":"00d05077-20bb-4166-8df7-e6f85c945f4d"}
+{"type":"summary","summary":"Git History Security Hardening Complete","leafUuid":"3805fadd-e3fa-4d26-963a-f20581cfee27"}
+{"type":"summary","summary":"Mac Security Assessment & Repo Hardening","leafUuid":"3d21df3f-6a9b-41a8-b309-5a57cf753e79"}
+{"type":"summary","summary":"Mac Security Assessment & Gitleaks Hardening","leafUuid":"3b1afcf8-3ed2-486f-900e-7af4ef539505"}
+{"type":"summary","summary":"Mac Security Assessment & Gitleaks Hardening","leafUuid":"c3b3fe0f-a133-482d-ac59-7d63e6443e84"}
+{"type":"summary","summary":"Mac Security Assessment & Gitleaks Hardening","leafUuid":"1bec3f27-57ae-4765-998b-1234d19723dd"}
+{"type":"summary","summary":"Mac Security Assessment & Gitleaks Hardening","leafUuid":"95e35fd8-5a33-411b-8238-9274b6e51454"}
+{"type":"summary","summary":"Mac Security Assessment & Repository Secret Sanitization","leafUuid":"8d1e546f-3b03-46ef-b791-9edc464814fa"}
+{"type":"summary","summary":"Mac Security Assessment + Gitleaks Hardening + History Scrubbing","leafUuid":"da6802b3-7df8-4ce4-ba6c-3e591eb97ec7"}
+{"type":"summary","summary":"Mac Security Audit & Gitleaks Hardening","leafUuid":"3674e446-50ca-4719-886a-dfdf6e72c0ca"}
+{"type":"summary","summary":"Mac Security Assessment & Gitleaks Hardening Complete","leafUuid":"7b464dbb-fbe1-4367-bb9a-8a85b7e57a8e"}
+{"type":"summary","summary":"Mac Security Assessment & Gitleaks Hardening","leafUuid":"c9694e6d-69a1-405d-acdb-77ca3e9cf667"}
+{"type":"summary","summary":"Mac Security Assessment & Git Secret Scrubbing","leafUuid":"aaaef66d-e384-4040-b294-741a2b9736ba"}
+{"type":"summary","summary":"M-Claude repo security hardening: gitleaks, history cleanup, force push complete","leafUuid":"2a6ab40a-dcc4-4df6-b437-807987e13e58"}
+{"type":"summary","summary":"Claude Code CLI shortcut with 1Password integration","leafUuid":"2cb2df34-58e0-4d0d-8aed-57d095a8426f"}
