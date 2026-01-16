@@ -1,0 +1,52 @@
+# Home Assistant Recorder Configuration
+# Add this to your configuration.yaml in the Home Assistant config directory
+
+recorder:
+  # Database URL for MariaDB
+  db_url: mysql://homeassistant:your_secure_ha_password_here@mariadb:3306/homeassistant?charset=utf8mb4
+
+  # For PostgreSQL, use this instead:
+  # db_url: postgresql://homeassistant:your_secure_postgres_password_here@postgresql:5432/homeassistant
+
+  # Purge settings to manage database size
+  purge_keep_days: 7
+  auto_purge: true
+  auto_repack: true
+
+  # Commit interval (seconds) - higher values reduce disk I/O
+  commit_interval: 5
+
+  # Exclude certain entities/domains to reduce database size
+  exclude:
+    domains:
+      - automation
+      - updater
+      - camera
+    entity_globs:
+      - sensor.weather_*
+    entities:
+      - sun.sun
+      - sensor.last_boot
+      - sensor.date
+
+  # Include specific entities if needed
+  # include:
+  #   domains:
+  #     - sensor
+  #     - switch
+  #     - light
+
+# MQTT Configuration
+mqtt:
+  broker: mosquitto
+  port: 1883
+  # username: your_mqtt_username
+  # password: your_mqtt_password
+  discovery: true
+  discovery_prefix: homeassistant
+  birth_message:
+    topic: 'homeassistant/status'
+    payload: 'online'
+  will_message:
+    topic: 'homeassistant/status'
+    payload: 'offline'
