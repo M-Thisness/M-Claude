@@ -1,8 +1,10 @@
 #!/bin/sh
 # M-Claude Pre-Commit Hook
-# Syncs Claude CLI conversations and converts to journals before each commit
+# 1. Scans staged files for secrets using gitleaks (MAX STRICT MODE)
+# 2. Auto-redacts any detected secrets (non-blocking)
+# 3. Syncs Claude CLI conversations and converts to journals before each commit
 
-echo "🔄 Running sync + convert..."
+echo "🔐 Running gitleaks secret scan + auto-redaction..."
 
 # Detect Python command
 if command -v python3 &> /dev/null; then
@@ -10,19 +12,29 @@ if command -v python3 &> /dev/null; then
 elif command -v python &> /dev/null; then
     PYTHON=python
 else
-    echo "⚠️ Python not found, skipping sync"
+    echo "⚠️ Python not found, skipping hooks"
     exit 0
 fi
 
 # Get repo root
 REPO_ROOT="$(git rev-parse --show-toplevel)"
 
-# Run sync+convert
+# Step 1: Run gitleaks scan with auto-redaction (non-blocking)
+$PYTHON "$REPO_ROOT/Projects/Scripts/redact_gitleaks_secrets.py"
+GITLEAKS_EXIT=$?
+
+# Note: We don't exit on gitleaks findings because redaction script handles them
+# The script will auto-redact secrets and re-stage files
+
+echo ""
+echo "🔄 Running sync + convert..."
+
+# Step 2: Run sync+convert
 $PYTHON "$REPO_ROOT/Projects/Scripts/sync_raw_logs.py"
 
 # Stage any new/modified files in Archives and Journals
 git add "$REPO_ROOT/Archives/"*.jsonl 2>/dev/null || true
 git add "$REPO_ROOT/Journals/"*.md 2>/dev/null || true
 
-echo "✅ Sync complete"
+echo "✅ Pre-commit checks complete"
 exit 0
