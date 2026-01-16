@@ -1,21 +1,9 @@
-# Gitleaksignore - Files to completely skip in max strict mode
-# These files are conversation logs and documentation that contain many
-# example secrets, API keys, and sensitive-looking text that are actually
-# safe redacted examples from conversations.
-
-# Chat logs - contain conversation history with redacted examples
-CHAT_LOG.md
-CHAT_LOGS/**
-CHAT_LOGS-markdown/**
-
-# Documentation with examples
-docs/*.md
-
-# Example and template files
-*.example
-*.sample
-*.template
-
-# README files often contain example configurations
-README.md
-**/README.md
+# .gitleaksignore - Fingerprint-based ignore file
+#
+# Format: file:rule:line
+# This file is for ignoring specific findings by their fingerprint.
+#
+# For path-based allowlisting, use .gitleaks.toml [allowlist] section instead.
+#
+# Note: This file is currently empty. All path-based exclusions are
+# configured in .gitleaks.toml to avoid "Invalid entry" warnings.
