@@ -1,0 +1,191 @@
+name: "🤖 Claude Code Review"
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  claude-review:
+    name: "Claude AI Code Review"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for better context
+
+      - name: Get PR diff
+        id: diff
+        run: |
+          # Fetch base branch
+          git fetch origin ${{ github.base_ref }}
+
+          # Generate diff
+          git diff origin/${{ github.base_ref }}...HEAD > pr-diff.txt
+
+          # Get changed files list
+          git diff --name-only origin/${{ github.base_ref }}...HEAD > changed-files.txt
+
+          # Calculate diff size
+          DIFF_SIZE=$(wc -c < pr-diff.txt)
+          echo "diff_size=$DIFF_SIZE" >> $GITHUB_OUTPUT
+
+          # Limit diff size to 100KB to avoid API limits
+          if [ $DIFF_SIZE -gt 102400 ]; then
+            echo "⚠️ Diff too large ($DIFF_SIZE bytes), truncating to 100KB"
+            head -c 102400 pr-diff.txt > pr-diff-truncated.txt
+            mv pr-diff-truncated.txt pr-diff.txt
+            echo "truncated=true" >> $GITHUB_OUTPUT
+          else
+            echo "truncated=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get PR context
+        id: pr-context
+        run: |
+          echo "pr_title=${{ github.event.pull_request.title }}" >> $GITHUB_OUTPUT
+          echo "pr_number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+          echo "base_branch=${{ github.base_ref }}" >> $GITHUB_OUTPUT
+          echo "head_branch=${{ github.head_ref }}" >> $GITHUB_OUTPUT
+
+      - name: Claude Code Review
+        id: claude-review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          # Check if API key is set
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "⚠️ ANTHROPIC_API_KEY not set in repository secrets"
+            echo "review=❌ **Claude Code Review Failed**\n\nANTHROPIC_API_KEY is not configured in repository secrets.\n\nTo enable Claude code reviews:\n1. Go to Settings > Secrets and variables > Actions\n2. Add a new secret named \`ANTHROPIC_API_KEY\`\n3. Paste your Anthropic API key\n\nGet your API key at: https://console.anthropic.com/" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Read diff and changed files
+          DIFF_CONTENT=$(cat pr-diff.txt)
+          CHANGED_FILES=$(cat changed-files.txt)
+
+          # Create review prompt
+          PROMPT="You are an expert code reviewer. Review this pull request and provide constructive feedback.
+
+**PR Title:** ${{ steps.pr-context.outputs.pr_title }}
+**Base Branch:** ${{ steps.pr-context.outputs.base_branch }}
+**Changed Files:**
+$CHANGED_FILES
+
+**Diff:**
+\`\`\`diff
+$DIFF_CONTENT
+\`\`\`
+
+Provide a comprehensive code review covering:
+1. **Security Issues**: Any potential vulnerabilities or security concerns
+2. **Code Quality**: Best practices, readability, maintainability
+3. **Bugs & Logic Errors**: Potential bugs or logical issues
+4. **Performance**: Performance implications or optimizations
+5. **Documentation**: Comments, docstrings, README updates needed
+6. **Testing**: Test coverage or missing test cases
+
+Format your response as a GitHub-flavored markdown comment with:
+- Clear section headers
+- Specific line references when possible
+- Actionable recommendations
+- Positive feedback for good practices
+
+Keep it concise and constructive. If the PR looks good, say so!"
+
+          # Call Claude API
+          REVIEW_RESPONSE=$(curl -s https://api.anthropic.com/v1/messages \
+            -H "content-type: application/json" \
+            -H "x-api-key: $ANTHROPIC_API_KEY" \
+            -H "anthropic-version: 2023-06-01" \
+            -d "{
+              \"model\": \"claude-sonnet-4-20250514\",
+              \"max_tokens\": 4096,
+              \"messages\": [{
+                \"role\": \"user\",
+                \"content\": $(echo "$PROMPT" | jq -Rs .)
+              }]
+            }")
+
+          # Extract review content
+          REVIEW=$(echo "$REVIEW_RESPONSE" | jq -r '.content[0].text // "Error: Could not parse Claude response"')
+
+          # Save review to file
+          echo "$REVIEW" > claude-review.md
+
+          # Output for next step (escape for GitHub Actions)
+          {
+            echo 'review<<EOF'
+            echo "$REVIEW"
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
+
+      - name: Post Claude Review Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const review = fs.readFileSync('claude-review.md', 'utf8');
+
+            const truncated = '${{ steps.diff.outputs.truncated }}' === 'true';
+            const diffSize = '${{ steps.diff.outputs.diff_size }}';
+
+            let header = '## 🤖 Claude Code Review\n\n';
+
+            if (truncated) {
+              header += `⚠️ **Note:** Diff was truncated (${diffSize} bytes → 100KB) due to size limits.\n\n`;
+            }
+
+            const footer = '\n\n---\n\n*Powered by Claude Sonnet 4 • Non-blocking review • [Claude API](https://www.anthropic.com/api)*';
+
+            const body = header + review + footer;
+
+            // Check if we already posted a review
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            const botComment = comments.data.find(comment =>
+              comment.user.type === 'Bot' &&
+              comment.body.includes('🤖 Claude Code Review')
+            );
+
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: body
+              });
+              console.log('Updated existing Claude review comment');
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+              console.log('Posted new Claude review comment');
+            }
+
+      - name: Upload Review Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: claude-review-pr-${{ steps.pr-context.outputs.pr_number }}
+          path: |
+            claude-review.md
+            pr-diff.txt
+            changed-files.txt
+          retention-days: 30
