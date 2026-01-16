@@ -1,15 +1,29 @@
 # Gitleaks Maximum Strictness Configuration
 
-**Date:** January 12, 2026
-**Mode:** ⚡ MAXIMUM STRICTNESS
+**Date:** January 12, 2026 (Updated: January 16, 2026)
+**Mode:** ⚡ MAXIMUM STRICTNESS + AUTO-REDACTION
 **Status:** ACTIVE
-**Security Level:** EXTREME
+**Security Level:** EXTREME (Non-Blocking)
+
+---
+
+## 🆕 Update: Auto-Redaction Mode (January 16, 2026)
+
+**Breaking Change:** Gitleaks now **automatically redacts** detected secrets instead of blocking commits!
+
+**What changed:**
+- ✅ Secrets are automatically redacted in-place
+- ✅ Commits proceed without interruption
+- ✅ Zero workflow friction
+- ✅ Same security level (all secrets still caught)
+
+**See:** [GITLEAKS-AUTO-REDACTION.md](./GITLEAKS-AUTO-REDACTION.md) for complete documentation.
 
 ---
 
 ## Overview
 
-The M-Claude repository is now configured with **MAXIMUM STRICTNESS** gitleaks detection. This is the most aggressive secret scanning configuration possible, designed to catch even the slightest possibility of credential exposure.
+The M-Claude repository is now configured with **MAXIMUM STRICTNESS** gitleaks detection with **automatic redaction**. This is the most aggressive secret scanning configuration possible, designed to catch even the slightest possibility of credential exposure, while maintaining zero friction for developers.
 
 ### ⚠️ What "Max Strict" Means
 
@@ -196,13 +210,17 @@ git add myfile.py
 git commit -m "Add feature"
 
 # Output:
-🔍 Running gitleaks scan (⚡ MAX STRICT MODE) on staged files...
+🔐 Running gitleaks secret scan + auto-redaction...
+📂 Scanning 1 staged file(s)...
 ```
 
 **If secrets detected:**
-- ❌ Commit blocked
+- ✅ **Secrets automatically redacted** (NEW!)
 - 📋 Detailed findings shown
-- 💡 Remediation instructions provided
+- 🔧 Files modified and re-staged
+- ✅ Commit proceeds with redacted content
+
+**Legacy blocking mode removed** - see [GITLEAKS-AUTO-REDACTION.md](./GITLEAKS-AUTO-REDACTION.md)
 
 ### Manual Scanning
 
@@ -242,33 +260,31 @@ gitleaks detect --config=.gitleaks.toml --log-opts="myfile.py"
 
 ### Real Secrets (CRITICAL - Take Immediate Action)
 
-If gitleaks detects a **real secret**:
+If gitleaks detects and redacts a **real secret**:
 
-1. **🛑 STOP - Do not commit**
-2. **🔄 Rotate/revoke the credential immediately**
-3. **♻️ Use environment variables:**
+1. **✅ Secret already redacted** - commit will proceed safely
+2. **🔄 Rotate/revoke the credential immediately** (exposed locally)
+3. **♻️ Update code to use environment variables:**
    ```python
-   # ❌ BAD
+   # ❌ BAD (will be auto-redacted)
    API_KEY = "sk-ant-api03-real-secret"
 
-   # ✅ GOOD
+   # ✅ GOOD (nothing to redact)
    import os
    API_KEY = os.getenv("ANTHROPIC_API_KEY")
    ```
-4. **🗑️ If already committed:** Remove from history (BFG/git-filter-repo)
+4. **🗑️ If previously committed:** Remove from history (BFG/git-filter-repo)
 5. **👀 Monitor:** Check API usage logs for abuse
+
+**Note:** Auto-redaction prevents secrets from entering git history, but the secret was still in your local working directory. Always rotate exposed credentials.
 
 ### False Positives (Common in Max Strict)
 
 **Expected:** Max strict mode generates many false positives.
 
-**Option 1: Verify and Commit Anyway**
-```bash
-# After verifying it's NOT a real secret:
-git commit --no-verify -m "Add feature"
-```
+**New behavior:** False positives are automatically redacted (safe but may be unexpected).
 
-**Option 2: Add to .gitleaksignore**
+**Option 1: Add to .gitleaksignore** (Recommended)
 ```bash
 # Edit .gitleaksignore
 echo "path/to/noisy/file.txt" >> .gitleaksignore
@@ -276,19 +292,27 @@ git add .gitleaksignore
 git commit -m "Update gitleaksignore"
 ```
 
-**Option 3: Add Inline Comment**
+**Option 2: Add Inline Comment**
 ```python
 # gitleaks:allow
 EXAMPLE_KEY = "sk-test-not-a-real-key"
 ```
 
-**Option 4: Add to .gitleaks.toml Allowlist** (last resort)
+**Option 3: Add to .gitleaks.toml Allowlist**
 ```toml
 [allowlist]
 paths = [
     '''tests/test_redaction\.py''',
     '''path/to/new/file\.py''',    # Add specific file
 ]
+```
+
+**Option 4: Restore redacted content** (if redaction was incorrect)
+```bash
+# Before committing, restore original
+git checkout HEAD -- file.py
+
+# Then add to allowlist and try again
 ```
 
 ---
