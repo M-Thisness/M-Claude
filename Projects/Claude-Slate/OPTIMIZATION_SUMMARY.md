@@ -22,7 +22,7 @@ Three implementation approaches for your router optimization:
 
 **To run:**
 ```bash
-cd ~/M-Claude/Claude-Zima/
+cd ~/M-Claude/Claude-Slate/
 ./router_optimization_script.sh
 ```
 
@@ -51,7 +51,7 @@ cd ~/M-Claude/Claude-Zima/
 
 **To run:**
 ```bash
-cd ~/M-Claude/Claude-Zima/
+cd ~/M-Claude/Claude-Slate/
 ./collect_device_info.sh > device_info.txt
 cat device_info.txt
 ```
@@ -186,12 +186,12 @@ WAN: eth0 (DHCP from upstream)
 - [ ] **BACKUP CURRENT CONFIG**
   ```bash
   ssh root@192.168.8.1 "sysupgrade -b /tmp/backup.tar.gz"
-  scp root@192.168.8.1:/tmp/backup.tar.gz ~/M-Claude/Claude-Zima/
+  scp root@192.168.8.1:/tmp/backup.tar.gz ~/M-Claude/Claude-Slate/
   ```
 
 - [ ] **Collect Device MACs**
   ```bash
-  cd ~/M-Claude/Claude-Zima/
+  cd ~/M-Claude/Claude-Slate/
   ./collect_device_info.sh > device_info.txt
   ```
 
@@ -207,7 +207,7 @@ Choose ONE method:
 
 **Method 1: Automated (Recommended)**
 ```bash
-cd ~/M-Claude/Claude-Zima/
+cd ~/M-Claude/Claude-Slate/
 ./router_optimization_script.sh
 ```
 
@@ -243,7 +243,7 @@ cd ~/M-Claude/Claude-Zima/
 - [ ] **Create final backup:**
   ```bash
   ssh root@192.168.8.1 "sysupgrade -b /tmp/backup-optimized.tar.gz"
-  scp root@192.168.8.1:/tmp/backup-optimized.tar.gz ~/M-Claude/Claude-Zima/
+  scp root@192.168.8.1:/tmp/backup-optimized.tar.gz ~/M-Claude/Claude-Slate/
   ```
 
 ---
@@ -345,7 +345,7 @@ ssh root@192.168.8.1 "sysupgrade -r /tmp/backup.tar.gz"
 
 ## Files Created
 
-All files located in: `~/M-Claude/Claude-Zima/`
+All files located in: `~/M-Claude/Claude-Slate/`
 
 1. **GL-BE3600_Technical_Specifications.md** - Hardware specs
 2. **GL-BE3600_Software_Report.md** - Software/firmware details
@@ -401,7 +401,7 @@ All files located in: `~/M-Claude/Claude-Zima/`
 
 ```bash
 # Quick start:
-cd ~/M-Claude/Claude-Zima/
+cd ~/M-Claude/Claude-Slate/
 ssh root@192.168.8.1 "sysupgrade -b /tmp/backup.tar.gz"
 scp root@192.168.8.1:/tmp/backup.tar.gz .
 ./router_optimization_script.sh

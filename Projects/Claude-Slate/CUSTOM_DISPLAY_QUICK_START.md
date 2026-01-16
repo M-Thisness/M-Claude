@@ -7,7 +7,7 @@
 ## 🚀 Quick Install
 
 ```bash
-cd ~/M-Claude/Claude-Zima/
+cd ~/M-Claude/Claude-Slate/
 ./install_custom_display.sh
 ```
 

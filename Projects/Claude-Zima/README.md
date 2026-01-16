@@ -1,99 +1,93 @@
-# Claude-Zima Homelab
+# Claude-Zima
 
-**GL-BE3600 (Slate 7) Router Configuration + Zimaboard Server Homelab**
+**Zimaboard Homelab Server Configuration**
 
-Complete infrastructure-as-code and documentation for a privacy-focused homelab network featuring GL.iNet GL-BE3600 WiFi 7 router with Mullvad VPN, Blocky DNS filtering, and Zimaboard server integration.
+Documentation and configuration for the Zimaboard x86 single-board server running homelab services including Blocky DNS filtering, Docker containers, and network services.
 
 ## Overview
 
-This project provides comprehensive documentation, scripts, and configurations for setting up and managing a secure homelab network with:
+Claude-Zima is the homelab server component that provides:
 
-- **Router:** GL.iNet GL-BE3600 (Slate 7) - WiFi 7 travel router
-- **Server:** Zimaboard (192.168.8.21) - Running Blocky DNS
-- **VPN:** Mullvad WireGuard configuration
-- **DNS:** Blocky DNS filtering (port 5353)
-- **Network:** Static IPs, IoT isolation, WiFi 7 optimization
-- **WAN:** Starlink with 2.5Gbps ethernet
+- **Hardware:** Zimaboard x86 single-board computer
+- **IP Address:** 192.168.8.21 (static, wired connection)
+- **Primary Service:** Blocky DNS filtering (port 5353)
+- **Integration:** Works with Claude-Slate (GL-BE3600 router)
 
-## Documentation
+## Current Services
 
-### Technical Specifications
-- `GL-BE3600_Technical_Specifications.md` - Complete hardware specs
-- `GL-BE3600_Software_Report.md` - All software packages and versions
-- `GL-BE3600_SSH_Session_Report.md` - Live system inspection results
+### Blocky DNS
+- **Port:** 5353
+- **Function:** DNS filtering and ad-blocking
+- **Integration:** Router forwards DNS queries to Zimaboard
+- **Configuration:** Custom blocklists and allowlists
 
-### Configuration Guides
-- `OPTIMIZATION_SUMMARY.md` - Quick reference guide
-- `network_optimization_plan.md` - Detailed optimization strategy
-- `manual_configuration_guide.md` - Step-by-step manual configuration
-- `custom_display_guide.md` - Touchscreen customization guide
-- `CUSTOM_DISPLAY_QUICK_START.md` - Quick start for custom dashboard
+## Planned Services
 
-### Session Notes
-- `SESSION_NOTES.md` - Comprehensive session notes and router configuration
+Future expansion may include:
+- Docker containers for homelab applications
+- Media server (Plex/Jellyfin)
+- Home automation hub
+- Network monitoring (Grafana/Prometheus)
+- File server (SMB/NFS)
+- Backup server
 
-### Cleanup Logs
-- `zerotier_removal_log.md` - ZeroTier package removal documentation
-- `parental_control_removal_log.md` - Parental control removal log
+## Server Specifications
 
-## Scripts
+- **Model:** Zimaboard (x86 single-board computer)
+- **CPU:** Intel Celeron (quad-core)
+- **RAM:** 8GB
+- **Storage:** 32GB eMMC + expandable via SATA
+- **Network:** Gigabit Ethernet
+- **OS:** TBD (Linux-based)
 
-- `router_optimization_script.sh` - Automated router optimization
-- `collect_device_info.sh` - Device information collector
-- `install_custom_display.sh` - Custom display installation
+## Network Configuration
 
-## Network Design
+**Static IP:** 192.168.8.21
+**Network:** 192.168.8.0/24
+**Gateway:** 192.168.8.1 (Claude-Slate router)
+**DNS:** Self (127.0.0.1) or upstream via router
 
-**Main Network:** 192.168.8.0/24
-- Wired devices: 192.168.8.21-50
-- WiFi devices: 192.168.8.51-100
-- IoT devices: 192.168.8.150-200 (isolated guest network)
-- DHCP pool: 192.168.8.201-250
+## Integration with Claude-Slate
 
-**Key Features:**
-- WiFi 7 with MLO (Multi-Link Operation)
-- WPA3 encryption
-- Mullvad VPN kill-switch
-- DNS filtering via Blocky
-- IoT network isolation
-- Static IP management
+The Zimaboard server integrates with the GL-BE3600 router:
+
+1. **DNS Filtering:** Router forwards DNS queries to Zimaboard:5353
+2. **Wired Connection:** Static IP in wired device range (21-50)
+3. **Network Services:** Server provides services to all network clients
+4. **IoT Isolation:** Server accessible from main network, not IoT network
+
+See the `Claude-Slate` project for router configuration details.
 
 ## Quick Start
 
-### 1. Review Documentation
 ```bash
-# Read the optimization summary
-cat OPTIMIZATION_SUMMARY.md
+# SSH into Zimaboard
+ssh user@192.168.8.21
 
-# Review the network plan
-cat network_optimization_plan.md
+# Check Blocky DNS status
+systemctl status blocky
+
+# View Blocky logs
+journalctl -u blocky -f
+
+# Test DNS resolution
+dig @192.168.8.21 -p 5353 example.com
 ```
 
-### 2. Run Optimization Script
-```bash
-# SSH into router
-ssh root@192.168.8.1
+## Documentation
 
-# Download and run optimization script
-./router_optimization_script.sh
-```
+Documentation will be added as services are configured:
+- Blocky DNS configuration
+- Docker compose files
+- Service management scripts
+- Backup procedures
+- Monitoring setup
 
-### 3. Manual Configuration
-```bash
-# Follow step-by-step guide
-cat manual_configuration_guide.md
-```
+## Status
 
-## Router Specifications
+🚧 **Project Status:** Initial Setup
 
-- **Model:** GL.iNet GL-BE3600 (Slate 7)
-- **Firmware:** GL.iNet 4.8.1 (OpenWrt 23.05-SNAPSHOT)
-- **Kernel:** Linux 5.4.213
-- **SoC:** Qualcomm IPQ5312 (Quad-core @ 1.1 GHz)
-- **RAM:** 1 GB
-- **Storage:** 512 MB NAND
-- **WiFi:** WiFi 7 (802.11be) with MLO support
-- **Ports:** 1x 2.5Gbps WAN, 1x 2.5Gbps LAN
+This project is in early stages. Documentation and configurations will be added as the server is set up and services are deployed.
 
 ## License
 

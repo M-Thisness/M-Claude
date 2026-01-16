@@ -274,7 +274,7 @@ DNS: Blocky (127.0.0.1:5353) → dnsmasq (port 53)
 **Status:** All files staged and ready to commit
 
 **Files to commit:**
-- Claude-Zima/ (entire directory)
+- Claude-Slate/ (entire directory)
 - 16 files total
 - All documentation, scripts, and guides
 
@@ -291,7 +291,7 @@ This was a comprehensive router configuration session that achieved:
 - ✅ VPN leak protection verification
 - ✅ Blocky DNS integration confirmation
 
-All work is ready to be committed to the M-Claude repository under the `Claude-Zima/` project directory.
+All work is ready to be committed to the M-Claude repository under the `Claude-Slate/` project directory.
 
 **Status:** Ready for deployment when user chooses to apply optimizations.
 
