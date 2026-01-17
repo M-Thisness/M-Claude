@@ -6,19 +6,21 @@ This script processes all conversation transcripts from Claude Code and generate
 a single, chronologically ordered Markdown file for easy reading.
 """
 
+from __future__ import annotations
+
 import json
-import os
 import logging
-from pathlib import Path
 from datetime import datetime
-from typing import Dict, List, Any, Tuple
+from pathlib import Path
+from typing import Any, Dict, List, Tuple
+
+from config import get_paths, setup_logging
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+logger = setup_logging(__name__)
+
+# Configuration from centralized config
+_paths = get_paths()
 
 def format_timestamp(timestamp_str: str) -> str:
     """Convert ISO timestamp to readable format."""
@@ -190,12 +192,11 @@ def create_chronological_markdown(messages_with_sessions: List[Tuple[Dict[str, A
 
     print(f"[OK] Created chronological transcript with {len(sorted_messages)} messages")
 
-def main():
+def main() -> None:
     """Main conversion process."""
-    # Setup paths
-    project_root = Path(__file__).parent.parent
-    transcripts_dir = project_root / 'CHAT_LOGS'
-    output_file = project_root / 'CHAT_LOG.md'
+    # Setup paths from centralized config
+    transcripts_dir = _paths.chat_logs
+    output_file = _paths.repo_root / "CHAT_LOG.md"
 
     print("=" * 70)
     print("Claude Code JSONL -> Chronological Markdown Converter")

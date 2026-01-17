@@ -13,24 +13,25 @@ Usage:
     python scripts/generate_stats.py [--output stats.md]
 """
 
-import json
+from __future__ import annotations
+
 import argparse
+import json
 import logging
-from pathlib import Path
+from collections import Counter, defaultdict
 from datetime import datetime
-from collections import defaultdict, Counter
-from typing import Dict, List, Any, Optional
+from pathlib import Path
+from typing import Any, Counter as CounterType, DefaultDict, Dict, List, Optional
+
+from config import get_paths, setup_logging
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+logger = setup_logging(__name__, format_string="%(levelname)s - %(message)s")
 
-# Configuration
-REPO_ROOT = Path(__file__).parent.parent
-CHAT_LOGS = REPO_ROOT / "CHAT_LOGS"
+# Configuration from centralized config
+_paths = get_paths()
+REPO_ROOT = _paths.repo_root
+CHAT_LOGS = _paths.chat_logs
 
 
 def parse_timestamp(timestamp_str: str) -> Optional[datetime]:
@@ -267,7 +268,7 @@ def generate_markdown_report(stats: ConversationStats) -> str:
     return ''.join(report)
 
 
-def main():
+def main() -> None:
     """Main entry point for stats generator."""
     parser = argparse.ArgumentParser(
         description='Generate statistics dashboard from conversations'

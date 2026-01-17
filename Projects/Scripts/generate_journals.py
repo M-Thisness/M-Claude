@@ -6,22 +6,24 @@ Creates journal files organized by day with Morning/Day/Night sections
 summarizing collaborative work accomplished.
 """
 
+from __future__ import annotations
+
 import json
-import re
 import logging
-from pathlib import Path
-from datetime import datetime
 from collections import defaultdict
-from typing import Dict, List, Tuple
+from datetime import datetime
+from pathlib import Path
+from typing import Any, DefaultDict, Dict, List, Optional, Tuple
+
+from config import get_paths, setup_logging
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+logger = setup_logging(__name__)
 
-def parse_timestamp(timestamp_str: str) -> datetime:
+# Configuration from centralized config
+_paths = get_paths()
+
+def parse_timestamp(timestamp_str: str) -> Optional[datetime]:
     """Parse ISO timestamp string to datetime."""
     try:
         # Handle Z suffix
@@ -40,7 +42,7 @@ def get_time_of_day(hour: int) -> str:
     else:
         return "Night"
 
-def summarize_session(messages: List[Dict]) -> str:
+def summarize_session(messages: List[Dict[str, Any]]) -> str:
     """Create a tweet-length summary of what was accomplished in a session."""
     # Extract user prompts and key actions
     user_prompts = []
@@ -112,7 +114,9 @@ def summarize_session(messages: List[Dict]) -> str:
 
     return "Brief session"
 
-def load_all_sessions(transcripts_dir: Path) -> Dict[str, List[Tuple[datetime, str, List[Dict]]]]:
+def load_all_sessions(
+    transcripts_dir: Path,
+) -> Dict[str, List[Tuple[Optional[datetime], str, List[Dict[str, Any]]]]]:
     """Load all sessions grouped by date."""
     sessions_by_date = defaultdict(list)
 
@@ -149,7 +153,11 @@ def load_all_sessions(transcripts_dir: Path) -> Dict[str, List[Tuple[datetime, s
 
     return sessions_by_date
 
-def create_journal_entry(date: str, sessions: List[Tuple[datetime, str, List[Dict]]], output_path: Path):
+def create_journal_entry(
+    date: str,
+    sessions: List[Tuple[Optional[datetime], str, List[Dict[str, Any]]]],
+    output_path: Path,
+) -> None:
     """Create a daily journal entry."""
     # Collect all entries for the day
     entries = []
@@ -179,14 +187,14 @@ def create_journal_entry(date: str, sessions: List[Tuple[datetime, str, List[Dic
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(''.join(md_lines))
 
-def main():
+def main() -> None:
     """Generate all journal entries."""
-    project_root = Path(__file__).parent.parent
-    transcripts_dir = project_root / 'CHAT_LOGS'
-    journals_dir = project_root / 'journals'
+    # Use centralized config
+    transcripts_dir = _paths.chat_logs
+    journals_dir = _paths.journals
 
     # Create journals directory
-    journals_dir.mkdir(exist_ok=True)
+    journals_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 70)
     print("Daily Journal Generator")

@@ -17,13 +17,13 @@ Features:
 - Provides detailed reporting of redactions
 """
 
+from __future__ import annotations
+
 import json
-import os
-import re
 import subprocess
 import sys
 from pathlib import Path
-from typing import Dict, List, Set, Tuple
+from typing import Any, Dict, List, Tuple
 
 
 class Colors:
@@ -38,7 +38,9 @@ class Colors:
     END = '\033[0m'
 
 
-def run_command(cmd: List[str], capture_output=True, check=False) -> subprocess.CompletedProcess:
+def run_command(
+    cmd: List[str], capture_output: bool = True, check: bool = False
+) -> subprocess.CompletedProcess[str]:
     """Run a command and return the result"""
     try:
         result = subprocess.run(
@@ -74,7 +76,7 @@ def get_staged_files() -> List[str]:
     return []
 
 
-def run_gitleaks_scan(repo_root: Path) -> Tuple[List[Dict], int]:
+def run_gitleaks_scan(repo_root: Path) -> Tuple[List[Dict[str, Any]], int]:
     """
     Run gitleaks on staged files and return findings.
 
@@ -176,7 +178,7 @@ def redact_secret(content: str, secret: str, line_number: int, start_col: int, e
     return content, False
 
 
-def process_findings(findings: List[Dict], repo_root: Path) -> Dict[str, int]:
+def process_findings(findings: List[Dict[str, Any]], repo_root: Path) -> Dict[str, int]:
     """
     Process gitleaks findings and redact secrets in files.
 
@@ -255,8 +257,8 @@ def process_findings(findings: List[Dict], repo_root: Path) -> Dict[str, int]:
     return files_modified
 
 
-def restage_files(files: List[str], repo_root: Path):
-    """Re-stage modified files"""
+def restage_files(files: List[str], repo_root: Path) -> None:
+    """Re-stage modified files."""
     if not files:
         return
 

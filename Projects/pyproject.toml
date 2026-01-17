@@ -1,3 +1,68 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "m-claude"
+version = "1.0.0"
+description = "Claude Code conversation archive and automation system"
+readme = "../README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "M"}
+]
+keywords = ["claude", "conversation", "archive", "automation", "cli"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Utilities",
+]
+# No dependencies - stdlib only!
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.12.0",
+    "black>=24.0.0",
+    "flake8>=7.0.0",
+    "mypy>=1.8.0",
+    "pytest-xdist>=3.5.0",
+    "pytest-timeout>=2.2.0",
+]
+docs = [
+    "sphinx>=7.2.0",
+    "sphinx-rtd-theme>=2.0.0",
+]
+
+[project.scripts]
+m-claude = "Scripts.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/M-Thisness/M-Claude"
+Repository = "https://github.com/M-Thisness/M-Claude"
+Issues = "https://github.com/M-Thisness/M-Claude/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["Scripts*", "Tests*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.toml", "*.txt", "*.md"]
+
+# =============================================================================
+# BLACK - Code Formatting
+# =============================================================================
 [tool.black]
 line-length = 100
 target-version = ['py310', 'py311', 'py312']
@@ -14,44 +79,147 @@ extend-exclude = '''
   | venv
   | build
   | dist
+  | __pycache__
 )/
 '''
 
+# =============================================================================
+# PYTEST - Testing
+# =============================================================================
 [tool.pytest.ini_options]
 minversion = "8.0"
-testpaths = ["tests"]
+testpaths = ["Tests"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
 addopts = [
     "-v",
     "--strict-markers",
-    "--cov=scripts",
+    "--cov=Scripts",
     "--cov-report=term-missing",
-    "--cov-report=html",
+    "--cov-report=html:coverage_html",
+    "--cov-fail-under=70",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
 ]
 
+# =============================================================================
+# MYPY - Static Type Checking
+# =============================================================================
 [tool.mypy]
 python_version = "3.11"
 warn_return_any = true
 warn_unused_configs = true
-disallow_untyped_defs = false  # Start lenient
-ignore_missing_imports = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
 check_untyped_defs = true
+disallow_untyped_decorators = false
+no_implicit_optional = true
+strict_equality = true
+strict_concatenate = true
+ignore_missing_imports = true
+show_error_codes = true
+show_column_numbers = true
+pretty = true
 
+# Per-module overrides for gradual adoption
+[[tool.mypy.overrides]]
+module = "Tests.*"
+disallow_untyped_defs = false
+
+# =============================================================================
+# COVERAGE - Test Coverage
+# =============================================================================
 [tool.coverage.run]
-source = ["scripts"]
+source = ["Scripts"]
+branch = true
 omit = [
     "*/tests/*",
+    "*/Tests/*",
     "*/__pycache__/*",
     "*/venv/*",
+    "*/.venv/*",
+    "*/hooks/*",
 ]
 
 [tool.coverage.report]
 exclude_lines = [
     "pragma: no cover",
     "def __repr__",
+    "def __str__",
     "if __name__ == .__main__.:",
     "raise AssertionError",
     "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if typing.TYPE_CHECKING:",
+    "@abstractmethod",
+    "@abc.abstractmethod",
 ]
+fail_under = 70
+show_missing = true
+skip_covered = false
+precision = 2
+
+[tool.coverage.html]
+directory = "coverage_html"
+
+# =============================================================================
+# FLAKE8 - Linting (via pyproject-flake8)
+# =============================================================================
+[tool.flake8]
+max-line-length = 100
+extend-ignore = ["E203", "W503"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    ".eggs",
+    "*.egg-info",
+    ".venv",
+    "venv",
+]
+per-file-ignores = [
+    "__init__.py:F401",
+    "test_*.py:S101",
+]
+
+# =============================================================================
+# RUFF - Fast Linting (alternative to flake8)
+# =============================================================================
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # Pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "UP",     # pyupgrade
+    "ARG",    # flake8-unused-arguments
+    "SIM",    # flake8-simplify
+]
+ignore = [
+    "E501",   # line too long (handled by black)
+    "B008",   # function call in default argument
+    "C901",   # too complex
+    "ARG001", # unused function argument (common in CLI handlers)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"test_*.py" = ["S101", "ARG001"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["Scripts", "config", "cli"]

@@ -12,23 +12,24 @@ Usage:
     python scripts/search.py "your query" [--from DATE] [--to DATE] [--tool TOOL]
 """
 
-import json
+from __future__ import annotations
+
 import argparse
+import json
 import logging
-from pathlib import Path
 from datetime import datetime
-from typing import List, Dict, Any, Optional
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+from config import get_paths, setup_logging
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+logger = setup_logging(__name__, format_string="%(levelname)s - %(message)s")
 
-# Configuration
-REPO_ROOT = Path(__file__).parent.parent
-CHAT_LOGS = REPO_ROOT / "CHAT_LOGS"
+# Configuration from centralized config
+_paths = get_paths()
+REPO_ROOT = _paths.repo_root
+CHAT_LOGS = _paths.chat_logs
 
 
 def parse_timestamp(timestamp_str: str) -> Optional[datetime]:
@@ -188,7 +189,7 @@ def format_result(result: Dict[str, Any], show_full: bool = False) -> str:
     return output
 
 
-def main():
+def main() -> None:
     """Main entry point for search CLI."""
     parser = argparse.ArgumentParser(
         description='Search Claude Code conversations',

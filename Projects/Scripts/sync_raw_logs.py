@@ -8,28 +8,28 @@ then converts ONLY newly synced sessions into daily journal entries.
 Supported Platforms: Windows 11, macOS, Linux, Android (Termux)
 """
 
+from __future__ import annotations
+
+import json
+import logging
 import os
 import re
-import json
-import platform
-import logging
-from pathlib import Path
-from datetime import datetime
 from collections import defaultdict
-from typing import Dict, List, Tuple, Set
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Set, Tuple
+
+from config import get_paths, get_platform, setup_logging
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+logger = setup_logging(__name__)
 
-# Configuration
-HOME = Path.home()
-REPO_ROOT = Path(__file__).parent.parent.parent  # Projects/Scripts -> Projects -> M-Claude
-ARCHIVES_DEST = REPO_ROOT / "Archives"
-JOURNALS_DEST = REPO_ROOT / "Journals"
+# Get paths from centralized config
+_paths = get_paths()
+HOME = _paths.home
+REPO_ROOT = _paths.repo_root
+ARCHIVES_DEST = _paths.archives
+JOURNALS_DEST = _paths.journals
 
 # ============================================================================
 # PLATFORM DETECTION
@@ -37,45 +37,12 @@ JOURNALS_DEST = REPO_ROOT / "Journals"
 
 def get_claude_project_dirs() -> List[Path]:
     """Detect Claude Code project directories dynamically."""
-    claude_base = HOME / ".claude" / "projects"
-    project_dirs = []
-    
-    if not claude_base.exists():
-        logger.warning(f"Claude base directory not found: {claude_base}")
-        return project_dirs
-    
-    try:
-        for entry in claude_base.iterdir():
-            if entry.is_dir():
-                jsonl_files = list(entry.glob("*.jsonl"))
-                if jsonl_files:
-                    project_dirs.append(entry)
-    except PermissionError as e:
-        logger.error(f"Permission denied accessing {claude_base}: {e}")
-    
-    return project_dirs
+    return _paths.get_claude_project_dirs()
+
 
 def get_platform_info() -> str:
     """Get detailed platform information."""
-    if os.path.exists("/data/data/com.termux"):
-        return "Android (Termux)"
-    
-    system = platform.system()
-    if system == "Darwin":
-        return f"macOS {platform.mac_ver()[0]}"
-    elif system == "Windows":
-        return f"Windows {platform.release()}"
-    elif system == "Linux":
-        try:
-            with open("/etc/os-release") as f:
-                for line in f:
-                    if line.startswith("PRETTY_NAME="):
-                        return line.split("=")[1].strip().strip('"')
-        except FileNotFoundError:
-            pass
-        return f"Linux {platform.release()}"
-    
-    return system
+    return get_platform().display_name()
 
 # ============================================================================
 # REDACTION
@@ -184,7 +151,7 @@ def sync_jsonl_logs() -> Set[str]:
 # CONVERT - Parse JSONL to structured data
 # ============================================================================
 
-def parse_timestamp(timestamp_str: str) -> datetime:
+def parse_timestamp(timestamp_str: str) -> Optional[datetime]:
     """Parse ISO timestamp string to datetime."""
     try:
         ts = timestamp_str.replace('Z', '+00:00')
@@ -192,7 +159,7 @@ def parse_timestamp(timestamp_str: str) -> datetime:
     except (ValueError, AttributeError):
         return None
 
-def parse_session(jsonl_path: Path) -> Tuple[datetime, str, List[Dict]]:
+def parse_session(jsonl_path: Path) -> Tuple[Optional[datetime], str, List[Dict[str, Any]]]:
     """
     Parse a JSONL session file into structured data.
     Returns: (first_timestamp, session_id, messages)
@@ -220,7 +187,7 @@ def parse_session(jsonl_path: Path) -> Tuple[datetime, str, List[Dict]]:
     
     return first_timestamp, session_id, messages
 
-def extract_session_summary(messages: List[Dict]) -> Dict:
+def extract_session_summary(messages: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
     Extract comprehensive summary from session messages.
     Parses user prompts, assistant responses, tool usage, and outcomes.
@@ -321,7 +288,7 @@ def extract_session_summary(messages: List[Dict]) -> Dict:
     
     return summary
 
-def summarize_session_narrative(summary: Dict) -> Tuple[str, str]:
+def summarize_session_narrative(summary: Dict[str, Any]) -> Tuple[str, str]:
     """
     Create rich human-readable narrative from session summary.
     Returns: (title, body_markdown)
@@ -378,7 +345,9 @@ def format_duration(ms: int) -> str:
     else:
         return f"{sec:.0f}s"
 
-def update_journal_for_date(date_str: str, sessions: List[Tuple[datetime, str, List[Dict]]]):
+def update_journal_for_date(
+    date_str: str, sessions: List[Tuple[Optional[datetime], str, List[Dict[str, Any]]]]
+) -> int:
     """
     Create rich journal entry for a specific date.
     Produces human-readable markdown with session details.
@@ -448,7 +417,7 @@ def update_journal_for_date(date_str: str, sessions: List[Tuple[datetime, str, L
     
     return len(entries)
 
-def convert_sessions_to_journals(session_ids: Set[str]):
+def convert_sessions_to_journals(session_ids: Set[str]) -> None:
     """
     Convert specified sessions to journal entries.
     Groups sessions by date, then updates each day's journal.
@@ -456,9 +425,11 @@ def convert_sessions_to_journals(session_ids: Set[str]):
     if not session_ids:
         logger.info("No new sessions to convert")
         return
-    
+
     # Group sessions by date
-    sessions_by_date: Dict[str, List] = defaultdict(list)
+    sessions_by_date: Dict[str, List[Tuple[Optional[datetime], str, List[Dict[str, Any]]]]] = (
+        defaultdict(list)
+    )
     
     for session_id in session_ids:
         jsonl_path = ARCHIVES_DEST / f"{session_id}.jsonl"
@@ -480,7 +451,11 @@ def convert_sessions_to_journals(session_ids: Set[str]):
 # MAIN
 # ============================================================================
 
-def main():
+def main() -> None:
+    """Main entry point for sync and convert operations."""
+    # Ensure directories exist
+    _paths.ensure_directories()
+
     print("=" * 60)
     print("Claude Code: Sync + Convert")
     print("=" * 60)
@@ -488,21 +463,22 @@ def main():
     print(f"Archives: {ARCHIVES_DEST}")
     print(f"Journals: {JOURNALS_DEST}")
     print()
-    
+
     # Step 1: Sync
     print("[1/2] Syncing raw logs...")
     newly_synced = sync_jsonl_logs()
     print(f"      Synced: {len(newly_synced)} new/updated sessions")
     print()
-    
+
     # Step 2: Convert
     print("[2/2] Converting to journals...")
     convert_sessions_to_journals(newly_synced)
     print()
-    
+
     print("=" * 60)
     print("Complete!")
     print("=" * 60)
+
 
 if __name__ == "__main__":
     main()
