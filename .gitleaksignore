@@ -4,6 +4,25 @@
 # This file is for ignoring specific findings by their fingerprint.
 #
 # For path-based allowlisting, use .gitleaks.toml [allowlist] section instead.
-#
-# Note: This file is currently empty. All path-based exclusions are
-# configured in .gitleaks.toml to avoid "Invalid entry" warnings.
+
+# SLATE-NETWORK-CONFIG-2026-01-17.md - RFC1918 private IPs (not secrets)
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:5
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:80
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:97
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:99
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:101
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:103
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:105
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:107
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:155
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:156
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:157
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:158
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:159
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:160
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:190
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:193
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:194
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:195
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:196
+Docs/SLATE-NETWORK-CONFIG-2026-01-17.md:hardcoded-ip:199
