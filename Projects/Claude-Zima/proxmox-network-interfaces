@@ -1,0 +1,193 @@
+# /etc/network/interfaces - Proxmox VE Network Configuration for Zimaboard
+# This configuration creates a managed switch architecture with traffic monitoring
+#
+# Network Architecture:
+# - vmbr0: Management network (192.168.8.0/24) on enp2s0
+# - vmbr1: WAN/Uplink to Slate router on enp3s0
+# - vmbr2: Legion client network (192.168.10.0/24) on enp4s0
+# - vmbr3: Book client network (192.168.20.0/24) on enp5s0
+# - vmbr4: IoT network (192.168.30.0/24) on enp6s0
+# - vmbr_monitor: Traffic mirroring on enp7s0
+
+# Loopback interface
+auto lo
+iface lo inet loopback
+
+# ============================================================================
+# ONBOARD NETWORK INTERFACES
+# ============================================================================
+
+# Onboard NIC 1 - Management Network
+# Connected to: Management switch or direct to router
+auto enp2s0
+iface enp2s0 inet manual
+    # Enable multi-queue for better performance
+    post-up ethtool -L enp2s0 combined 4 || true
+    # Disable offloading for better IDS compatibility
+    post-up ethtool -K enp2s0 gro off gso off tso off || true
+    # Optional: Enable jumbo frames if switch supports it
+    # mtu 9000
+
+# Onboard NIC 2 - Uplink/WAN
+# Connected to: Slate router
+auto enp3s0
+iface enp3s0 inet manual
+    post-up ethtool -L enp3s0 combined 4 || true
+
+# ============================================================================
+# PCIe 4-PORT 2.5GbE CARD INTERFACES
+# ============================================================================
+
+# PCIe Port 1 - Legion Network
+auto enp4s0
+iface enp4s0 inet manual
+    post-up ethtool -L enp4s0 combined 4 || true
+    post-up ethtool -K enp4s0 gro off gso off tso off || true
+
+# PCIe Port 2 - Book Network
+auto enp5s0
+iface enp5s0 inet manual
+    post-up ethtool -L enp5s0 combined 4 || true
+    post-up ethtool -K enp5s0 gro off gso off tso off || true
+
+# PCIe Port 3 - IoT Network (Sonos, etc.)
+auto enp6s0
+iface enp6s0 inet manual
+    post-up ethtool -L enp6s0 combined 4 || true
+    post-up ethtool -K enp6s0 gro off gso off tso off || true
+
+# PCIe Port 4 - Monitor/Spare
+auto enp7s0
+iface enp7s0 inet manual
+    # Promiscuous mode for traffic monitoring
+    post-up ip link set enp7s0 promisc on
+
+# ============================================================================
+# LINUX BRIDGES
+# ============================================================================
+
+# vmbr0 - Management Bridge (Proxmox host + containers/VMs)
+# This is the primary management interface for Proxmox
+auto vmbr0
+iface vmbr0 inet static
+    address 192.168.8.21/24
+    gateway 192.168.8.1
+    dns-nameservers 192.168.8.1 1.1.1.1 8.8.8.8
+    bridge-ports enp2s0
+    bridge-stp off
+    bridge-fd 0
+    bridge-vlan-aware yes
+    bridge-vids 2-4094
+    # Enable IP forwarding
+    post-up echo 1 > /proc/sys/net/ipv4/ip_forward
+    # Optimize bridge for low latency
+    post-up sysctl -w net.bridge.bridge-nf-call-iptables=1
+    post-up sysctl -w net.bridge.bridge-nf-call-ip6tables=1
+
+# vmbr1 - WAN/Uplink Bridge
+# Connects to external router (Slate) for internet access
+auto vmbr1
+iface vmbr1 inet dhcp
+    bridge-ports enp3s0
+    bridge-stp off
+    bridge-fd 0
+    # NAT masquerading for outbound traffic
+    post-up iptables -t nat -A POSTROUTING -s '192.168.8.0/24' -o vmbr1 -j MASQUERADE
+    post-up iptables -t nat -A POSTROUTING -s '192.168.10.0/24' -o vmbr1 -j MASQUERADE
+    post-up iptables -t nat -A POSTROUTING -s '192.168.20.0/24' -o vmbr1 -j MASQUERADE
+    post-up iptables -t nat -A POSTROUTING -s '192.168.30.0/24' -o vmbr1 -j MASQUERADE
+    post-down iptables -t nat -D POSTROUTING -s '192.168.8.0/24' -o vmbr1 -j MASQUERADE
+    post-down iptables -t nat -D POSTROUTING -s '192.168.10.0/24' -o vmbr1 -j MASQUERADE
+    post-down iptables -t nat -D POSTROUTING -s '192.168.20.0/24' -o vmbr1 -j MASQUERADE
+    post-down iptables -t nat -D POSTROUTING -s '192.168.30.0/24' -o vmbr1 -j MASQUERADE
+
+# vmbr2 - Legion Client Network
+# High-performance network for Legion Pro 7i
+auto vmbr2
+iface vmbr2 inet static
+    address 192.168.10.1/24
+    bridge-ports enp4s0
+    bridge-stp off
+    bridge-fd 0
+    bridge-vlan-aware no
+    # QoS: High priority for Legion traffic
+    post-up tc qdisc add dev vmbr2 root handle 1: htb default 10
+    post-up tc class add dev vmbr2 parent 1: classid 1:10 htb rate 2000mbit ceil 2500mbit
+    post-down tc qdisc del dev vmbr2 root || true
+
+# vmbr3 - Book Client Network
+# Network for Book laptop
+auto vmbr3
+iface vmbr3 inet static
+    address 192.168.20.1/24
+    bridge-ports enp5s0
+    bridge-stp off
+    bridge-fd 0
+    bridge-vlan-aware no
+    # QoS: High priority for Book traffic
+    post-up tc qdisc add dev vmbr3 root handle 1: htb default 10
+    post-up tc class add dev vmbr3 parent 1: classid 1:10 htb rate 2000mbit ceil 2500mbit
+    post-down tc qdisc del dev vmbr3 root || true
+
+# vmbr4 - IoT Network (Isolated)
+# Network for Sonos Beam and other IoT devices
+auto vmbr4
+iface vmbr4 inet static
+    address 192.168.30.1/24
+    bridge-ports enp6s0
+    bridge-stp off
+    bridge-fd 0
+    bridge-vlan-aware no
+    # IoT isolation rules applied via iptables (see firewall script)
+
+# vmbr_monitor - Traffic Monitoring Bridge
+# Port mirroring for IDS/monitoring (Suricata, ntopng)
+# No IP address - passive monitoring only
+auto vmbr_monitor
+iface vmbr_monitor inet manual
+    bridge-ports enp7s0
+    bridge-stp off
+    bridge-fd 0
+    bridge-ageing 0
+    # Enable promiscuous mode for packet capture
+    post-up ip link set vmbr_monitor promisc on
+
+# ============================================================================
+# INTER-BRIDGE ROUTING
+# ============================================================================
+
+# Enable routing between bridge networks
+# Applied via post-up on vmbr0 (already configured above)
+
+# ============================================================================
+# NOTES
+# ============================================================================
+#
+# 1. After editing this file, apply changes with:
+#    systemctl restart networking
+#    OR
+#    ifreload -a
+#
+# 2. For persistent firewall rules, install:
+#    apt install iptables-persistent
+#    Then run the firewall configuration script:
+#    ./proxmox-firewall-rules.sh
+#
+# 3. Traffic mirroring setup:
+#    Use the traffic-mirror-setup.sh script to configure
+#    port mirroring from vmbr2/vmbr3/vmbr4 to vmbr_monitor
+#
+# 4. DHCP server configuration:
+#    If you want Proxmox to act as DHCP server for client networks,
+#    install and configure dnsmasq (see dhcp-server-config.sh)
+#
+# 5. Performance tuning:
+#    - Multi-queue enabled (4 queues per NIC)
+#    - STP disabled for low latency
+#    - Bridge forwarding delay set to 0
+#    - Optional jumbo frames (MTU 9000) - uncomment if needed
+#
+# 6. Security considerations:
+#    - IoT network is isolated (firewall rules required)
+#    - All traffic can be monitored via vmbr_monitor
+#    - NAT configured for internet access from all networks

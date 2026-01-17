@@ -1,0 +1,190 @@
+version: '3.8'
+
+services:
+  # Home Assistant Core
+  homeassistant:
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/home-assistant:stable
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    volumes:
+      - ./homeassistant/config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro  # Required for Bluetooth
+    devices:
+      # USB Zigbee/Z-Wave dongles - adjust paths to match your system
+      # Find device with: ls -l /dev/serial/by-id/
+      - /dev/ttyUSB0:/dev/ttyUSB0  # Example Zigbee dongle
+      # - /dev/ttyUSB1:/dev/ttyUSB1  # Example Z-Wave dongle
+      # - /dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20230508143713-if00:/dev/ttyUSB0
+    environment:
+      - TZ=America/New_York  # Change to your timezone
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '2.0'
+        reservations:
+          memory: 1G
+          cpus: '1.0'
+    depends_on:
+      - mariadb
+      - mosquitto
+
+  # MariaDB for Recorder
+  mariadb:
+    container_name: homeassistant_mariadb
+    image: mariadb:11.6
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-change_this_root_password}
+      MYSQL_DATABASE: homeassistant
+      MYSQL_USER: homeassistant
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-change_this_ha_password}
+    volumes:
+      - ./mariadb/data:/var/lib/mysql
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3306:3306"
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --max_connections=100
+      --innodb_buffer_pool_size=256M
+      --innodb_log_file_size=64M
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+        reservations:
+          memory: 256M
+          cpus: '0.5'
+
+  # Alternative: PostgreSQL (uncomment to use instead of MariaDB)
+  # postgresql:
+  #   container_name: homeassistant_postgresql
+  #   image: postgres:17-alpine
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_DB: homeassistant
+  #     POSTGRES_USER: homeassistant
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_this_password}
+  #   volumes:
+  #     - ./postgresql/data:/var/lib/postgresql/data
+  #     - /etc/localtime:/etc/localtime:ro
+  #   ports:
+  #     - "5432:5432"
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 512M
+  #         cpus: '1.0'
+  #       reservations:
+  #         memory: 256M
+  #         cpus: '0.5'
+
+  # Mosquitto MQTT Broker
+  mosquitto:
+    container_name: homeassistant_mosquitto
+    image: eclipse-mosquitto:2.0
+    restart: unless-stopped
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "1883:1883"  # MQTT
+      - "9001:9001"  # WebSocket
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+        reservations:
+          memory: 128M
+          cpus: '0.25'
+
+  # Optional: Zigbee2MQTT (if not using ZHA integration)
+  # zigbee2mqtt:
+  #   container_name: zigbee2mqtt
+  #   image: koenkk/zigbee2mqtt:latest
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./zigbee2mqtt/data:/app/data
+  #     - /run/udev:/run/udev:ro
+  #   devices:
+  #     - /dev/ttyUSB0:/dev/ttyACM0
+  #   environment:
+  #     - TZ=America/New_York
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - mosquitto
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 512M
+  #         cpus: '1.0'
+  #       reservations:
+  #         memory: 256M
+  #         cpus: '0.5'
+
+  # Optional: Node-RED for automation flows
+  # nodered:
+  #   container_name: homeassistant_nodered
+  #   image: nodered/node-red:latest
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./nodered/data:/data
+  #     - /etc/localtime:/etc/localtime:ro
+  #   ports:
+  #     - "1880:1880"
+  #   environment:
+  #     - TZ=America/New_York
+  #   depends_on:
+  #     - homeassistant
+  #     - mosquitto
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 512M
+  #         cpus: '0.5'
+  #       reservations:
+  #         memory: 256M
+  #         cpus: '0.25'
+
+  # Optional: ESPHome for ESP device management
+  # esphome:
+  #   container_name: homeassistant_esphome
+  #   image: ghcr.io/esphome/esphome:stable
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./esphome/config:/config
+  #     - /etc/localtime:/etc/localtime:ro
+  #   ports:
+  #     - "6052:6052"
+  #   network_mode: host
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 512M
+  #         cpus: '1.0'
+  #       reservations:
+  #         memory: 256M
+  #         cpus: '0.5'
+
+# Networks (only used if not using host networking)
+# networks:
+#   homeassistant:
+#     driver: bridge
+
+volumes:
+  # Named volumes as alternative to bind mounts
+  homeassistant_config:
+  mariadb_data:
+  mosquitto_config:
+  mosquitto_data:
+  mosquitto_log:
