@@ -17,7 +17,7 @@ import re
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
 from config import get_paths, get_platform, setup_logging
 
@@ -49,6 +49,58 @@ def get_platform_info() -> str:
 # ============================================================================
 
 BS = chr(92)  # backslash
+
+# ============================================================================
+# GMAIL CONTENT DETECTION & REDACTION
+# ============================================================================
+
+def detect_gmail_content(text: str) -> bool:
+    """
+    Detect if text contains Gmail API response content or email data.
+    Returns True if potential email content is found, triggering review flag.
+
+    TODO(human): Implement detection logic for Gmail content patterns
+    """
+    # TODO(human): Add your detection logic here
+    # Consider checking for:
+    # - Gmail API response structures
+    # - Email header patterns
+    # - Common email content indicators
+    pass
+
+
+def redact_gmail_content(text: str) -> str:
+    """
+    Redact Gmail-specific content from conversation logs.
+    Called after standard SECRET_PATTERNS redaction.
+    """
+    if not isinstance(text, str):
+        return text
+
+    # Gmail API JSON field redaction
+    gmail_field_patterns = [
+        # Message body content (base64 or plain)
+        (r'"body"\s*:\s*\{[^}]*"data"\s*:\s*"[^"]*"', '"body": {"data": "[REDACTED_EMAIL_BODY]"'),
+        # Snippet previews
+        (r'"snippet"\s*:\s*"[^"]{10,}"', '"snippet": "[REDACTED_EMAIL_SNIPPET]"'),
+        # Subject lines
+        (r'"subject"\s*:\s*"[^"]*"', '"subject": "[REDACTED_EMAIL_SUBJECT]"'),
+        # From/To headers in raw format
+        (r'(From|To|Cc|Bcc):\s*[^\n]+', r'\1: [REDACTED_EMAIL_HEADER]'),
+        # Quoted email content (common reply patterns)
+        (r'On .{10,60} wrote:', 'On [DATE] [SENDER] wrote:'),
+        # Email threading indicators
+        (r'(Re|Fwd|RE|FW):\s*[^\n]{5,}', r'\1: [REDACTED_SUBJECT]'),
+    ]
+
+    for pattern, replacement in gmail_field_patterns:
+        text = re.sub(pattern, replacement, text, flags=re.IGNORECASE | re.DOTALL)
+
+    return text
+
+
+# Sessions flagged for manual review (contains potential email content)
+FLAGGED_SESSIONS: Set[str] = set()
 
 SECRET_PATTERNS = [
     (r"(sk-[a-zA-Z0-9]{20,})", "[REDACTED_API_KEY]"),
@@ -83,34 +135,46 @@ SECRET_PATTERNS = [
 WIN_PATH_PATTERN = f'C:{BS}{BS}Users{BS}{BS}[a-zA-Z0-9_-]+'
 WIN_PATH_REPLACEMENT = f'C:{BS}Users{BS}[USER]'
 
-def redact_text(text: str) -> str:
-    """Apply all redaction patterns to text."""
+def redact_text(text: str, session_id: str = "") -> Tuple[str, bool]:
+    """
+    Apply all redaction patterns to text.
+    Returns: (redacted_text, contains_email_content)
+    """
     if not isinstance(text, str):
-        return text
+        return text, False
 
+    # Check for Gmail content before redaction
+    has_email = detect_gmail_content(text) or False
+
+    # Apply standard secret redaction
     for pattern, replacement in SECRET_PATTERNS:
         text = re.sub(pattern, replacement, text, flags=re.IGNORECASE)
-    
+
     text = re.sub(WIN_PATH_PATTERN, lambda m: WIN_PATH_REPLACEMENT, text, flags=re.IGNORECASE)
-    return text
+
+    # Apply Gmail-specific redaction
+    text = redact_gmail_content(text)
+
+    return text, has_email
 
 # ============================================================================
 # SYNC
 # ============================================================================
 
-def sync_jsonl_logs() -> Set[str]:
+def sync_jsonl_logs() -> Tuple[Set[str], Set[str]]:
     """
     Sync and redact .jsonl conversation logs.
-    Returns set of session IDs that were newly synced or updated.
+    Returns: (newly_synced_session_ids, flagged_session_ids)
     """
     os.makedirs(ARCHIVES_DEST, exist_ok=True)
-    
+
     project_dirs = get_claude_project_dirs()
     newly_synced: Set[str] = set()
-    
+    flagged_for_review: Set[str] = set()
+
     if not project_dirs:
         logger.error("No Claude Code project directories found!")
-        return newly_synced
+        return newly_synced, flagged_for_review
 
     for claude_projects in project_dirs:
         jsonl_files = list(claude_projects.glob("*.jsonl"))
@@ -124,7 +188,11 @@ def sync_jsonl_logs() -> Set[str]:
                 with open(src_file, 'r', encoding='utf-8', errors='replace') as f:
                     content = f.read()
 
-                redacted_content = redact_text(content)
+                redacted_content, has_email = redact_text(content, session_id)
+
+                if has_email:
+                    flagged_for_review.add(session_id)
+                    logger.warning(f"⚠️  Session {session_id[:8]}... flagged for review (email content)")
 
                 # Check if update needed
                 should_write = True
@@ -145,7 +213,7 @@ def sync_jsonl_logs() -> Set[str]:
             except Exception as e:
                 logger.error(f"Error processing {src_file.name}: {e}")
 
-    return newly_synced
+    return newly_synced, flagged_for_review
 
 # ============================================================================
 # CONVERT - Parse JSONL to structured data
@@ -451,13 +519,35 @@ def convert_sessions_to_journals(session_ids: Set[str]) -> None:
 # MAIN
 # ============================================================================
 
+def write_flagged_sessions_report(flagged: Set[str]) -> Optional[Path]:
+    """Write flagged sessions to a review file for manual inspection."""
+    if not flagged:
+        return None
+
+    report_path = REPO_ROOT / "REVIEW_REQUIRED.md"
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M')
+
+    with open(report_path, 'w', encoding='utf-8') as f:
+        f.write(f"# Sessions Requiring Manual Review\n\n")
+        f.write(f"*Generated: {timestamp}*\n\n")
+        f.write("These sessions were flagged as potentially containing email content.\n")
+        f.write("Review before committing to public repository.\n\n")
+        f.write("---\n\n")
+        for sid in sorted(flagged):
+            f.write(f"- [ ] `{sid}.jsonl`\n")
+        f.write("\n---\n")
+        f.write("\n*Delete this file after review is complete.*\n")
+
+    return report_path
+
+
 def main() -> None:
     """Main entry point for sync and convert operations."""
     # Ensure directories exist
     _paths.ensure_directories()
 
     print("=" * 60)
-    print("Claude Code: Sync + Convert")
+    print("Claude Code: Sync + Convert (with Gmail Redaction)")
     print("=" * 60)
     print(f"Platform: {get_platform_info()}")
     print(f"Archives: {ARCHIVES_DEST}")
@@ -466,8 +556,10 @@ def main() -> None:
 
     # Step 1: Sync
     print("[1/2] Syncing raw logs...")
-    newly_synced = sync_jsonl_logs()
+    newly_synced, flagged = sync_jsonl_logs()
     print(f"      Synced: {len(newly_synced)} new/updated sessions")
+    if flagged:
+        print(f"      ⚠️  Flagged for review: {len(flagged)} sessions")
     print()
 
     # Step 2: Convert
@@ -475,9 +567,22 @@ def main() -> None:
     convert_sessions_to_journals(newly_synced)
     print()
 
-    print("=" * 60)
-    print("Complete!")
-    print("=" * 60)
+    # Step 3: Report flagged sessions
+    if flagged:
+        report = write_flagged_sessions_report(flagged)
+        print("=" * 60)
+        print("⚠️  MANUAL REVIEW REQUIRED")
+        print("=" * 60)
+        print(f"Sessions with potential email content: {len(flagged)}")
+        if report:
+            print(f"Review file: {report}")
+        print()
+        print("Review these sessions before pushing to public repo!")
+        print("=" * 60)
+    else:
+        print("=" * 60)
+        print("✅ Complete! No sessions flagged for review.")
+        print("=" * 60)
 
 
 if __name__ == "__main__":
